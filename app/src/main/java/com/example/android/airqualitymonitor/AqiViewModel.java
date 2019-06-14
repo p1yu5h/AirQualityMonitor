@@ -38,7 +38,7 @@ public class AqiViewModel extends ViewModel {
     private void loadApiResponse() {
         mApiInterface = mRetrofitHelper.getApiInterface();
         mStatus.setValue("Fetching data...");
-        Call<ApiResponse> mApiResponseCall = mApiInterface.getAQI(BuildConfig.ApiKey);
+        Call<ApiResponse> mApiResponseCall = mApiInterface.getAQI("demo");
         mApiResponseCall.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {

@@ -1,11 +1,12 @@
 package com.example.android.airqualitymonitor;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -17,8 +18,8 @@ public class MainActivity extends AppCompatActivity {
 
     Button button;
     private TextView mAqiText;
-    //TODO enter your api key here
-    public static String apiKey = "demo";
+    //TODO enter your api key here. You can use "demo" for trying.
+    public static String apiKey = BuildConfig.ApiKey;
     ApiInterface mApiInterface;
     String mToken;
     ApiResponse mResponse;

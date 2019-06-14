@@ -1,6 +1,15 @@
 
 package com.example.android.airqualitymonitor;
 
+import com.example.android.airqualitymonitor.AirProperties.Co;
+import com.example.android.airqualitymonitor.AirProperties.No2;
+import com.example.android.airqualitymonitor.AirProperties.O3;
+import com.example.android.airqualitymonitor.AirProperties.Pm10;
+import com.example.android.airqualitymonitor.AirProperties.Pm25;
+import com.example.android.airqualitymonitor.AirProperties.Pressure;
+import com.example.android.airqualitymonitor.AirProperties.So2;
+import com.example.android.airqualitymonitor.AirProperties.Temperature;
+import com.example.android.airqualitymonitor.AirProperties.Wind;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -15,6 +24,9 @@ public class Iaqi {
     @SerializedName("o3")
     @Expose
     private O3 o3;
+    @SerializedName("p")
+    @Expose
+    private Pressure pressure;
     @SerializedName("pm10")
     @Expose
     private Pm10 pm10;
@@ -26,10 +38,10 @@ public class Iaqi {
     private So2 so2;
     @SerializedName("t")
     @Expose
-    private T t;
+    private Temperature temperature;
     @SerializedName("w")
     @Expose
-    private W w;
+    private Wind wind;
 
     public Co getCo() {
         return co;
@@ -79,20 +91,28 @@ public class Iaqi {
         this.so2 = so2;
     }
 
-    public T getT() {
-        return t;
+    public Pressure getPressure() {
+        return pressure;
     }
 
-    public void setT(T t) {
-        this.t = t;
+    public void setPressure(Pressure pressure) {
+        this.pressure = pressure;
     }
 
-    public W getW() {
-        return w;
+    public Temperature getTemperature() {
+        return temperature;
     }
 
-    public void setW(W w) {
-        this.w = w;
+    public void setTemperature(Temperature temperature) {
+        this.temperature = temperature;
+    }
+
+    public Wind getWind() {
+        return wind;
+    }
+
+    public void setWind(Wind wind) {
+        this.wind = wind;
     }
 
 }

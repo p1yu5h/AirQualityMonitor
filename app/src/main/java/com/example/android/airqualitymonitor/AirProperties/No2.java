@@ -1,20 +1,20 @@
 
-package com.example.android.airqualitymonitor;
+package com.example.android.airqualitymonitor.AirProperties;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class O3 {
+public class No2 {
 
     @SerializedName("v")
     @Expose
-    private float v;
+    private Double v;
 
-    public float getV() {
+    public Double getV() {
         return v;
     }
 
-    public void setV(float v) {
+    public void setV(Double v) {
         this.v = v;
     }
 

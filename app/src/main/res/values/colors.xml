@@ -10,4 +10,7 @@
     <color name="transparent">#0FFF</color>
     <color name="transparentDark">#4000</color>
     <color name="transparentLight">#4FFF</color>
+    <color name="blue">#284CDC</color>
+    <color name="aqua">#009ba3</color>
+    <color name="lemonYellow">#fff44f</color>
 </resources>

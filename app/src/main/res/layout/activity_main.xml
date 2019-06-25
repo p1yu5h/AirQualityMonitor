@@ -1,34 +1,221 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/container"
-    android:background="@drawable/background_gradient">
+    android:background="@color/aqua">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:contentScrim="@color/transparent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/aqi_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="8dp"
+                    android:elevation="2dp"
+                    android:text="@string/aqi_title"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    app:layout_constraintBottom_toTopOf="@+id/aqi_textview"
+                    app:layout_constraintEnd_toEndOf="@+id/aqi_background"
+                    app:layout_constraintStart_toStartOf="@+id/aqi_background" />
+
+                <TextView
+                    android:id="@+id/aqi_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/aqi_title"
+                    android:elevation="2dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="50sp"
+                    android:textStyle="bold"
+                    android:transitionName="zoom"
+                    app:layout_constraintBottom_toBottomOf="@+id/aqi_background"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/aqi_background"
+                    tools:text="123" />
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="120dp"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:elevation="2dp"
+                    app:layout_constraintEnd_toEndOf="@+id/aqi_background"
+                    app:layout_constraintStart_toStartOf="@+id/aqi_background"
+                    app:layout_constraintTop_toBottomOf="@+id/aqi_textview" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="@+id/aqi_background"
+                    app:layout_constraintStart_toStartOf="@+id/aqi_background"
+                    app:layout_constraintTop_toBottomOf="@+id/view">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:elevation="2dp"
+                        android:padding="2dp"
+                        android:src="@drawable/icon_thermometer"
+                        android:tint="@color/white" />
+
+                    <TextView
+                        android:id="@+id/temperature_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:elevation="2dp"
+                        android:text="37 C"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/aqi_background"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="32dp"
+                    android:src="@drawable/circle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/aqi_background">
+
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/icon_location"
+                        android:tint="@color/lemonYellow" />
+
+                    <TextView
+                        android:id="@+id/location_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        tools:text="New Delhi" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="64dp">
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TextView
-            android:id="@+id/aqi_textview"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/pressure_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:elevation="2dp"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="50sp"
-            android:transitionName="zoom"
-            tools:text="123" />
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:weightSum="3">
 
-        <ImageView
-            android:id="@+id/aqi_background"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_centerInParent="true"
-            android:contentDescription="@string/button"
-            android:src="@drawable/circle" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TextAppearanceHeading"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Pressure" />
+
+                <TextView android:id="@+id/pressure_textview"
+                    style="@style/TextAppearance"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="2.3" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TextAppearanceHeading"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Humidity" />
+
+                <TextView android:id="@+id/humidity_textview"
+                    style="@style/TextAppearance"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="226" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TextAppearanceHeading"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Wind" />
+
+                <TextView android:id="@+id/wind_textview"
+                    style="@style/TextAppearance"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="226" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/pollutants_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/pressure_layout"
+            android:layout_margin="16dp" />
     </RelativeLayout>
-</RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

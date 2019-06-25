@@ -6,9 +6,24 @@
         <item name="colorPrimary">@color/lightPurple</item>
         <item name="colorPrimaryDark">@color/purple</item>
         <item name="colorAccent">@color/orange</item>
-        <item name="android:statusBarColor">@color/lightPurple</item>
+        <item name="android:statusBarColor">@color/aqua</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowActivityTransitions">true</item>
+        <item name="android:navigationBarColor">@color/aqua</item>
     </style>
 
+    <!-- Text styles -->
+    <style name="TextAppearanceHeading" >
+        <item name="android:textColor">@color/lemonYellow</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="TextAppearance" >
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textAlignment">center</item>
+    </style>
 </resources>

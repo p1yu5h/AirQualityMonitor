@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">AirQualityMonitor</string>
-    <string name="button">Get AQI</string>
-    <string name="blank">---</string>
+    <string name="aqi_title">AQI</string>
+    <string name="celsius_symbol">%1$.1f &#176;C</string>
 </resources>

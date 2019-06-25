@@ -1,5 +1,5 @@
-/.idea/
-.idea/
+.idea
+.idea/misc.xml
 *.iml
 .gradle
 /local.properties
@@ -14,3 +14,4 @@
 /captures
 .externalNativeBuild
 api_key.txt
+sample_api_response.txt

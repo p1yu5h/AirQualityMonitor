@@ -2,10 +2,11 @@
 package com.example.android.airqualitymonitor;
 
 import com.example.android.airqualitymonitor.AirProperties.Co;
+import com.example.android.airqualitymonitor.AirProperties.Humidity;
 import com.example.android.airqualitymonitor.AirProperties.No2;
 import com.example.android.airqualitymonitor.AirProperties.O3;
 import com.example.android.airqualitymonitor.AirProperties.Pm10;
-import com.example.android.airqualitymonitor.AirProperties.Pm25;
+import com.example.android.airqualitymonitor.AirProperties.Pm2_5;
 import com.example.android.airqualitymonitor.AirProperties.Pressure;
 import com.example.android.airqualitymonitor.AirProperties.So2;
 import com.example.android.airqualitymonitor.AirProperties.Temperature;
@@ -32,13 +33,16 @@ public class Iaqi {
     private Pm10 pm10;
     @SerializedName("pm25")
     @Expose
-    private Pm25 pm25;
+    private Pm2_5 pm25;
     @SerializedName("so2")
     @Expose
     private So2 so2;
     @SerializedName("t")
     @Expose
     private Temperature temperature;
+    @SerializedName("h")
+    @Expose
+    private Humidity humidity;
     @SerializedName("w")
     @Expose
     private Wind wind;
@@ -75,11 +79,11 @@ public class Iaqi {
         this.pm10 = pm10;
     }
 
-    public Pm25 getPm25() {
+    public Pm2_5 getPm2_5() {
         return pm25;
     }
 
-    public void setPm25(Pm25 pm25) {
+    public void setPm2_5(Pm2_5 pm25) {
         this.pm25 = pm25;
     }
 
@@ -113,6 +117,14 @@ public class Iaqi {
 
     public void setWind(Wind wind) {
         this.wind = wind;
+    }
+
+    public Humidity getHumidity() {
+        return humidity;
+    }
+
+    public void setHumidity(Humidity humidity) {
+        this.humidity = humidity;
     }
 
 }

@@ -4,7 +4,7 @@ package com.example.android.airqualitymonitor.AirProperties;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Pm10 {
+public class Pm2_5 {
 
     @SerializedName("v")
     @Expose

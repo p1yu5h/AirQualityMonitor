@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">AirQualityMonitor</string>
     <string name="aqi_title">AQI</string>
-    <string name="celsius_symbol">%1$.1f &#176;C</string>
+    <string name="temperature_unit_celsius">%1$.1f &#176;C</string>
+    <string name="humidity_unit">%1$.0f%%</string>
+    <string name="pressure_unit">%1$.1f mb</string>
+    <string name="wind_unit">%1$.1f m/s</string>
 </resources>

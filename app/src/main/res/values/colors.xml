@@ -13,4 +13,12 @@
     <color name="blue">#284CDC</color>
     <color name="aqua">#009ba3</color>
     <color name="lemonYellow">#fff44f</color>
+    
+    <!--AQI Scale Colors-->
+    <color name="scaleGood">#009966</color>
+    <color name="scaleModerate">#FFDE33</color>
+    <color name="scaleUnhealthySensitive">#FF8821</color>
+    <color name="scaleUnhealthy">#CC0033</color>
+    <color name="scaleVeryUnhealthy">#660099</color>
+    <color name="scaleHazardous">#7E0023</color>
 </resources>

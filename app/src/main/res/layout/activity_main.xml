@@ -88,7 +88,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:elevation="2dp"
-                        android:text="37 C"
+                        android:text="---"
                         android:textColor="@color/white"
                         android:textSize="18sp" />
                 </LinearLayout>
@@ -131,91 +131,103 @@
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <RelativeLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="16dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
-            android:id="@+id/pressure_layout"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="8dp"
-            android:weightSum="3">
+            android:layout_height="match_parent">
+
+            <include android:id="@+id/aqi_color_scale"
+                layout="@layout/aqi_color_scale"/>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:id="@+id/pressure_layout"
+                android:layout_width="match_parent"
+                android:layout_below="@+id/aqi_color_scale"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:padding="8dp"
+                android:weightSum="3">
 
-                <TextView
-                    style="@style/TextAppearanceHeading"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Pressure" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <TextView android:id="@+id/pressure_textview"
-                    style="@style/TextAppearance"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="2.3" />
+                    <TextView
+                        style="@style/TextAppearanceHeading"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Pressure" />
+
+                    <TextView
+                        android:id="@+id/pressure_textview"
+                        style="@style/TextAppearance"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="---" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextAppearanceHeading"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Humidity" />
+
+                    <TextView
+                        android:id="@+id/humidity_textview"
+                        style="@style/TextAppearance"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="---" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextAppearanceHeading"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Wind" />
+
+                    <TextView
+                        android:id="@+id/wind_textview"
+                        style="@style/TextAppearance"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="---" />
+                </LinearLayout>
+
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/TextAppearanceHeading"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Humidity" />
-
-                <TextView android:id="@+id/humidity_textview"
-                    style="@style/TextAppearance"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="226" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/TextAppearanceHeading"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Wind" />
-
-                <TextView android:id="@+id/wind_textview"
-                    style="@style/TextAppearance"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="226" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/pollutants_recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/pressure_layout"
-            android:layout_margin="16dp" />
-    </RelativeLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/pollutants_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/pressure_layout"
+                android:layout_margin="16dp" />
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

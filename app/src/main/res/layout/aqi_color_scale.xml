@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:weightSum="6">
+
+    <TextView android:id="@+id/scaleGood"
+        style="@style/TextAQIScale"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/scaleGood"
+        android:text="Good" />
+
+    <TextView android:id="@+id/scaleModerate"
+        style="@style/TextAQIScale"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/scaleModerate"
+        android:text="Moderate" />
+
+    <TextView android:id="@+id/scaleUnhealthySensitive"
+        style="@style/TextAQIScale"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/scaleUnhealthySensitive"
+        android:text="Unhealthy for Sensitive Group" />
+
+    <TextView android:id="@+id/scaleUnhealthy"
+        style="@style/TextAQIScale"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/scaleUnhealthy"
+        android:text="Unhealthy" />
+
+    <TextView android:id="@+id/scaleVeryUnhealthy"
+        style="@style/TextAQIScale"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/scaleVeryUnhealthy"
+        android:text="Very Unhealthy" />
+
+    <TextView android:id="@+id/scaleHazardous"
+        style="@style/TextAQIScale"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/scaleHazardous"
+        android:text="Hazardous" />
+
+</LinearLayout>

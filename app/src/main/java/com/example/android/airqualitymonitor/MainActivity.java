@@ -1,10 +1,8 @@
 package com.example.android.airqualitymonitor;
 
-import android.graphics.Canvas;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -44,11 +42,12 @@ public class MainActivity extends AppCompatActivity {
             if (apiResponse != null) {
                 data = apiResponse.getData();
                 aqiTextView.setText(String.valueOf(data.getAqi()));
+                setAqiScaleGroup();
                 Iaqi iaqi = data.getIaqi();
-                if (iaqi.getTemperature() != null) temperatureTextView.setText(getString(R.string.celsius_symbol, data.getIaqi().getTemperature().getV()));
-                if (iaqi.getPressure() != null) pressureTextView.setText(String.valueOf(iaqi.getPressure().getV()));
-                if (iaqi.getHumidity() != null) humidityTextView.setText(String.valueOf(iaqi.getHumidity().getV()));
-                if (iaqi.getWind() != null) windTextView.setText(String.valueOf(iaqi.getWind().getV()));
+                if (iaqi.getTemperature() != null) temperatureTextView.setText(getString(R.string.temperature_unit_celsius, data.getIaqi().getTemperature().getV()));
+                if (iaqi.getPressure() != null) pressureTextView.setText(getString(R.string.pressure_unit, iaqi.getPressure().getV()));
+                if (iaqi.getHumidity() != null) humidityTextView.setText(getString(R.string.humidity_unit, iaqi.getHumidity().getV()));
+                if (iaqi.getWind() != null) windTextView.setText(getString(R.string.wind_unit, iaqi.getWind().getV()));
                 locationTextView.setText(data.getCity().getName());
                 setupRecyclerView();
                 addPollutantsToList(data.getIaqi());
@@ -83,6 +82,19 @@ public class MainActivity extends AppCompatActivity {
         pollutantsList.add(new Pollutant("Sulfur Dioxide", iaqi.getSo2().getV()));
         pollutantsAdapter = new PollutantsAdapter(pollutantsList);
         pollutantsRecyclerview.setAdapter(pollutantsAdapter);
+    }
+
+    private void setAqiScaleGroup() {
+        int aqi = data.getAqi();
+        TextView aqiScaleText;
+        if (aqi >= 0 && aqi <= 50) aqiScaleText = findViewById(R.id.scaleGood);
+        else if (aqi >= 51 && aqi <= 100) aqiScaleText = findViewById(R.id.scaleModerate);
+        else if (aqi >= 101 && aqi <= 150) aqiScaleText = findViewById(R.id.scaleUnhealthySensitive);
+        else if (aqi >= 151 && aqi <= 200) aqiScaleText = findViewById(R.id.scaleUnhealthy);
+        else if (aqi >= 201 && aqi <= 300) aqiScaleText = findViewById(R.id.scaleVeryUnhealthy);
+        else if (aqi >= 301) aqiScaleText = findViewById(R.id.scaleVeryUnhealthy);
+        else aqiScaleText = findViewById(R.id.scaleGood);
+        aqiScaleText.setForeground(getDrawable(R.drawable.selected_aqi_foreground));
     }
 
     private void showDialog(String s) {

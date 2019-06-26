@@ -57,6 +57,40 @@ public class AqiViewModel extends ViewModel {
         });
     }
 
+    public LiveData<ApiResponse> getGPSApiResponse(String geo) {
+        if (mApiResponse == null) {
+            mApiResponse = new MutableLiveData<>();
+            loadGPSBasedApiResponse(geo);
+        }
+        return mApiResponse;
+    }
+
+    private void loadGPSBasedApiResponse(String geo) {
+        mApiInterface = mRetrofitHelper.getApiInterface();
+        mStatus.setValue("Fetching data...");
+        Call<ApiResponse> mApiResponseCall = mApiInterface.getLocationAQI(geo, "demo");
+        mApiResponseCall.enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
+                if (!response.isSuccessful()) {
+                    return;
+                }
+
+                if (response.body() == null) {
+                    return;
+                }
+
+                mApiResponse.setValue(response.body());
+                mStatus.setValue("Done");
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
+                Log.d("Error", "erorr");
+            }
+        });
+    }
+
     public LiveData<String> getStatus() {
         return mStatus;
     }

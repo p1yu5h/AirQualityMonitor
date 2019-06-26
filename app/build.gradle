@@ -9,7 +9,7 @@ android {
         versionCode 1
         versionName "0.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        //buildConfigField 'String', "ApiKey", AirQualityMonitor_ApiToken
+//        buildConfigField 'String', "ApiKey", AirQualityMonitor_ApiToken
     }
     buildTypes {
         debug {
@@ -44,4 +44,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
     testImplementation "androidx.arch.core:core-testing:$lifecycle_version"
+
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
 }

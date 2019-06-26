@@ -1,5 +1,7 @@
 package com.example.android.airqualitymonitor;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -11,6 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.airqualitymonitor.Adapters.PollutantsAdapter;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,13 +30,58 @@ public class MainActivity extends AppCompatActivity {
     private PollutantsAdapter pollutantsAdapter;
     private List<Pollutant> pollutantsList = new ArrayList<>();
 
+    FusedLocationProviderClient fusedLocationClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
         aqiViewModel = ViewModelProviders.of(this).get(AqiViewModel.class);
-        aqiViewModel.getStatus().observe(this, s -> {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    Activity#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for Activity#requestPermissions for more details.
+            return;
+        }
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, location -> {
+                    if (location != null) {
+                        String geo = "geo:" + location.getLatitude() + ";" + location.getLongitude();
+                        aqiViewModel.getStatus().observe(MainActivity.this, s -> {
+                            if (s != null) {
+                                if (s.equals("Fetching data...")) {
+                                    showDialog(s);
+                                } else dismissDialog();
+                            }
+                        });
+                        aqiViewModel.getGPSApiResponse(geo).observe(MainActivity.this, apiResponse -> {
+                            if (apiResponse != null) {
+                                data = apiResponse.getData();
+                                aqiTextView.setText(String.valueOf(data.getAqi()));
+                                setAqiScaleGroup();
+                                Iaqi iaqi = data.getIaqi();
+                                if (iaqi.getTemperature() != null)
+                                    temperatureTextView.setText(getString(R.string.temperature_unit_celsius, data.getIaqi().getTemperature().getV()));
+                                if (iaqi.getPressure() != null)
+                                    pressureTextView.setText(getString(R.string.pressure_unit, iaqi.getPressure().getV()));
+                                if (iaqi.getHumidity() != null)
+                                    humidityTextView.setText(getString(R.string.humidity_unit, iaqi.getHumidity().getV()));
+                                if (iaqi.getWind() != null)
+                                    windTextView.setText(getString(R.string.wind_unit, iaqi.getWind().getV()));
+                                locationTextView.setText(data.getCity().getName());
+                                setupRecyclerView();
+                                addPollutantsToList(data.getIaqi());
+                            }
+                        });
+                    }
+                });
+        /*aqiViewModel.getStatus().observe(this, s -> {
             if (s != null) {
                 if (s.equals("Fetching data...")) {
                     showDialog(s);
@@ -53,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                 setupRecyclerView();
                 addPollutantsToList(data.getIaqi());
             }
-        });
+        });*/
     }
 
     private void init() {

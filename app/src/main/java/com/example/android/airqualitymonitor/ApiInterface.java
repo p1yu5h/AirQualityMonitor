@@ -9,4 +9,7 @@ public interface ApiInterface {
 
     @GET("feed/here/")
     Call<ApiResponse> getAQI(@Query("token") String token);
+
+    @GET("feed/{geo}/")
+    Call<ApiResponse> getLocationAQI(@Path("geo") String geo, @Query("token") String token);
 }

@@ -1,5 +1,6 @@
 package com.example.android.airqualitymonitor;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -94,7 +95,9 @@ public class MainActivity extends AppCompatActivity {
         else if (aqi >= 201 && aqi <= 300) aqiScaleText = findViewById(R.id.scaleVeryUnhealthy);
         else if (aqi >= 301) aqiScaleText = findViewById(R.id.scaleVeryUnhealthy);
         else aqiScaleText = findViewById(R.id.scaleGood);
-        aqiScaleText.setForeground(getDrawable(R.drawable.selected_aqi_foreground));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            aqiScaleText.setForeground(getDrawable(R.drawable.selected_aqi_foreground));
+        }
     }
 
     private void showDialog(String s) {

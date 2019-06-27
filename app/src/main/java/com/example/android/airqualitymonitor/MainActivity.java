@@ -1,15 +1,17 @@
 package com.example.android.airqualitymonitor;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -27,8 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     //Views
@@ -47,6 +47,13 @@ public class MainActivity extends AppCompatActivity {
     FusedLocationProviderClient fusedLocationClient;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     Location lastLocation = null;
+    LocationManager locationManager;
+
+    Context context;
+    private static final String LAST_LATITUDE = "last_location";
+    private static final String LAST_LONGITUDE = "last_longitude";
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,41 +62,10 @@ public class MainActivity extends AppCompatActivity {
         init();
         aqiViewModel = ViewModelProviders.of(this).get(AqiViewModel.class);
         retrofitHelper = RetrofitHelper.getInstance();
+        locationManager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                checkLocationPermission();
-            } else {
-                fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
-                    lastLocation = location;
-                    loadAQIData(lastLocation.getLatitude(), lastLocation.getLongitude());
-                });
-
-            }
-        }
-
-        /*aqiViewModel.getStatus().observe(this, s -> {
-            if (s != null) {
-                if (s.equals("Fetching data...")) {
-                    showDialog(s);
-                } else dismissDialog();
-            }
-        });
-        aqiViewModel.getApiResponse().observe(this, apiResponse -> {
-            if (apiResponse != null) {
-                data = apiResponse.getData();
-                aqiTextView.setText(String.valueOf(data.getAqi()));
-                setAqiScaleGroup();
-                Iaqi iaqi = data.getIaqi();
-                if (iaqi.getTemperature() != null) temperatureTextView.setText(getString(R.string.temperature_unit_celsius, data.getIaqi().getTemperature().getV()));
-                if (iaqi.getPressure() != null) pressureTextView.setText(getString(R.string.pressure_unit, iaqi.getPressure().getV()));
-                if (iaqi.getHumidity() != null) humidityTextView.setText(getString(R.string.humidity_unit, iaqi.getHumidity().getV()));
-                if (iaqi.getWind() != null) windTextView.setText(getString(R.string.wind_unit, iaqi.getWind().getV()));
-                locationTextView.setText(data.getCity().getName());
-                setupRecyclerView();
-                addPollutantsToList(data.getIaqi());
-            }
-        });*/
+        sharedPreferences = getApplicationContext().getSharedPreferences("location_preference", MODE_PRIVATE);
+        context = this;
     }
 
     private void init() {
@@ -99,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         pressureTextView = findViewById(R.id.pressure_textview);
         humidityTextView = findViewById(R.id.humidity_textview);
         windTextView = findViewById(R.id.wind_textview);
+        setupRecyclerView();
     }
 
     private void setupRecyclerView() {
@@ -111,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addPollutantsToList(Iaqi iaqi) {
+        pollutantsList.clear();
         pollutantsList.add(new Pollutant("Carbon Monoxide", iaqi.getCo().getV()));
         pollutantsList.add(new Pollutant("Nitrous Dioxide", iaqi.getNo2().getV()));
         pollutantsList.add(new Pollutant("Ozone", iaqi.getO3().getV()));
@@ -196,8 +174,7 @@ public class MainActivity extends AppCompatActivity {
                             == PackageManager.PERMISSION_GRANTED) {
 
                         //Request location updates:
-                        fusedLocationClient.getLastLocation().addOnSuccessListener(location -> lastLocation = location);
-                        loadAQIData(lastLocation.getLatitude(), lastLocation.getLongitude());
+                        onResume();
                     }
 
                 } else {
@@ -211,58 +188,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @SuppressLint("MissingPermission")
-    private void getAqiData() {
-        fusedLocationClient.getLastLocation()
-                .addOnSuccessListener(this, location -> {
-                    if (location != null) {
-                        String geo = "geo:" + location.getLatitude() + ";" + location.getLongitude();
-                        aqiViewModel.getStatus().observe(MainActivity.this, s -> {
-                            if (s != null) {
-                                if (s.equals("Fetching data...")) {
-                                    showDialog(s);
-                                } else dismissDialog();
-                            }
-                        });
-                        aqiViewModel.getGPSApiResponse(geo).observe(MainActivity.this, apiResponse -> {
-                            if (apiResponse != null) {
-                                Log.d("api", String.valueOf(apiResponse));
-                                data = apiResponse.getData();
-                                aqiTextView.setText(String.valueOf(data.getAqi()));
-                                setAqiScaleGroup();
-                                Iaqi iaqi = data.getIaqi();
-                                if (iaqi.getTemperature() != null)
-                                    temperatureTextView.setText(getString(R.string.temperature_unit_celsius, data.getIaqi().getTemperature().getV()));
-                                if (iaqi.getPressure() != null)
-                                    pressureTextView.setText(getString(R.string.pressure_unit, iaqi.getPressure().getV()));
-                                if (iaqi.getHumidity() != null)
-                                    humidityTextView.setText(getString(R.string.humidity_unit, iaqi.getHumidity().getV()));
-                                if (iaqi.getWind() != null)
-                                    windTextView.setText(getString(R.string.wind_unit, iaqi.getWind().getV()));
-                                locationTextView.setText(data.getCity().getName());
-                                setupRecyclerView();
-                                addPollutantsToList(data.getIaqi());
-                            }
-                        });
-                    }
-                });
-    }
-
-    private void loadAQIData(double latitude, double longitude) {
-        apiInterface = retrofitHelper.getApiInterface();
+    private void getAqiData(String latitude, String longitude) {
         String geo = "geo:" + latitude + ";" + longitude;
-        loadAQICall = apiInterface.getLocationAQI(geo, "demo");
-        loadAQICall.enqueue(new Callback<ApiResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
-                if (!response.isSuccessful()) {
-                    return;
-                }
-
-                if (response.body() == null) {
-                    return;
-                }
-                data = response.body().getData();
+        aqiViewModel.getStatus().observe(MainActivity.this, s -> {
+            if (s != null) {
+                if (s.equals("Fetching data...")) {
+                    showDialog(s);
+                } else dismissDialog();
+            }
+        });
+        aqiViewModel.getGPSApiResponse(geo).observe(MainActivity.this, apiResponse -> {
+            if (apiResponse != null) {
+                Log.d("api", String.valueOf(apiResponse));
+                data = apiResponse.getData();
                 aqiTextView.setText(String.valueOf(data.getAqi()));
                 setAqiScaleGroup();
                 Iaqi iaqi = data.getIaqi();
@@ -275,14 +213,8 @@ public class MainActivity extends AppCompatActivity {
                 if (iaqi.getWind() != null)
                     windTextView.setText(getString(R.string.wind_unit, iaqi.getWind().getV()));
                 locationTextView.setText(data.getCity().getName());
-                setupRecyclerView();
                 addPollutantsToList(data.getIaqi());
-                Log.d("response", String.valueOf(response.body()));
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ApiResponse> call, Throwable t) {
-                Log.d("Error", "erorr");
+                pollutantsAdapter.notifyDataSetChanged();
             }
         });
     }
@@ -290,6 +222,28 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (lastLocation != null) loadAQIData(lastLocation.getLatitude(), lastLocation.getLongitude());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                checkLocationPermission();
+            } else {
+                if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
+                        if (location != null) {
+                            editor = sharedPreferences.edit();
+                            editor.clear();
+                            editor.putString(LAST_LATITUDE, String.valueOf(location.getLatitude()));
+                            editor.putString(LAST_LONGITUDE, String.valueOf(location.getLongitude()));
+                            editor.apply();
+                            lastLocation = location;
+                            getAqiData(String.valueOf(lastLocation.getLatitude()), String.valueOf(lastLocation.getLongitude()));
+                        } else {
+                            getAqiData(sharedPreferences.getString(LAST_LATITUDE, ""), sharedPreferences.getString(LAST_LONGITUDE, ""));
+                        }
+                    });
+                } else {
+                    Toast.makeText(this, "Enable Location", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
     }
 }

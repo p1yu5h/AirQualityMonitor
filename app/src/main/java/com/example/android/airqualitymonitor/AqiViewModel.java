@@ -16,6 +16,7 @@ public class AqiViewModel extends ViewModel {
     private ApiInterface mApiInterface;
     private MutableLiveData<ApiResponse> mApiResponse;
     private MutableLiveData<String> mStatus = new MutableLiveData<>();
+    private String apiKey = "demo";
 
     public AqiViewModel() {
         super();
@@ -34,7 +35,7 @@ public class AqiViewModel extends ViewModel {
     private void loadApiResponse() {
         mApiInterface = mRetrofitHelper.getApiInterface();
         mStatus.setValue("Fetching data...");
-        Call<ApiResponse> mApiResponseCall = mApiInterface.getAQI("demo");
+        Call<ApiResponse> mApiResponseCall = mApiInterface.getAQI(apiKey);
         mApiResponseCall.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
@@ -68,7 +69,7 @@ public class AqiViewModel extends ViewModel {
     private void loadGPSBasedApiResponse(String geo) {
         mApiInterface = mRetrofitHelper.getApiInterface();
         mStatus.setValue("Fetching data...");
-        Call<ApiResponse> mApiResponseCall = mApiInterface.getLocationAQI(geo, "demo");
+        Call<ApiResponse> mApiResponseCall = mApiInterface.getLocationAQI(geo, apiKey);
         mApiResponseCall.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {

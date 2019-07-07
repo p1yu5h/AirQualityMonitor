@@ -2,15 +2,15 @@ package com.example.android.airqualitymonitor;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,12 +23,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.airqualitymonitor.Adapters.PollutantsAdapter;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
 
 public class MainActivity extends AppCompatActivity {
     //Views
@@ -40,20 +41,15 @@ public class MainActivity extends AppCompatActivity {
     private Data data = new Data();
     private PollutantsAdapter pollutantsAdapter;
     private List<Pollutant> pollutantsList = new ArrayList<>();
-    private Call<ApiResponse> loadAQICall;
-    private RetrofitHelper retrofitHelper;
-    private ApiInterface apiInterface;
 
+    //Location
     FusedLocationProviderClient fusedLocationClient;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    Location lastLocation = null;
     LocationManager locationManager;
+    private LocationRequest locationRequest;
+    private LocationCallback locationCallback;
 
     Context context;
-    private static final String LAST_LATITUDE = "last_location";
-    private static final String LAST_LONGITUDE = "last_longitude";
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,11 +57,26 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         init();
         aqiViewModel = ViewModelProviders.of(this).get(AqiViewModel.class);
-        retrofitHelper = RetrofitHelper.getInstance();
-        locationManager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        sharedPreferences = getApplicationContext().getSharedPreferences("location_preference", MODE_PRIVATE);
         context = this;
+        locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.
+                PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(20 * 1000);
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                if (locationResult == null) {
+                    return;
+                }
+                for (Location location : locationResult.getLocations()) {
+                    if (location != null) {
+                        getAqiData(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
+                    }
+                }
+            }
+        };
     }
 
     private void init() {
@@ -227,23 +238,24 @@ public class MainActivity extends AppCompatActivity {
                 checkLocationPermission();
             } else {
                 if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
-                        if (location != null) {
-                            editor = sharedPreferences.edit();
-                            editor.clear();
-                            editor.putString(LAST_LATITUDE, String.valueOf(location.getLatitude()));
-                            editor.putString(LAST_LONGITUDE, String.valueOf(location.getLongitude()));
-                            editor.apply();
-                            lastLocation = location;
-                            getAqiData(String.valueOf(lastLocation.getLatitude()), String.valueOf(lastLocation.getLongitude()));
-                        } else {
-                            getAqiData(sharedPreferences.getString(LAST_LATITUDE, ""), sharedPreferences.getString(LAST_LONGITUDE, ""));
-                        }
-                    });
+                    fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
                 } else {
-                    Toast.makeText(this, "Enable Location", Toast.LENGTH_SHORT).show();
+                    showEnableLocationDialog();
                 }
             }
         }
+    }
+
+    private void showEnableLocationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(R.string.alert_title_gps_off)
+                .setMessage(R.string.alert_content_gps_off)
+                .setPositiveButton("Ok", (dialog, which) -> {
+                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivity(intent);
+                })
+                .setNegativeButton("CANCEL", ((dialog, which) -> {
+                }));
+        builder.create().show();
     }
 }

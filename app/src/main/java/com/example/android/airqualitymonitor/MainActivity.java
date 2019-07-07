@@ -12,6 +12,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -21,7 +22,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.android.airqualitymonitor.Adapters.PollutantsAdapter;
+import com.example.android.airqualitymonitor.adapters.PollutantsAdapter;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -34,7 +35,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     //Views
     private TextView aqiTextView, temperatureTextView, locationTextView, pressureTextView, humidityTextView, windTextView;
-    private RecyclerView pollutantsRecyclerview;
+    private RecyclerView pollutantsRecyclerView;
 
     //Data
     private AqiViewModel aqiViewModel;
@@ -43,13 +44,13 @@ public class MainActivity extends AppCompatActivity {
     private List<Pollutant> pollutantsList = new ArrayList<>();
 
     //Location
-    FusedLocationProviderClient fusedLocationClient;
-    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    LocationManager locationManager;
+    private FusedLocationProviderClient fusedLocationClient;
+    private static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    private LocationManager locationManager;
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
 
-    Context context;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,22 +81,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
-        aqiTextView = findViewById(R.id.aqi_textview);
-        temperatureTextView = findViewById(R.id.temperature_textview);
-        locationTextView = findViewById(R.id.location_textview);
-        pressureTextView = findViewById(R.id.pressure_textview);
-        humidityTextView = findViewById(R.id.humidity_textview);
-        windTextView = findViewById(R.id.wind_textview);
+        aqiTextView = findViewById(R.id.aqi_text_view);
+        temperatureTextView = findViewById(R.id.temperature_text_view);
+        locationTextView = findViewById(R.id.location_text_view);
+        pressureTextView = findViewById(R.id.pressure_text_view);
+        humidityTextView = findViewById(R.id.humidity_text_view);
+        windTextView = findViewById(R.id.wind_text_view);
         setupRecyclerView();
     }
 
     private void setupRecyclerView() {
-        pollutantsRecyclerview = findViewById(R.id.pollutants_recyclerview);
-        pollutantsRecyclerview.setLayoutManager(new LinearLayoutManager(this));
-        pollutantsRecyclerview.setHasFixedSize(true);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(pollutantsRecyclerview.getContext(),
+        pollutantsRecyclerView = findViewById(R.id.pollutants_recycler_view);
+        pollutantsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        pollutantsRecyclerView.setHasFixedSize(true);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(pollutantsRecyclerView.getContext(),
                 DividerItemDecoration.VERTICAL);
-        pollutantsRecyclerview.addItemDecoration(dividerItemDecoration);
+        pollutantsRecyclerView.addItemDecoration(dividerItemDecoration);
     }
 
     private void addPollutantsToList(Iaqi iaqi) {
@@ -107,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         pollutantsList.add(new Pollutant("PM 10", iaqi.getPm10().getV()));
         pollutantsList.add(new Pollutant("Sulfur Dioxide", iaqi.getSo2().getV()));
         pollutantsAdapter = new PollutantsAdapter(pollutantsList);
-        pollutantsRecyclerview.setAdapter(pollutantsAdapter);
+        pollutantsRecyclerView.setAdapter(pollutantsAdapter);
     }
 
     private void setAqiScaleGroup() {
@@ -134,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
         RetrofitHelper.getInstance().dismissProgressDialog();
     }
 
-    public boolean checkLocationPermission() {
+    private void checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -163,23 +164,17 @@ public class MainActivity extends AppCompatActivity {
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         MY_PERMISSIONS_REQUEST_LOCATION);
             }
-            return false;
-        } else {
-            return true;
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_LOCATION: {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    // permission was granted, yay! Do the
-                    // location-related task you need to do.
                     if (ContextCompat.checkSelfPermission(this,
                             Manifest.permission.ACCESS_FINE_LOCATION)
                             == PackageManager.PERMISSION_GRANTED) {
@@ -190,11 +185,7 @@ public class MainActivity extends AppCompatActivity {
 
                 } else {
                     finish();
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-
                 }
-                return;
             }
         }
     }

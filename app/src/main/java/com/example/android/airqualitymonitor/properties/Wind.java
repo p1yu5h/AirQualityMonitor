@@ -1,9 +1,10 @@
-package com.example.android.airqualitymonitor.AirProperties;
+
+package com.example.android.airqualitymonitor.properties;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Humidity {
+public class Wind {
 
     @SerializedName("v")
     @Expose
@@ -16,4 +17,5 @@ public class Humidity {
     public void setV(Double v) {
         this.v = v;
     }
+
 }

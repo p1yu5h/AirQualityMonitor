@@ -1,16 +1,16 @@
 
 package com.example.android.airqualitymonitor;
 
-import com.example.android.airqualitymonitor.AirProperties.Co;
-import com.example.android.airqualitymonitor.AirProperties.Humidity;
-import com.example.android.airqualitymonitor.AirProperties.No2;
-import com.example.android.airqualitymonitor.AirProperties.O3;
-import com.example.android.airqualitymonitor.AirProperties.Pm10;
-import com.example.android.airqualitymonitor.AirProperties.Pm2_5;
-import com.example.android.airqualitymonitor.AirProperties.Pressure;
-import com.example.android.airqualitymonitor.AirProperties.So2;
-import com.example.android.airqualitymonitor.AirProperties.Temperature;
-import com.example.android.airqualitymonitor.AirProperties.Wind;
+import com.example.android.airqualitymonitor.properties.Co;
+import com.example.android.airqualitymonitor.properties.Humidity;
+import com.example.android.airqualitymonitor.properties.No2;
+import com.example.android.airqualitymonitor.properties.O3;
+import com.example.android.airqualitymonitor.properties.Pm10;
+import com.example.android.airqualitymonitor.properties.Pm2_5;
+import com.example.android.airqualitymonitor.properties.Pressure;
+import com.example.android.airqualitymonitor.properties.So2;
+import com.example.android.airqualitymonitor.properties.Temperature;
+import com.example.android.airqualitymonitor.properties.Wind;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

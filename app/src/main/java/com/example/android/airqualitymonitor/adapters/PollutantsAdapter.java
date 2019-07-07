@@ -1,4 +1,4 @@
-package com.example.android.airqualitymonitor.Adapters;
+package com.example.android.airqualitymonitor.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,10 +44,10 @@ public class PollutantsAdapter extends RecyclerView.Adapter<PollutantsAdapter.Po
     class PollutantViewHolder extends RecyclerView.ViewHolder {
         private TextView pollutantNameTextView, pollutantValueTextView;
 
-        public PollutantViewHolder(@NonNull View itemView) {
+        PollutantViewHolder(@NonNull View itemView) {
             super(itemView);
-            pollutantNameTextView = itemView.findViewById(R.id.pollutant_name_textview);
-            pollutantValueTextView = itemView.findViewById(R.id.pollutant_value_textview);
+            pollutantNameTextView = itemView.findViewById(R.id.pollutant_name_text_view);
+            pollutantValueTextView = itemView.findViewById(R.id.pollutant_value_text_view);
         }
     }
 }

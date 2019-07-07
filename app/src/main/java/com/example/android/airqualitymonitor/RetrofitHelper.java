@@ -12,9 +12,9 @@ public class RetrofitHelper {
     private final ApiInterface mApiInterface;
     private ProgressDialog mProgressDialog;
 
-    public static final String BASE_URL = "https://api.waqi.info/";
+    private static final String BASE_URL = "https://api.waqi.info/";
 
-    public RetrofitHelper() {
+    private RetrofitHelper() {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)

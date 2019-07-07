@@ -8,4 +8,17 @@
 
     <string name="alert_title_gps_off">GPS is Turned Off</string>
     <string name="alert_content_gps_off">Would you Like to turn on GPS?</string>
+
+    <string name="place_holder">---</string>
+    <string name="pressure">Pressure</string>
+    <string name="humidity">Humidity</string>
+    <string name="wind">Wind</string>
+
+    <!--AQI Scale-->
+    <string name="good">Good</string>
+    <string name="moderate">Moderate</string>
+    <string name="unhealthy_for_sensitive">Unhealthy for Sensitive Group</string>
+    <string name="unhealthy">Unhealthy</string>
+    <string name="very_unhealthy">Very Unhealthy</string>
+    <string name="hazardous">Hazardous</string>
 </resources>

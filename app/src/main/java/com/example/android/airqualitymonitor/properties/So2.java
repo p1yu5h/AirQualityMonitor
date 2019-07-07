@@ -1,9 +1,10 @@
-package com.example.android.airqualitymonitor.AirProperties;
+
+package com.example.android.airqualitymonitor.properties;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Pressure {
+public class So2 {
 
     @SerializedName("v")
     @Expose

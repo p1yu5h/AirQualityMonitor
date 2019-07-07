@@ -16,7 +16,7 @@ public class AqiViewModel extends ViewModel {
     private ApiInterface mApiInterface;
     private MutableLiveData<ApiResponse> mApiResponse;
     private MutableLiveData<String> mStatus = new MutableLiveData<>();
-    private String apiKey = "demo";
+    private final String apiKey = "demo";
 
     public AqiViewModel() {
         super();
@@ -52,8 +52,8 @@ public class AqiViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(Call<ApiResponse> call, Throwable t) {
-                Log.d("Error", "erorr");
+            public void onFailure(@NonNull Call<ApiResponse> call, @NonNull Throwable t) {
+                Log.d("Error", "error");
             }
         });
     }
@@ -86,8 +86,8 @@ public class AqiViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(Call<ApiResponse> call, Throwable t) {
-                Log.d("Error", "erorr");
+            public void onFailure(@NonNull Call<ApiResponse> call, @NonNull Throwable t) {
+                Log.d("Error", "error");
             }
         });
     }

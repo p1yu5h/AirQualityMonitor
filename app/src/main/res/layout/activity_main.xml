@@ -32,12 +32,12 @@
                     android:text="@string/aqi_title"
                     android:textColor="@color/white"
                     android:textSize="22sp"
-                    app:layout_constraintBottom_toTopOf="@+id/aqi_textview"
+                    app:layout_constraintBottom_toTopOf="@+id/aqi_text_view"
                     app:layout_constraintEnd_toEndOf="@+id/aqi_background"
                     app:layout_constraintStart_toStartOf="@+id/aqi_background" />
 
                 <TextView
-                    android:id="@+id/aqi_textview"
+                    android:id="@+id/aqi_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/aqi_title"
@@ -62,7 +62,7 @@
                     android:elevation="2dp"
                     app:layout_constraintEnd_toEndOf="@+id/aqi_background"
                     app:layout_constraintStart_toStartOf="@+id/aqi_background"
-                    app:layout_constraintTop_toBottomOf="@+id/aqi_textview" />
+                    app:layout_constraintTop_toBottomOf="@+id/aqi_text_view" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -81,14 +81,15 @@
                         android:elevation="2dp"
                         android:padding="2dp"
                         android:src="@drawable/icon_thermometer"
-                        android:tint="@color/white" />
+                        android:tint="@color/white"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
-                        android:id="@+id/temperature_textview"
+                        android:id="@+id/temperature_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:elevation="2dp"
-                        android:text="---"
+                        android:text="@string/place_holder"
                         android:textColor="@color/white"
                         android:textSize="18sp" />
                 </LinearLayout>
@@ -101,7 +102,8 @@
                     android:src="@drawable/circle"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -117,10 +119,11 @@
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:src="@drawable/icon_location"
-                        android:tint="@color/lemonYellow" />
+                        android:tint="@color/lemonYellow"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
-                        android:id="@+id/location_textview"
+                        android:id="@+id/location_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
@@ -151,7 +154,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="8dp"
-                android:weightSum="3">
+                android:weightSum="3"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -165,14 +169,14 @@
                         style="@style/TextAppearanceHeading"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="Pressure" />
+                        android:text="@string/pressure" />
 
                     <TextView
-                        android:id="@+id/pressure_textview"
+                        android:id="@+id/pressure_text_view"
                         style="@style/TextAppearance"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="---" />
+                        android:text="@string/place_holder" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -187,14 +191,14 @@
                         style="@style/TextAppearanceHeading"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="Humidity" />
+                        android:text="@string/humidity" />
 
                     <TextView
-                        android:id="@+id/humidity_textview"
+                        android:id="@+id/humidity_text_view"
                         style="@style/TextAppearance"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="---" />
+                        android:text="@string/place_holder" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -209,20 +213,20 @@
                         style="@style/TextAppearanceHeading"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="Wind" />
+                        android:text="@string/wind" />
 
                     <TextView
-                        android:id="@+id/wind_textview"
+                        android:id="@+id/wind_text_view"
                         style="@style/TextAppearance"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="---" />
+                        android:text="@string/place_holder" />
                 </LinearLayout>
 
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/pollutants_recyclerview"
+                android:id="@+id/pollutants_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/pressure_layout"

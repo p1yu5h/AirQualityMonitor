@@ -141,6 +141,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="16dp"
+        android:overScrollMode="never"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <RelativeLayout
@@ -247,6 +248,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/pollutants_title_text_view"
+                android:overScrollMode="never"
                 android:layout_margin="16dp" />
 
             <TextView android:id="@+id/attribution_title"

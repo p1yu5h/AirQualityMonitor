@@ -15,7 +15,7 @@ public class AqiViewModel extends ViewModel {
     private RetrofitHelper mRetrofitHelper;
     private ApiInterface mApiInterface;
     private MutableLiveData<ApiResponse> mApiResponse;
-    private MutableLiveData<String> mStatus = new MutableLiveData<>();
+    private MutableLiveData<Status> mStatus = new MutableLiveData<>();
     private final String apiKey = "demo";
 
     public AqiViewModel() {
@@ -34,7 +34,7 @@ public class AqiViewModel extends ViewModel {
 
     private void loadApiResponse() {
         mApiInterface = mRetrofitHelper.getApiInterface();
-        mStatus.setValue("Fetching data...");
+        mStatus.setValue(Status.FETCHING);
         Call<ApiResponse> mApiResponseCall = mApiInterface.getAQI(apiKey);
         mApiResponseCall.enqueue(new Callback<ApiResponse>() {
             @Override
@@ -48,7 +48,7 @@ public class AqiViewModel extends ViewModel {
                 }
                 
                 mApiResponse.setValue(response.body());
-                mStatus.setValue("Done");
+                mStatus.setValue(Status.DONE);
             }
 
             @Override
@@ -68,7 +68,7 @@ public class AqiViewModel extends ViewModel {
 
     private void loadGPSBasedApiResponse(String geo) {
         mApiInterface = mRetrofitHelper.getApiInterface();
-        mStatus.setValue("Fetching data...");
+        mStatus.setValue(Status.FETCHING);
         Call<ApiResponse> mApiResponseCall = mApiInterface.getLocationAQI(geo, apiKey);
         mApiResponseCall.enqueue(new Callback<ApiResponse>() {
             @Override
@@ -82,7 +82,7 @@ public class AqiViewModel extends ViewModel {
                 }
 
                 mApiResponse.setValue(response.body());
-                mStatus.setValue("Done");
+                mStatus.setValue(Status.DONE);
             }
 
             @Override
@@ -92,7 +92,7 @@ public class AqiViewModel extends ViewModel {
         });
     }
 
-    public LiveData<String> getStatus() {
+    public LiveData<Status> getStatus() {
         return mStatus;
     }
 }

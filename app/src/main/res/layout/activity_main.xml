@@ -109,6 +109,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
                     android:gravity="center"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -127,7 +129,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
-                        android:textSize="18sp"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="8dp"
                         tools:text="New Delhi" />
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -153,8 +156,10 @@
                 android:layout_below="@+id/aqi_color_scale"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="8dp"
                 android:weightSum="3"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="#55FFFFFF"
                 android:baselineAligned="false">
 
                 <LinearLayout
@@ -225,11 +230,23 @@
 
             </LinearLayout>
 
+            <TextView android:id="@+id/pollutants_title_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearanceHeading"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/pollutants_aqi"
+                android:textAlignment="textStart"
+                android:layout_below="@+id/pressure_layout"
+                />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/pollutants_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/pressure_layout"
+                android:layout_below="@+id/pollutants_title_text_view"
                 android:layout_margin="16dp" />
 
             <TextView android:id="@+id/attribution_title"

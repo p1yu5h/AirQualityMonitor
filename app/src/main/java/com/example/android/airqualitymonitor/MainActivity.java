@@ -196,10 +196,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void getAqiData(String latitude, String longitude) {
         String geo = "geo:" + latitude + ";" + longitude;
-        aqiViewModel.getStatus().observe(MainActivity.this, s -> {
-            if (s != null) {
-                if (s.equals("Fetching data...")) {
-                    showDialog(s);
+        aqiViewModel.getStatus().observe(MainActivity.this, status -> {
+            if (status != null) {
+                if (status == Status.FETCHING) {
+                    showDialog("Getting data from nearest station...");
                 } else dismissDialog();
             }
         });
@@ -219,15 +219,25 @@ public class MainActivity extends AppCompatActivity {
                 if (iaqi.getWind() != null)
                     windTextView.setText(getString(R.string.wind_unit, iaqi.getWind().getV()));
                 locationTextView.setText(data.getCity().getName());
-                StringBuilder attributionText = new StringBuilder();
-                for (Attribution attribution : data.getAttributions()) {
-                    attributionText.append(attribution.getName()).append("\n").append(attribution.getUrl()).append("\n");
-                }
-                attributionTextView.setText(attributionText);
+                setupAttributions(data);
                 addPollutantsToList(data.getIaqi());
                 pollutantsAdapter.notifyDataSetChanged();
             }
         });
+    }
+
+    private void setupAttributions(Data data) {
+        int index = 1;
+        StringBuilder attributionText = new StringBuilder();
+        for (Attribution attribution : data.getAttributions()) {
+            attributionText.append(index++)
+                    .append(". ")
+                    .append(attribution.getName())
+                    .append("\n")
+                    .append(attribution.getUrl())
+                    .append("\n\n");
+        }
+        attributionTextView.setText(attributionText);
     }
 
     @Override
@@ -255,6 +265,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 })
                 .setNegativeButton("CANCEL", ((dialog, which) -> {
+                    finish();
                 }));
         builder.create().show();
     }

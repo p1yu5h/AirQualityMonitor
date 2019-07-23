@@ -13,6 +13,7 @@
     <string name="pressure">Pressure</string>
     <string name="humidity">Humidity</string>
     <string name="wind">Wind</string>
+    <string name="attribution">Attributions</string>
 
     <!--AQI Scale-->
     <string name="good">Good</string>

@@ -34,7 +34,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     //Views
-    private TextView aqiTextView, temperatureTextView, locationTextView, pressureTextView, humidityTextView, windTextView;
+    private TextView aqiTextView, temperatureTextView, locationTextView, pressureTextView, humidityTextView, windTextView, attributionTextView;
     private RecyclerView pollutantsRecyclerView;
 
     //Data
@@ -50,8 +50,6 @@ public class MainActivity extends AppCompatActivity {
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
 
-    private Context context;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
         aqiViewModel = ViewModelProviders.of(this).get(AqiViewModel.class);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        context = this;
         locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.
                 PRIORITY_HIGH_ACCURACY);
@@ -87,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         pressureTextView = findViewById(R.id.pressure_text_view);
         humidityTextView = findViewById(R.id.humidity_text_view);
         windTextView = findViewById(R.id.wind_text_view);
+        attributionTextView = findViewById(R.id.attribution_text_view);
         setupRecyclerView();
     }
 
@@ -101,12 +99,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void addPollutantsToList(Iaqi iaqi) {
         pollutantsList.clear();
-        pollutantsList.add(new Pollutant("Carbon Monoxide", iaqi.getCo().getV()));
-        pollutantsList.add(new Pollutant("Nitrous Dioxide", iaqi.getNo2().getV()));
-        pollutantsList.add(new Pollutant("Ozone", iaqi.getO3().getV()));
-        pollutantsList.add(new Pollutant("PM 2.5", iaqi.getPm2_5().getV()));
-        pollutantsList.add(new Pollutant("PM 10", iaqi.getPm10().getV()));
-        pollutantsList.add(new Pollutant("Sulfur Dioxide", iaqi.getSo2().getV()));
+        if (iaqi.getCo() != null)
+            pollutantsList.add(new Pollutant("Carbon Monoxide - AQI", iaqi.getCo().getV()));
+        if (iaqi.getNo2() != null)
+            pollutantsList.add(new Pollutant("Nitrous Dioxide - AQI", iaqi.getNo2().getV()));
+        if (iaqi.getO3() != null)
+            pollutantsList.add(new Pollutant("Ozone - AQI", iaqi.getO3().getV()));
+        if (iaqi.getPm2_5() != null)
+            pollutantsList.add(new Pollutant("PM 2.5 - AQI", iaqi.getPm2_5().getV()));
+        if (iaqi.getPm10() != null)
+            pollutantsList.add(new Pollutant("PM 10 - AQI", iaqi.getPm10().getV()));
+        if (iaqi.getSo2() != null)
+            pollutantsList.add(new Pollutant("Sulfur Dioxide - AQI", iaqi.getSo2().getV()));
         pollutantsAdapter = new PollutantsAdapter(pollutantsList);
         pollutantsRecyclerView.setAdapter(pollutantsAdapter);
     }
@@ -215,6 +219,11 @@ public class MainActivity extends AppCompatActivity {
                 if (iaqi.getWind() != null)
                     windTextView.setText(getString(R.string.wind_unit, iaqi.getWind().getV()));
                 locationTextView.setText(data.getCity().getName());
+                StringBuilder attributionText = new StringBuilder();
+                for (Attribution attribution : data.getAttributions()) {
+                    attributionText.append(attribution.getName()).append("\n").append(attribution.getUrl()).append("\n");
+                }
+                attributionTextView.setText(attributionText);
                 addPollutantsToList(data.getIaqi());
                 pollutantsAdapter.notifyDataSetChanged();
             }
@@ -238,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showEnableLocationDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.alert_title_gps_off)
                 .setMessage(R.string.alert_content_gps_off)
                 .setPositiveButton("Ok", (dialog, which) -> {

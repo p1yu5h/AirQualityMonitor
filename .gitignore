@@ -16,3 +16,4 @@
 api_key.txt
 sample_api_response.txt
 app/google-services.json
+app/release/*

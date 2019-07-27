@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AirQualityMonitor</string>
+    <string name="app_name">Air Quality Monitor</string>
     <string name="aqi_title">AQI</string>
     <string name="temperature_unit_celsius">%1$.1f &#176;C</string>
     <string name="humidity_unit">%1$.0f%%</string>
@@ -8,6 +8,8 @@
 
     <string name="alert_title_gps_off">GPS is Turned Off</string>
     <string name="alert_content_gps_off">Would you Like to turn on GPS?</string>
+    <string name="alert_title_location_access">Allow Location Access</string>
+    <string name="alert_content_location_access">Please Allow Location Access to get Air Quality and Weather Information.</string>
 
     <string name="place_holder">---</string>
     <string name="pressure">Pressure</string>

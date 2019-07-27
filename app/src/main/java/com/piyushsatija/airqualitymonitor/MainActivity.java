@@ -152,8 +152,8 @@ public class MainActivity extends AppCompatActivity {
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
                 new AlertDialog.Builder(this)
-                        .setTitle("Allow Location Access")
-                        .setMessage("Allow Location Access")
+                        .setTitle(R.string.alert_title_location_access)
+                        .setMessage(R.string.alert_content_location_access)
                         .setPositiveButton("Ok", (dialogInterface, i) -> {
                             //Prompt the user once explanation has been shown
                             ActivityCompat.requestPermissions(MainActivity.this,
@@ -263,6 +263,7 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("Ok", (dialog, which) -> {
                     Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                     startActivity(intent);
+                    dialog.cancel();
                 })
                 .setNegativeButton("CANCEL", ((dialog, which) -> {
                     finish();

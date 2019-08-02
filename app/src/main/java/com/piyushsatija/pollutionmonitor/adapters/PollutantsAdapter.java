@@ -1,4 +1,4 @@
-package com.piyushsatija.airqualitymonitor.adapters;
+package com.piyushsatija.pollutionmonitor.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.piyushsatija.airqualitymonitor.Pollutant;
-import com.piyushsatija.airqualitymonitor.R;
+import com.piyushsatija.pollutionmonitor.Pollutant;
+import com.piyushsatija.pollutionmonitor.R;
 
 import java.util.List;
 

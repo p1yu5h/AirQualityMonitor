@@ -1,4 +1,4 @@
-package com.piyushsatija.airqualitymonitor;
+package com.piyushsatija.pollutionmonitor;
 
 public enum Status {
     FETCHING,

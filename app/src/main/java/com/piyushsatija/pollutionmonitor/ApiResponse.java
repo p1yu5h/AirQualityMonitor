@@ -1,5 +1,5 @@
 
-package com.piyushsatija.airqualitymonitor;
+package com.piyushsatija.pollutionmonitor;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

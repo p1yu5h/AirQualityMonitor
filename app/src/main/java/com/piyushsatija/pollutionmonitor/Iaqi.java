@@ -1,16 +1,16 @@
 
-package com.piyushsatija.airqualitymonitor;
+package com.piyushsatija.pollutionmonitor;
 
-import com.piyushsatija.airqualitymonitor.properties.Co;
-import com.piyushsatija.airqualitymonitor.properties.Humidity;
-import com.piyushsatija.airqualitymonitor.properties.No2;
-import com.piyushsatija.airqualitymonitor.properties.O3;
-import com.piyushsatija.airqualitymonitor.properties.Pm10;
-import com.piyushsatija.airqualitymonitor.properties.Pm2_5;
-import com.piyushsatija.airqualitymonitor.properties.Pressure;
-import com.piyushsatija.airqualitymonitor.properties.So2;
-import com.piyushsatija.airqualitymonitor.properties.Temperature;
-import com.piyushsatija.airqualitymonitor.properties.Wind;
+import com.piyushsatija.pollutionmonitor.properties.Co;
+import com.piyushsatija.pollutionmonitor.properties.Humidity;
+import com.piyushsatija.pollutionmonitor.properties.No2;
+import com.piyushsatija.pollutionmonitor.properties.O3;
+import com.piyushsatija.pollutionmonitor.properties.Pm10;
+import com.piyushsatija.pollutionmonitor.properties.Pm2_5;
+import com.piyushsatija.pollutionmonitor.properties.Pressure;
+import com.piyushsatija.pollutionmonitor.properties.So2;
+import com.piyushsatija.pollutionmonitor.properties.Temperature;
+import com.piyushsatija.pollutionmonitor.properties.Wind;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

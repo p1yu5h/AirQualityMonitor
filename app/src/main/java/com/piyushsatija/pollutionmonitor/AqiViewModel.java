@@ -1,4 +1,4 @@
-package com.piyushsatija.airqualitymonitor;
+package com.piyushsatija.pollutionmonitor;
 
 import android.util.Log;
 
@@ -16,7 +16,7 @@ public class AqiViewModel extends ViewModel {
     private ApiInterface mApiInterface;
     private MutableLiveData<ApiResponse> mApiResponse;
     private MutableLiveData<Status> mStatus = new MutableLiveData<>();
-    private final String apiKey = "demo";
+    private final String apiKey = BuildConfig.ApiKey;
 
     public AqiViewModel() {
         super();

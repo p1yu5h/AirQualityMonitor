@@ -7,7 +7,7 @@
     <string name="wind_unit">%1$.1f m/s</string>
 
     <string name="alert_title_gps_off">GPS is Turned Off</string>
-    <string name="alert_content_gps_off">Would you Like to turn on GPS?</string>
+    <string name="alert_content_gps_off">Please turn on GPS for more accurate data.</string>
     <string name="alert_title_location_access">Allow Location Access</string>
     <string name="alert_content_location_access">Please Allow Location Access to get Air Quality and Weather Information.</string>
 

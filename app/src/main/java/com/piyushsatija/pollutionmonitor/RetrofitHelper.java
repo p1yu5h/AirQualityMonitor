@@ -1,4 +1,4 @@
-package com.piyushsatija.airqualitymonitor;
+package com.piyushsatija.pollutionmonitor;
 
 import android.app.ProgressDialog;
 import android.content.Context;

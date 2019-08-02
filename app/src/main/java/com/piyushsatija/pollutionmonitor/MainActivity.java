@@ -1,4 +1,4 @@
-package com.piyushsatija.airqualitymonitor;
+package com.piyushsatija.pollutionmonitor;
 
 import android.Manifest;
 import android.content.Context;
@@ -22,12 +22,12 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.piyushsatija.airqualitymonitor.adapters.PollutantsAdapter;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.piyushsatija.pollutionmonitor.adapters.PollutantsAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -160,6 +160,9 @@ public class MainActivity extends AppCompatActivity {
                                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                                     MY_PERMISSIONS_REQUEST_LOCATION);
                         })
+                        .setNegativeButton("Cancel", (dialogInterface, i) -> {
+                            getAqiData();
+                        })
                         .create()
                         .show();
             } else {
@@ -188,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 } else {
-                    finish();
+                    getAqiData();
                 }
             }
         }
@@ -204,6 +207,37 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         aqiViewModel.getGPSApiResponse(geo).observe(MainActivity.this, apiResponse -> {
+            if (apiResponse != null) {
+                Log.d("api", String.valueOf(apiResponse));
+                data = apiResponse.getData();
+                aqiTextView.setText(String.valueOf(data.getAqi()));
+                setAqiScaleGroup();
+                Iaqi iaqi = data.getIaqi();
+                if (iaqi.getTemperature() != null)
+                    temperatureTextView.setText(getString(R.string.temperature_unit_celsius, data.getIaqi().getTemperature().getV()));
+                if (iaqi.getPressure() != null)
+                    pressureTextView.setText(getString(R.string.pressure_unit, iaqi.getPressure().getV()));
+                if (iaqi.getHumidity() != null)
+                    humidityTextView.setText(getString(R.string.humidity_unit, iaqi.getHumidity().getV()));
+                if (iaqi.getWind() != null)
+                    windTextView.setText(getString(R.string.wind_unit, iaqi.getWind().getV()));
+                locationTextView.setText(data.getCity().getName());
+                setupAttributions(data);
+                addPollutantsToList(data.getIaqi());
+                pollutantsAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    private void getAqiData() {
+        aqiViewModel.getStatus().observe(MainActivity.this, status -> {
+            if (status != null) {
+                if (status == Status.FETCHING) {
+                    showDialog("Getting data based on network...");
+                } else dismissDialog();
+            }
+        });
+        aqiViewModel.getApiResponse().observe(MainActivity.this, apiResponse -> {
             if (apiResponse != null) {
                 Log.d("api", String.valueOf(apiResponse));
                 data = apiResponse.getData();
@@ -261,12 +295,13 @@ public class MainActivity extends AppCompatActivity {
         builder.setTitle(R.string.alert_title_gps_off)
                 .setMessage(R.string.alert_content_gps_off)
                 .setPositiveButton("Ok", (dialog, which) -> {
+                    dialog.dismiss();
                     Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                     startActivity(intent);
-                    dialog.cancel();
                 })
                 .setNegativeButton("CANCEL", ((dialog, which) -> {
-                    finish();
+                    dialog.dismiss();
+                    getAqiData();
                 }));
         builder.create().show();
     }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.piyushsatija.airqualitymonitor">
+    package="com.piyushsatija.pollutionmonitor">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
@@ -11,7 +11,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.piyushsatija.airqualitymonitor.MainActivity">
+        <activity android:name="com.piyushsatija.pollutionmonitor.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

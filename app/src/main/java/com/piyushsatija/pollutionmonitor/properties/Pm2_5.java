@@ -1,10 +1,10 @@
 
-package com.piyushsatija.airqualitymonitor.properties;
+package com.piyushsatija.pollutionmonitor.properties;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class O3 {
+public class Pm2_5 {
 
     @SerializedName("v")
     @Expose

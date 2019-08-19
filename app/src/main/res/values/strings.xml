@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Air Quality Monitor</string>
+    <string name="app_name">Air Pollution Monitor - AQI</string>
     <string name="aqi_title">AQI</string>
     <string name="temperature_unit_celsius">%1$.1f &#176;C</string>
     <string name="humidity_unit">%1$.0f%%</string>

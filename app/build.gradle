@@ -10,13 +10,14 @@ android {
         versionCode 1
         versionName "0.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-//        buildConfigField 'String', "ApiKey", AirQualityMonitor_ApiToken
     }
     buildTypes {
         debug {
+            buildConfigField 'String', "ApiKey", "\"demo\""
             minifyEnabled false
         }
         release {
+            buildConfigField 'String', "ApiKey", AirQualityMonitor_ApiToken
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }

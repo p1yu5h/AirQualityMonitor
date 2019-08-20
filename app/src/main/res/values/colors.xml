@@ -13,6 +13,7 @@
     <color name="blue">#284CDC</color>
     <color name="aqua">#009ba3</color>
     <color name="lemonYellow">#fff44f</color>
+    <color name="grey">#999</color>
     
     <!--AQI Scale Colors-->
     <color name="scaleGood">#009966</color>

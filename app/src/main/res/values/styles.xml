@@ -41,4 +41,11 @@
         <item name="android:gravity">center</item>
         <item name="android:padding">4dp</item>
     </style>
+
+    <!--Animations-->
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_up_fade</item>
+        <item name="android:windowExitAnimation">@anim/slide_down_fade</item>
+    </style>
 </resources>

@@ -25,4 +25,23 @@
     <string name="unhealthy">Unhealthy</string>
     <string name="very_unhealthy">Very Unhealthy</string>
     <string name="hazardous">Hazardous</string>
+
+    <!--Info Dialog-->
+
+    <!--AQI Range-->
+    <string name="good_range">0 – 50</string>
+    <string name="moderate_range">51 – 100</string>
+    <string name="unhealthy_for_sensitive_range">101 – 150</string>
+    <string name="unhealthy_range">151 – 200</string>
+    <string name="very_unhealthy_range">201 – 300</string>
+    <string name="hazardous_range">300+</string>
+
+    <!--Health Implications-->
+    <string name="good_health_implications">Air quality is considered satisfactory, and air pollution poses little or no risk.</string>
+    <string name="moderate_health_implications">Air quality is acceptable; however, for some pollutants there may be a moderate health concern for a very small number of people who are unusually sensitive to air pollution.</string>
+    <string name="unhealthy_for_sensitive_health_implications">Members of sensitive groups may experience health effects. The general public is not likely to be affected.</string>
+    <string name="unhealthy_health_implications">Everyone may begin to experience health effects; members of sensitive groups may experience more serious health effects.</string>
+    <string name="very_unhealthy_health_implications">Health warnings of emergency conditions. The entire population is more likely to be affected.</string>
+    <string name="hazardous_health_implications">Health alert: everyone may experience more serious health effects.</string>
+
 </resources>

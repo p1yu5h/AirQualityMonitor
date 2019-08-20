@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -32,7 +33,14 @@ import com.piyushsatija.pollutionmonitor.adapters.PollutantsAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+import static com.piyushsatija.pollutionmonitor.PollutionLevels.GOOD;
+import static com.piyushsatija.pollutionmonitor.PollutionLevels.HAZARDOUS;
+import static com.piyushsatija.pollutionmonitor.PollutionLevels.MODERATE;
+import static com.piyushsatija.pollutionmonitor.PollutionLevels.UNHEALTHY;
+import static com.piyushsatija.pollutionmonitor.PollutionLevels.UNHEALTHY_FOR_SENSITIVE;
+import static com.piyushsatija.pollutionmonitor.PollutionLevels.VERY_UNHEALTHY;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     //Views
     private TextView aqiTextView, temperatureTextView, locationTextView, pressureTextView, humidityTextView, windTextView, attributionTextView;
     private RecyclerView pollutantsRecyclerView;
@@ -86,6 +94,22 @@ public class MainActivity extends AppCompatActivity {
         windTextView = findViewById(R.id.wind_text_view);
         attributionTextView = findViewById(R.id.attribution_text_view);
         setupRecyclerView();
+        setupClickListeners();
+    }
+
+    private void setupClickListeners() {
+        TextView good = findViewById(R.id.scaleGood);
+        TextView moderate = findViewById(R.id.scaleModerate);
+        TextView unhealthySensitive = findViewById(R.id.scaleUnhealthySensitive);
+        TextView unhealthy = findViewById(R.id.scaleUnhealthy);
+        TextView veryUnhealthy = findViewById(R.id.scaleVeryUnhealthy);
+        TextView hazardous = findViewById(R.id.scaleHazardous);
+        good.setOnClickListener(this);
+        moderate.setOnClickListener(this);
+        unhealthySensitive.setOnClickListener(this);
+        unhealthy.setOnClickListener(this);
+        veryUnhealthy.setOnClickListener(this);
+        hazardous.setOnClickListener(this);
     }
 
     private void setupRecyclerView() {
@@ -304,5 +328,32 @@ public class MainActivity extends AppCompatActivity {
                     getAqiData();
                 }));
         builder.create().show();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.scaleGood:
+                new InfoDialog(this, GOOD).show();
+                break;
+            case R.id.scaleModerate:
+                new InfoDialog(this, MODERATE).show();
+                break;
+            case R.id.scaleUnhealthySensitive:
+                new InfoDialog(this, UNHEALTHY_FOR_SENSITIVE).show();
+                break;
+            case R.id.scaleUnhealthy:
+                new InfoDialog(this, UNHEALTHY).show();
+                break;
+            case R.id.scaleVeryUnhealthy:
+                new InfoDialog(this, VERY_UNHEALTHY).show();
+                break;
+            case R.id.scaleHazardous:
+                new InfoDialog(this, HAZARDOUS).show();
+                break;
+            default:
+                break;
+
+        }
     }
 }

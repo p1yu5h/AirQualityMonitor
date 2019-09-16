@@ -1,2 +1,5 @@
-# AirQualityMonitor
-[![CircleCI](https://circleci.com/gh/p1yu5h/AirQualityMonitor.svg?style=svg)](https://circleci.com/gh/p1yu5h/AirQualityMonitor)
+# Air Pollution Monitor
+
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" 
+      alt="Download from Google Play" 
+      height="80">](https://play.google.com/store/apps/details?id=com.piyushsatija.pollutionmonitor)

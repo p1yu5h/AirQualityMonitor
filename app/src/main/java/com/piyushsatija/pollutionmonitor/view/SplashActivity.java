@@ -1,4 +1,4 @@
-package com.piyushsatija.pollutionmonitor;
+package com.piyushsatija.pollutionmonitor.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
+
+import com.piyushsatija.pollutionmonitor.BuildConfig;
+import com.piyushsatija.pollutionmonitor.R;
 
 public class SplashActivity extends AppCompatActivity {
     private Handler handler = new Handler();

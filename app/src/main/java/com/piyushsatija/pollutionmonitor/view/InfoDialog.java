@@ -1,4 +1,4 @@
-package com.piyushsatija.pollutionmonitor;
+package com.piyushsatija.pollutionmonitor.view;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -7,6 +7,9 @@ import android.view.Window;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+
+import com.piyushsatija.pollutionmonitor.PollutionLevels;
+import com.piyushsatija.pollutionmonitor.R;
 
 public class InfoDialog extends Dialog {
     private PollutionLevels pollutionLevel;

@@ -1,6 +1,7 @@
-package com.piyushsatija.pollutionmonitor;
+package com.piyushsatija.pollutionmonitor.view;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -8,12 +9,12 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -28,7 +29,16 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.piyushsatija.pollutionmonitor.AqiViewModel;
+import com.piyushsatija.pollutionmonitor.Attribution;
+import com.piyushsatija.pollutionmonitor.Data;
+import com.piyushsatija.pollutionmonitor.Iaqi;
+import com.piyushsatija.pollutionmonitor.Pollutant;
+import com.piyushsatija.pollutionmonitor.R;
+import com.piyushsatija.pollutionmonitor.RetrofitHelper;
+import com.piyushsatija.pollutionmonitor.Status;
 import com.piyushsatija.pollutionmonitor.adapters.PollutantsAdapter;
+import com.piyushsatija.pollutionmonitor.utils.GPSUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +49,7 @@ import static com.piyushsatija.pollutionmonitor.PollutionLevels.MODERATE;
 import static com.piyushsatija.pollutionmonitor.PollutionLevels.UNHEALTHY;
 import static com.piyushsatija.pollutionmonitor.PollutionLevels.UNHEALTHY_FOR_SENSITIVE;
 import static com.piyushsatija.pollutionmonitor.PollutionLevels.VERY_UNHEALTHY;
+import static com.piyushsatija.pollutionmonitor.utils.GPSUtils.GPS_REQUEST;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     //Views
@@ -83,6 +94,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         };
+        checkGPSAndRequestLocation();
+    }
+
+    private void checkGPSAndRequestLocation() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                checkLocationPermission();
+            } else {
+                if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    //Call for AQI data based on location is done in "locationCallback"
+                    fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
+                } else {
+                    new GPSUtils(this).turnGPSOn();
+                }
+            }
+        }
     }
 
     private void init() {
@@ -211,7 +238,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             == PackageManager.PERMISSION_GRANTED) {
 
                         //Request location updates:
-                        onResume();
+                        checkGPSAndRequestLocation();
                     }
 
                 } else {
@@ -299,35 +326,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                checkLocationPermission();
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GPS_REQUEST) {
+            if (resultCode == Activity.RESULT_OK) {
+                checkGPSAndRequestLocation();
             } else {
-                if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
-                } else {
-                    showEnableLocationDialog();
-                }
+                getAqiData();
             }
         }
-    }
-
-    private void showEnableLocationDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.alert_title_gps_off)
-                .setMessage(R.string.alert_content_gps_off)
-                .setPositiveButton("Ok", (dialog, which) -> {
-                    dialog.dismiss();
-                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                    startActivity(intent);
-                })
-                .setNegativeButton("CANCEL", ((dialog, which) -> {
-                    dialog.dismiss();
-                    getAqiData();
-                }));
-        builder.create().show();
     }
 
     @Override

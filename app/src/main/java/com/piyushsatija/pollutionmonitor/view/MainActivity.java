@@ -2,6 +2,8 @@ package com.piyushsatija.pollutionmonitor.view;
 
 import android.Manifest;
 import android.app.Activity;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -23,15 +25,21 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.work.Constraints;
+import androidx.work.NetworkType;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.piyushsatija.pollutionmonitor.AQIWidget;
 import com.piyushsatija.pollutionmonitor.AqiViewModel;
 import com.piyushsatija.pollutionmonitor.Attribution;
 import com.piyushsatija.pollutionmonitor.Data;
+import com.piyushsatija.pollutionmonitor.DataUpdateWorker;
 import com.piyushsatija.pollutionmonitor.Iaqi;
 import com.piyushsatija.pollutionmonitor.Pollutant;
 import com.piyushsatija.pollutionmonitor.R;
@@ -39,9 +47,11 @@ import com.piyushsatija.pollutionmonitor.RetrofitHelper;
 import com.piyushsatija.pollutionmonitor.Status;
 import com.piyushsatija.pollutionmonitor.adapters.PollutantsAdapter;
 import com.piyushsatija.pollutionmonitor.utils.GPSUtils;
+import com.piyushsatija.pollutionmonitor.utils.SharedPrefUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static com.piyushsatija.pollutionmonitor.PollutionLevels.GOOD;
 import static com.piyushsatija.pollutionmonitor.PollutionLevels.HAZARDOUS;
@@ -61,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Data data = new Data();
     private PollutantsAdapter pollutantsAdapter;
     private List<Pollutant> pollutantsList = new ArrayList<>();
+    private SharedPrefUtils sharedPrefUtils;
 
     //Location
     private FusedLocationProviderClient fusedLocationClient;
@@ -68,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LocationManager locationManager;
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
+    private Location latestLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,12 +101,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 for (Location location : locationResult.getLocations()) {
                     if (location != null) {
+                        latestLocation = location;
                         getAqiData(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
                     }
                 }
             }
         };
         checkGPSAndRequestLocation();
+        scheduleWidgetUpdater();
     }
 
     private void checkGPSAndRequestLocation() {
@@ -112,6 +126,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private void scheduleWidgetUpdater() {
+        Constraints constraints = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .setRequiresBatteryNotLow(true)
+                .build();
+
+        PeriodicWorkRequest periodicWorkRequest =
+                new PeriodicWorkRequest.Builder(DataUpdateWorker.class, 15, TimeUnit.MINUTES)
+                        .setConstraints(constraints)
+                        .build();
+
+        WorkManager.getInstance().enqueue(periodicWorkRequest);
+    }
+
     private void init() {
         aqiTextView = findViewById(R.id.aqi_text_view);
         temperatureTextView = findViewById(R.id.temperature_text_view);
@@ -122,21 +150,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         attributionTextView = findViewById(R.id.attribution_text_view);
         setupRecyclerView();
         setupClickListeners();
+        sharedPrefUtils = SharedPrefUtils.getInstance(this);
     }
 
     private void setupClickListeners() {
-        TextView good = findViewById(R.id.scaleGood);
-        TextView moderate = findViewById(R.id.scaleModerate);
-        TextView unhealthySensitive = findViewById(R.id.scaleUnhealthySensitive);
-        TextView unhealthy = findViewById(R.id.scaleUnhealthy);
-        TextView veryUnhealthy = findViewById(R.id.scaleVeryUnhealthy);
-        TextView hazardous = findViewById(R.id.scaleHazardous);
-        good.setOnClickListener(this);
-        moderate.setOnClickListener(this);
-        unhealthySensitive.setOnClickListener(this);
-        unhealthy.setOnClickListener(this);
-        veryUnhealthy.setOnClickListener(this);
-        hazardous.setOnClickListener(this);
+        findViewById(R.id.scaleGood).setOnClickListener(this);
+        findViewById(R.id.scaleModerate).setOnClickListener(this);
+        findViewById(R.id.scaleUnhealthySensitive).setOnClickListener(this);
+        findViewById(R.id.scaleUnhealthy).setOnClickListener(this);
+        findViewById(R.id.scaleVeryUnhealthy).setOnClickListener(this);
+        findViewById(R.id.scaleHazardous).setOnClickListener(this);
     }
 
     private void setupRecyclerView() {
@@ -262,6 +285,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d("api", String.valueOf(apiResponse));
                 data = apiResponse.getData();
                 aqiTextView.setText(String.valueOf(data.getAqi()));
+                //TODO: Find better implementation
+                sharedPrefUtils.saveLatestAQI(String.valueOf(data.getAqi()));
                 setAqiScaleGroup();
                 Iaqi iaqi = data.getIaqi();
                 if (iaqi.getTemperature() != null)
@@ -276,6 +301,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 setupAttributions(data);
                 addPollutantsToList(data.getIaqi());
                 pollutantsAdapter.notifyDataSetChanged();
+                updateWidget();
             }
         });
     }
@@ -293,6 +319,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d("api", String.valueOf(apiResponse));
                 data = apiResponse.getData();
                 aqiTextView.setText(String.valueOf(data.getAqi()));
+                //TODO: Find better implementation
+                sharedPrefUtils.saveLatestAQI(String.valueOf(data.getAqi()));
                 setAqiScaleGroup();
                 Iaqi iaqi = data.getIaqi();
                 if (iaqi.getTemperature() != null)
@@ -307,6 +335,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 setupAttributions(data);
                 addPollutantsToList(data.getIaqi());
                 pollutantsAdapter.notifyDataSetChanged();
+                updateWidget();
             }
         });
     }
@@ -337,6 +366,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private void updateWidget() {
+        Intent intent = new Intent(this, AQIWidget.class);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        // Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
+        // since it seems the onUpdate() is only fired on that:
+        int[] ids = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(new ComponentName(getApplication(), AQIWidget.class));
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+        sendBroadcast(intent);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -360,7 +399,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             default:
                 break;
-
         }
     }
 }

@@ -50,5 +50,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:17.0.0'
     implementation 'com.google.firebase:firebase-core:17.2.0'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+
+    //Work Manager
+    implementation "android.arch.work:work-runtime:1.0.1"
 }
 apply plugin: 'com.google.gms.google-services'

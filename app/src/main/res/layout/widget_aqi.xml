@@ -1,19 +1,46 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/aqua"
-    android:padding="@dimen/widget_margin">
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:src="@drawable/circle" />
 
     <TextView
-        android:id="@+id/appwidget_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/widget_aqi_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="4dp"
+        android:text="@string/aqi_title"
+        android:textColor="@color/white"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/widget_aqi_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center"
-        android:layout_margin="8dp"
-        android:text="Hello, AQI"
         android:textAlignment="center"
         android:textColor="#ffffff"
-        android:textSize="28sp" />
+        android:textSize="48sp"
+        android:textStyle="bold"
+        tools:text="123" />
+
+    <TextView android:id="@+id/widget_air_quality_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/widget_aqi_text"
+        android:layout_centerHorizontal="true"
+        tools:text="Unhealthy"
+        android:elevation="5dp"
+        android:textStyle="bold"
+        android:shadowColor="@color/white"
+        android:textColor="@color/scaleGood"
+        android:textSize="20sp" />
 </RelativeLayout>

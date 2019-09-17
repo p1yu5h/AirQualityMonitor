@@ -22,11 +22,36 @@ public class AQIWidget extends AppWidgetProvider {
 
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_aqi);
-        views.setTextViewText(R.id.appwidget_text, SharedPrefUtils.getInstance(context).getLatestAQI());
+        String aqiString = SharedPrefUtils.getInstance(context).getLatestAQI();
+        views.setTextViewText(R.id.widget_aqi_text, aqiString);
+        String airQuality = "";
+        int aqi = Integer.parseInt(aqiString);
+        int colorId = -1;
+        if (aqi >= 0 && aqi <= 50) {
+            airQuality = context.getString(R.string.good);
+            colorId = context.getResources().getColor(R.color.scaleGood);
+        } else if (aqi >= 51 && aqi <= 100) {
+            airQuality = context.getString(R.string.moderate);
+            colorId = context.getResources().getColor(R.color.scaleModerate);
+        } else if (aqi >= 101 && aqi <= 150) {
+            airQuality = context.getString(R.string.unhealthy);
+            colorId = context.getResources().getColor(R.color.scaleUnhealthySensitive);
+        } else if (aqi >= 151 && aqi <= 200) {
+            airQuality = context.getString(R.string.unhealthy);
+            colorId = context.getResources().getColor(R.color.scaleUnhealthy);
+        } else if (aqi >= 201 && aqi <= 300) {
+            airQuality = context.getString(R.string.very_unhealthy);
+            colorId = context.getResources().getColor(R.color.scaleVeryUnhealthy);
+        } else if (aqi >= 301) {
+            airQuality = context.getString(R.string.hazardous);
+            colorId = context.getResources().getColor(R.color.scaleHazardous);
+        }
+        views.setTextViewText(R.id.widget_air_quality_text, airQuality);
+        views.setTextColor(R.id.widget_air_quality_text, colorId);
 
         Intent intent = new Intent(context, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-        views.setOnClickPendingIntent(R.id.appwidget_text, pendingIntent);
+        views.setOnClickPendingIntent(R.id.widget_aqi_text, pendingIntent);
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }

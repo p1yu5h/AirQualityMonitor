@@ -198,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             aqiScaleText = findViewById(R.id.scaleUnhealthySensitive);
         else if (aqi >= 151 && aqi <= 200) aqiScaleText = findViewById(R.id.scaleUnhealthy);
         else if (aqi >= 201 && aqi <= 300) aqiScaleText = findViewById(R.id.scaleVeryUnhealthy);
-        else if (aqi >= 301) aqiScaleText = findViewById(R.id.scaleVeryUnhealthy);
+        else if (aqi >= 301) aqiScaleText = findViewById(R.id.scaleHazardous);
         else aqiScaleText = findViewById(R.id.scaleGood);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             aqiScaleText.setForeground(getDrawable(R.drawable.selected_aqi_foreground));

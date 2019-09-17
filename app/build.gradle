@@ -13,7 +13,7 @@ android {
     }
     buildTypes {
         debug {
-            buildConfigField 'String', "ApiKey", "\"demo\""
+            buildConfigField 'String', "ApiKey", AirQualityMonitor_ApiToken
             minifyEnabled false
         }
         release {

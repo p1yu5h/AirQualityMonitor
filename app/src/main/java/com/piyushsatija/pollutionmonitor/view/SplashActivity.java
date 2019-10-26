@@ -18,8 +18,8 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPrefUtils sharedPrefUtils = SharedPrefUtils.getInstance(this);
-        if (sharedPrefUtils.isDarkMode()) setTheme(R.style.AppTheme_Light);
-        else setTheme(R.style.AppTheme_Dark);
+        if (sharedPrefUtils.isDarkMode()) setTheme(R.style.AppTheme_Dark);
+        else setTheme(R.style.AppTheme_Light);
         setContentView(R.layout.activity_splash);
         TextView versionTextView = findViewById(R.id.splash_version_text);
         versionTextView.setText(String.format("v%s", BuildConfig.VERSION_NAME));

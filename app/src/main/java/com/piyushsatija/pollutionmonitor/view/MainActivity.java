@@ -85,8 +85,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sharedPrefUtils = SharedPrefUtils.getInstance(this);
-        if (sharedPrefUtils.isDarkMode()) setTheme(R.style.AppTheme_Light);
-        else setTheme(R.style.AppTheme_Dark);
+        if (sharedPrefUtils.isDarkMode()) setTheme(R.style.AppTheme_Dark);
+        else setTheme(R.style.AppTheme_Light);
         setContentView(R.layout.activity_main);
         init();
         aqiViewModel = ViewModelProviders.of(this).get(AqiViewModel.class);

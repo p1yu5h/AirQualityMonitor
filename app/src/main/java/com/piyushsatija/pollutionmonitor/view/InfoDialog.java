@@ -27,7 +27,10 @@ public class InfoDialog extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_info);
         Window window = getWindow();
-        if (window != null) window.getAttributes().windowAnimations = R.style.DialogAnimation;
+        if (window != null) {
+            window.getAttributes().windowAnimations = R.style.DialogAnimation;
+            window.setBackgroundDrawableResource(android.R.color.transparent);
+        }
         setupViews();
     }
 

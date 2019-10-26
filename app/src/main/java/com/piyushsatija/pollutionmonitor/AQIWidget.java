@@ -47,7 +47,7 @@ public class AQIWidget extends AppWidgetProvider {
             colorId = context.getResources().getColor(R.color.scaleHazardous);
         }
         views.setTextViewText(R.id.widget_air_quality_text, airQuality);
-        views.setTextColor(R.id.widget_air_quality_text, colorId);
+        views.setTextColor(R.id.widget_air_quality_text, context.getResources().getColor(R.color.grey));
 
         Intent intent = new Intent(context, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);

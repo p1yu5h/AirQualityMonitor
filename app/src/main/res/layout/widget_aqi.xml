@@ -4,10 +4,10 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:layout_width="200dp"
+        android:layout_width="160dp"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
-        android:src="@drawable/circle" />
+        android:src="@drawable/circle_widget" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -17,7 +17,7 @@
         android:layout_marginBottom="4dp"
         android:text="@string/aqi_title"
         android:textColor="@color/white"
-        android:textSize="24sp" />
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/widget_aqi_text"
@@ -27,8 +27,8 @@
         android:layout_centerVertical="true"
         android:layout_gravity="center"
         android:textAlignment="center"
-        android:textColor="#ffffff"
-        android:textSize="48sp"
+        android:textColor="@color/white"
+        android:textSize="44sp"
         android:textStyle="bold"
         tools:text="123" />
 
@@ -42,5 +42,5 @@
         android:textStyle="bold"
         android:shadowColor="@color/white"
         android:textColor="@color/scaleGood"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 </RelativeLayout>

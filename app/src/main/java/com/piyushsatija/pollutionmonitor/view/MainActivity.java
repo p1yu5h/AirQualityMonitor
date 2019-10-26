@@ -84,6 +84,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPrefUtils = SharedPrefUtils.getInstance(this);
+        if (sharedPrefUtils.isDarkMode()) setTheme(R.style.AppTheme_Light);
+        else setTheme(R.style.AppTheme_Dark);
         setContentView(R.layout.activity_main);
         init();
         aqiViewModel = ViewModelProviders.of(this).get(AqiViewModel.class);
@@ -150,7 +153,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         attributionTextView = findViewById(R.id.attribution_text_view);
         setupRecyclerView();
         setupClickListeners();
-        sharedPrefUtils = SharedPrefUtils.getInstance(this);
     }
 
     private void setupClickListeners() {
@@ -160,6 +162,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.scaleUnhealthy).setOnClickListener(this);
         findViewById(R.id.scaleVeryUnhealthy).setOnClickListener(this);
         findViewById(R.id.scaleHazardous).setOnClickListener(this);
+        findViewById(R.id.btnDarkMode).setOnClickListener(this);
     }
 
     private void setupRecyclerView() {
@@ -396,6 +399,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.scaleHazardous:
                 new InfoDialog(this, HAZARDOUS).show();
+                break;
+            case R.id.btnDarkMode:
+                sharedPrefUtils.isDarkMode(!sharedPrefUtils.isDarkMode());
+                recreate();
                 break;
             default:
                 break;

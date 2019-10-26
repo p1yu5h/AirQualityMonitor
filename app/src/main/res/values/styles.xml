@@ -6,11 +6,35 @@
         <item name="colorPrimary">@color/lightPurple</item>
         <item name="colorPrimaryDark">@color/purple</item>
         <item name="colorAccent">@color/orange</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:navigationBarColor">@color/white</item>
+        <item name="android:windowBackground">@color/white</item>
+    </style>
+
+    <!--Light Theme-->
+    <style name="AppTheme.Light" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/lightPurple</item>
+        <item name="colorPrimaryDark">@color/purple</item>
+        <item name="colorAccent">@color/orange</item>
         <item name="android:statusBarColor">@color/aqua</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowActivityTransitions">true</item>
         <item name="android:navigationBarColor">@color/aqua</item>
         <item name="android:windowBackground">@color/aqua</item>
+    </style>
+
+    <!--Dark Theme-->
+    <style name="AppTheme.Dark" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/lightPurple</item>
+        <item name="colorPrimaryDark">@color/purple</item>
+        <item name="colorAccent">@color/orange</item>
+        <item name="android:statusBarColor">@color/darkGrey</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:navigationBarColor">@color/darkGrey</item>
+        <item name="android:windowBackground">@color/darkGrey</item>
     </style>
 
     <!-- Text styles -->

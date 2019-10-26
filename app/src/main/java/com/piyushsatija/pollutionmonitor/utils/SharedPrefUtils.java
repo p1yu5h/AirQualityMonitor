@@ -32,6 +32,16 @@ public class SharedPrefUtils {
         return preferences.getString("aqi","");
     }
 
+    public void isDarkMode(Boolean b) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("darkMode", b);
+        editor.apply();
+    }
+
+    public Boolean isDarkMode() {
+        return preferences.getBoolean("darkMode", false);
+    }
+
     public void clearAllPrefs() {
         preferences.edit().clear().apply();
     }

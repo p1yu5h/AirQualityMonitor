@@ -14,6 +14,7 @@
     <color name="aqua">#009ba3</color>
     <color name="lemonYellow">#fff44f</color>
     <color name="grey">#999</color>
+    <color name="darkGrey">#363636</color>
     
     <!--AQI Scale Colors-->
     <color name="scaleGood">#009966</color>
@@ -22,4 +23,8 @@
     <color name="scaleUnhealthy">#CC0033</color>
     <color name="scaleVeryUnhealthy">#660099</color>
     <color name="scaleHazardous">#7E0023</color>
+
+    <!--Widget-->
+    <color name="widgetBackground">#9000</color>
+    <color name="widgetStroke">#00BCD4</color>
 </resources>

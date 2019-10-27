@@ -49,4 +49,9 @@
 
     <string name="shareText">Hey, Check the Air Quality in your area with this app: https://pollutionmonitor.page.link/RtQw</string>
 
+    <!--Rate Us Card-->
+    <string name="rateUsTitle">Would you like to rate us on Play Store?</string>
+    <string name="rateUsDesc">Ratings will help us continue improving this app and adding new features.</string>
+    <string name="rateUsYes">Sure</string>
+    <string name="rateUsNo">No Thanks.</string>
 </resources>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/lemonYellow"
+    app:cardCornerRadius="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imgRateUs"
+            android:layout_width="100dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_rate_us"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/titleRateUs"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:alpha="0.7"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="@string/rateUsTitle"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imgRateUs"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/descRateUs"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="@string/rateUsDesc"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@id/titleRateUs"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/titleRateUs"
+            app:layout_constraintTop_toBottomOf="@id/titleRateUs" />
+
+        <TextView
+            android:id="@+id/rateYes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="8dp"
+            android:text="@string/rateUsYes"
+            android:textAlignment="center"
+            android:textColor="@color/scaleGood"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/titleRateUs"
+            app:layout_constraintStart_toEndOf="@+id/rateNo"
+            app:layout_constraintTop_toTopOf="@id/rateNo" />
+
+        <TextView
+            android:id="@+id/rateNo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:alpha=".5"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:text="@string/rateUsNo"
+            android:textAlignment="center"
+            android:textColor="@color/scaleUnhealthy"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/rateYes"
+            app:layout_constraintStart_toEndOf="@+id/imgRateUs"
+            app:layout_constraintTop_toBottomOf="@+id/descRateUs" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

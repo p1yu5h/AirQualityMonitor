@@ -9,10 +9,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -66,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //Views
     private TextView aqiTextView, temperatureTextView, locationTextView, pressureTextView, humidityTextView, windTextView, attributionTextView;
     private RecyclerView pollutantsRecyclerView;
+    private ViewGroup rateUsCard;
 
     //Data
     private AqiViewModel aqiViewModel;
@@ -86,6 +89,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sharedPrefUtils = SharedPrefUtils.getInstance(this);
+        if (sharedPrefUtils.getAppInstallTime() == 0)
+            sharedPrefUtils.setAppInstallTime(System.currentTimeMillis());
         if (sharedPrefUtils.isDarkMode()) setTheme(R.style.AppTheme_Dark);
         else setTheme(R.style.AppTheme_Light);
         setContentView(R.layout.activity_main);
@@ -158,8 +163,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         humidityTextView = findViewById(R.id.humidity_text_view);
         windTextView = findViewById(R.id.wind_text_view);
         attributionTextView = findViewById(R.id.attribution_text_view);
+        rateUsCard = findViewById(R.id.rateUsLayout);
         setupRecyclerView();
         setupClickListeners();
+        setupRateCard();
     }
 
     private void setupClickListeners() {
@@ -171,6 +178,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.scaleHazardous).setOnClickListener(this);
         findViewById(R.id.btnDarkMode).setOnClickListener(this);
         findViewById(R.id.btnShare).setOnClickListener(this);
+        findViewById(R.id.rateYes).setOnClickListener(this);
+        findViewById(R.id.rateNo).setOnClickListener(this);
     }
 
     private void setupRecyclerView() {
@@ -395,6 +404,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(shareIntent);
     }
 
+    private void setupRateCard() {
+        if (!sharedPrefUtils.rateCardDone() && (System.currentTimeMillis() - sharedPrefUtils.getAppInstallTime() >= 86400000)) {
+            rateUsCard.setVisibility(View.VISIBLE);
+        }
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -422,6 +437,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnShare:
                 shareApp();
+                break;
+            case R.id.rateNo:
+                rateUsCard.animate().alpha(0.0f).translationX(200f).setDuration(500).withEndAction(() -> {
+                    rateUsCard.setVisibility(View.GONE);
+                    sharedPrefUtils.rateCardDone(true);
+                });
+                break;
+            case R.id.rateYes:
+                sharedPrefUtils.rateCardDone(true);
+                rateUsCard.setVisibility(View.GONE);
+                Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=com.piyushsatija.pollutionmonitor");
+                startActivity(new Intent(Intent.ACTION_VIEW, uri));
                 break;
             default:
                 break;

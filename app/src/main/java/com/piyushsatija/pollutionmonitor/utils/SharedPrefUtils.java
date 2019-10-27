@@ -29,7 +29,7 @@ public class SharedPrefUtils {
     }
 
     public String getLatestAQI() {
-        return preferences.getString("aqi","");
+        return preferences.getString("aqi", "");
     }
 
     public void isDarkMode(Boolean b) {
@@ -40,6 +40,26 @@ public class SharedPrefUtils {
 
     public Boolean isDarkMode() {
         return preferences.getBoolean("darkMode", false);
+    }
+
+    public void rateCardDone(Boolean b) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("rateCard", b);
+        editor.apply();
+    }
+
+    public Boolean rateCardDone() {
+        return preferences.getBoolean("rateCard", false);
+    }
+
+    public void setAppInstallTime(Long time) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putLong("appInstallTime", time);
+        editor.apply();
+    }
+
+    public Long getAppInstallTime() {
+        return preferences.getLong("appInstallTime", 0);
     }
 
     public void clearAllPrefs() {

@@ -25,12 +25,21 @@
                     android:id="@+id/btnDarkMode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="24dp"
                     android:src="@drawable/ic_dark_mode"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginTop="16dp"
-                    android:rotation="135"/>
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/btnShare"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:src="@drawable/ic_share"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btnDarkMode" />
 
                 <TextView
                     android:id="@+id/aqi_title"
@@ -119,10 +128,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
                     android:gravity="center"
                     android:orientation="horizontal"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/aqi_background">
@@ -138,9 +147,9 @@
                         android:id="@+id/location_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
                         android:textColor="@color/white"
                         android:textSize="14sp"
-                        android:layout_marginLeft="8dp"
                         tools:text="New Delhi" />
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -158,20 +167,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <include android:id="@+id/aqi_color_scale"
-                layout="@layout/aqi_color_scale"/>
+            <include
+                android:id="@+id/aqi_color_scale"
+                layout="@layout/aqi_color_scale" />
 
             <LinearLayout
                 android:id="@+id/pressure_layout"
                 android:layout_width="match_parent"
-                android:layout_below="@+id/aqi_color_scale"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="3"
+                android:layout_below="@+id/aqi_color_scale"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:background="#55FFFFFF"
-                android:baselineAligned="false">
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:weightSum="3">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -241,46 +251,48 @@
 
             </LinearLayout>
 
-            <TextView android:id="@+id/pollutants_title_text_view"
+            <TextView
+                android:id="@+id/pollutants_title_text_view"
+                style="@style/TextAppearanceHeading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/TextAppearanceHeading"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/pollutants_aqi"
-                android:textAlignment="textStart"
                 android:layout_below="@+id/pressure_layout"
-                />
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:text="@string/pollutants_aqi"
+                android:textAlignment="textStart" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/pollutants_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/pollutants_title_text_view"
-                android:overScrollMode="never"
-                android:layout_margin="16dp" />
+                android:layout_margin="16dp"
+                android:overScrollMode="never" />
 
-            <TextView android:id="@+id/attribution_title"
+
+            <TextView
+                android:id="@+id/attribution_title"
                 style="@style/TextAppearanceHeading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/pollutants_recycler_view"
-                android:text="@string/attribution"
                 android:layout_margin="16dp"
-                android:textAlignment="textStart"/>
+                android:text="@string/attribution"
+                android:textAlignment="textStart" />
 
             <TextView
                 android:id="@+id/attribution_text_view"
                 style="@style/TextAppearance"
-                android:layout_below="@+id/attribution_title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/place_holder"
-                android:textAlignment="textStart"
+                android:layout_below="@+id/attribution_title"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:textSize="14sp"/>
+                android:text="@string/place_holder"
+                android:textAlignment="textStart"
+                android:textSize="14sp" />
 
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>

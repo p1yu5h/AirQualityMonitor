@@ -47,4 +47,6 @@
     <string name="appwidget_text">AQI</string>
     <string name="add_widget">Add widget</string>
 
+    <string name="shareText">Hey, Check the Air Quality in your area with this app: https://pollutionmonitor.page.link/RtQw</string>
+
 </resources>

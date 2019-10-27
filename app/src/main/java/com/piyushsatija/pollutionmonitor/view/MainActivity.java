@@ -163,6 +163,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.scaleVeryUnhealthy).setOnClickListener(this);
         findViewById(R.id.scaleHazardous).setOnClickListener(this);
         findViewById(R.id.btnDarkMode).setOnClickListener(this);
+        findViewById(R.id.btnShare).setOnClickListener(this);
     }
 
     private void setupRecyclerView() {
@@ -379,6 +380,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         sendBroadcast(intent);
     }
 
+    private void shareApp() {
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.shareText));
+        shareIntent.setType("text/plain");
+        startActivity(shareIntent);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -403,6 +412,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnDarkMode:
                 sharedPrefUtils.isDarkMode(!sharedPrefUtils.isDarkMode());
                 recreate();
+                break;
+            case R.id.btnShare:
+                shareApp();
                 break;
             default:
                 break;

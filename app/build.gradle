@@ -10,15 +10,20 @@ android {
         versionCode 3
         versionName "0.0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.debug
     }
     buildTypes {
         debug {
             buildConfigField 'String', "ApiKey", AirQualityMonitor_ApiToken
             minifyEnabled false
+            debuggable true
+            applicationIdSuffix ".debug"
         }
         release {
             buildConfigField 'String', "ApiKey", AirQualityMonitor_ApiToken
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

@@ -35,6 +35,7 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.piyushsatija.pollutionmonitor.AQIWidget;
 import com.piyushsatija.pollutionmonitor.AqiViewModel;
 import com.piyushsatija.pollutionmonitor.Attribution;
@@ -112,6 +113,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         };
         checkGPSAndRequestLocation();
         scheduleWidgetUpdater();
+        try {
+            FirebaseMessaging.getInstance().subscribeToTopic("weather")
+                    .addOnCompleteListener(task -> Log.d("FCM", "Subscribed to \"weather\""));
+        } catch (Exception e) {
+            Log.e("FCM", "Unable to add FCM topic");
+        }
     }
 
     private void checkGPSAndRequestLocation() {

@@ -5,8 +5,9 @@ import android.content.Context
 import android.os.Bundle
 import android.view.Window
 import android.widget.TextView
-import com.piyushsatija.pollutionmonitor.model.PollutionLevels
+import androidx.core.content.ContextCompat
 import com.piyushsatija.pollutionmonitor.R
+import com.piyushsatija.pollutionmonitor.model.PollutionLevels
 
 class InfoDialog internal constructor(private val context1: Context, private val pollutionLevel: PollutionLevels) : Dialog(context1) {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +29,7 @@ class InfoDialog internal constructor(private val context1: Context, private val
         val color: Int
         when (pollutionLevel) {
             PollutionLevels.GOOD -> {
-                color = context1.resources.getColor(R.color.scaleGood)
+                color = ContextCompat.getColor(context1, R.color.scaleGood)
                 aqiRangeTextView.setText(R.string.good_range)
                 aqiRangeTextView.setTextColor(color)
                 pollutionLevelTextView.setBackgroundColor(color)
@@ -36,7 +37,7 @@ class InfoDialog internal constructor(private val context1: Context, private val
                 healthImplicationTextView.setText(R.string.good_health_implications)
             }
             PollutionLevels.MODERATE -> {
-                color = context1.resources.getColor(R.color.scaleModerate)
+                color = ContextCompat.getColor(context1, R.color.scaleModerate)
                 aqiRangeTextView.setText(R.string.moderate_range)
                 aqiRangeTextView.setTextColor(color)
                 pollutionLevelTextView.setBackgroundColor(color)
@@ -44,7 +45,7 @@ class InfoDialog internal constructor(private val context1: Context, private val
                 healthImplicationTextView.setText(R.string.moderate_health_implications)
             }
             PollutionLevels.UNHEALTHY_FOR_SENSITIVE -> {
-                color = context1.resources.getColor(R.color.scaleUnhealthySensitive)
+                color = ContextCompat.getColor(context1, R.color.scaleUnhealthySensitive)
                 aqiRangeTextView.setText(R.string.unhealthy_for_sensitive_range)
                 aqiRangeTextView.setTextColor(color)
                 pollutionLevelTextView.setBackgroundColor(color)
@@ -52,7 +53,7 @@ class InfoDialog internal constructor(private val context1: Context, private val
                 healthImplicationTextView.setText(R.string.unhealthy_for_sensitive_health_implications)
             }
             PollutionLevels.UNHEALTHY -> {
-                color = context1.resources.getColor(R.color.scaleUnhealthy)
+                color = ContextCompat.getColor(context1, R.color.scaleUnhealthy)
                 aqiRangeTextView.setText(R.string.unhealthy_range)
                 aqiRangeTextView.setTextColor(color)
                 pollutionLevelTextView.setBackgroundColor(color)
@@ -60,7 +61,7 @@ class InfoDialog internal constructor(private val context1: Context, private val
                 healthImplicationTextView.setText(R.string.unhealthy_health_implications)
             }
             PollutionLevels.VERY_UNHEALTHY -> {
-                color = context1.resources.getColor(R.color.scaleVeryUnhealthy)
+                color = ContextCompat.getColor(context1, R.color.scaleVeryUnhealthy)
                 aqiRangeTextView.setText(R.string.very_unhealthy_range)
                 aqiRangeTextView.setTextColor(color)
                 pollutionLevelTextView.setBackgroundColor(color)
@@ -68,7 +69,7 @@ class InfoDialog internal constructor(private val context1: Context, private val
                 healthImplicationTextView.setText(R.string.very_unhealthy_health_implications)
             }
             PollutionLevels.HAZARDOUS -> {
-                color = context1.resources.getColor(R.color.scaleHazardous)
+                color = ContextCompat.getColor(context1, R.color.scaleHazardous)
                 aqiRangeTextView.setText(R.string.hazardous_range)
                 aqiRangeTextView.setTextColor(color)
                 pollutionLevelTextView.setBackgroundColor(color)

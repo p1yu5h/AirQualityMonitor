@@ -7,21 +7,21 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitHelper private constructor() {
     private var retrofit: Retrofit? = null
-    val apiInterface: ApiInterface
+    val apiInterface: ApiInterface?
     private var mProgressDialog: ProgressDialog? = null
 
     fun showProgressDialog(context: Context?, Message: String?) {
         dismissProgressDialog()
         mProgressDialog = ProgressDialog(context, ProgressDialog.THEME_DEVICE_DEFAULT_LIGHT)
-        mProgressDialog!!.setCancelable(false)
-        mProgressDialog!!.setCanceledOnTouchOutside(false)
-        mProgressDialog!!.setMessage(Message)
-        mProgressDialog!!.show()
+        mProgressDialog?.setCancelable(false)
+        mProgressDialog?.setCanceledOnTouchOutside(false)
+        mProgressDialog?.setMessage(Message)
+        mProgressDialog?.show()
     }
 
     fun dismissProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog!!.isShowing) {
-            mProgressDialog!!.dismiss()
+        if (mProgressDialog?.isShowing == true) {
+            mProgressDialog?.dismiss()
         }
     }
 
@@ -45,6 +45,6 @@ class RetrofitHelper private constructor() {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
         }
-        apiInterface = retrofit!!.create(ApiInterface::class.java)
+        apiInterface = retrofit?.create(ApiInterface::class.java)
     }
 }

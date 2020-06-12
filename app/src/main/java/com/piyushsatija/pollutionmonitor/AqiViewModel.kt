@@ -11,7 +11,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class AqiViewModel : ViewModel() {
-    private val mRetrofitHelper: RetrofitHelper?
+    private val mRetrofitHelper: RetrofitHelper? = instance
     private var mApiInterface: ApiInterface? = null
     private var mApiResponse: MutableLiveData<ApiResponse?>? = null
     private val mStatus = MutableLiveData<Status>()
@@ -26,10 +26,10 @@ class AqiViewModel : ViewModel() {
         }
 
     private fun loadApiResponse() {
-        mApiInterface = mRetrofitHelper!!.apiInterface
+        mApiInterface = mRetrofitHelper?.apiInterface
         mStatus.value = Status.FETCHING
-        val mApiResponseCall = mApiInterface!!.getAQI(apiKey)
-        mApiResponseCall!!.enqueue(object : Callback<ApiResponse?> {
+        val mApiResponseCall = mApiInterface?.getAQI(apiKey)
+        mApiResponseCall?.enqueue(object : Callback<ApiResponse?> {
             override fun onResponse(call: Call<ApiResponse?>, response: Response<ApiResponse?>) {
                 if (!response.isSuccessful) {
                     return
@@ -37,7 +37,7 @@ class AqiViewModel : ViewModel() {
                 if (response.body() == null) {
                     return
                 }
-                mApiResponse!!.value = response.body()
+                mApiResponse?.value = response.body()
                 mStatus.value = Status.DONE
             }
 
@@ -56,9 +56,9 @@ class AqiViewModel : ViewModel() {
     }
 
     private fun loadGPSBasedApiResponse(geo: String) {
-        mApiInterface = mRetrofitHelper!!.apiInterface
+        mApiInterface = mRetrofitHelper?.apiInterface
         mStatus.value = Status.FETCHING
-        val mApiResponseCall = mApiInterface!!.getLocationAQI(geo, apiKey)
+        val mApiResponseCall = mApiInterface?.getLocationAQI(geo, apiKey)
         mApiResponseCall!!.enqueue(object : Callback<ApiResponse?> {
             override fun onResponse(call: Call<ApiResponse?>, response: Response<ApiResponse?>) {
                 if (!response.isSuccessful) {
@@ -67,7 +67,7 @@ class AqiViewModel : ViewModel() {
                 if (response.body() == null) {
                     return
                 }
-                mApiResponse!!.value = response.body()
+                mApiResponse?.value = response.body()
                 mStatus.value = Status.DONE
             }
 
@@ -80,7 +80,4 @@ class AqiViewModel : ViewModel() {
     val status: LiveData<Status>
         get() = mStatus
 
-    init {
-        mRetrofitHelper = instance
-    }
 }

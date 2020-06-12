@@ -15,17 +15,15 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.work.Constraints
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequest
@@ -40,24 +38,16 @@ import com.piyushsatija.pollutionmonitor.adapters.PollutantsAdapter
 import com.piyushsatija.pollutionmonitor.model.*
 import com.piyushsatija.pollutionmonitor.utils.GPSUtils
 import com.piyushsatija.pollutionmonitor.utils.SharedPrefUtils
+import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
-    //Views
-    private var aqiTextView: TextView? = null
-    private var temperatureTextView: TextView? = null
-    private var locationTextView: TextView? = null
-    private var pressureTextView: TextView? = null
-    private var humidityTextView: TextView? = null
-    private var windTextView: TextView? = null
-    private var attributionTextView: TextView? = null
-    private var pollutantsRecyclerView: RecyclerView? = null
-    private var rateUsCard: ViewGroup? = null
+    private val logTag = javaClass.simpleName
 
     //Data
-    private var aqiViewModel: AqiViewModel? = null
-    private var data = Data()
+    private lateinit var aqiViewModel: AqiViewModel
+    private var data: Data? = Data()
     private var pollutantsAdapter: PollutantsAdapter? = null
     private val pollutantsList: MutableList<Pollutant> = ArrayList()
     private var sharedPrefUtils: SharedPrefUtils? = null
@@ -68,40 +58,42 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var locationRequest: LocationRequest? = null
     private var locationCallback: LocationCallback? = null
     private var latestLocation: Location? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedPrefUtils = SharedPrefUtils.getInstance(this)
-        if (sharedPrefUtils!!.appInstallTime == 0L) sharedPrefUtils!!.appInstallTime = System.currentTimeMillis()
-        if (sharedPrefUtils?.isDarkMode!!) setTheme(R.style.AppTheme_Dark) else setTheme(R.style.AppTheme_Light)
-        setContentView(R.layout.activity_main)
-        init()
-        aqiViewModel = ViewModelProviders.of(this).get(AqiViewModel::class.java)
-        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        locationRequest = LocationRequest.create()
-        locationRequest!!.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-        locationRequest!!.setInterval(20 * 1000.toLong())
-        locationCallback = object : LocationCallback() {
-            override fun onLocationResult(locationResult: LocationResult) {
-                if (locationResult == null) {
-                    return
-                }
-                for (location in locationResult.locations) {
-                    if (location != null) {
-                        latestLocation = location
-                        getAqiData(location.latitude.toString(), location.longitude.toString())
+        try {
+            sharedPrefUtils = SharedPrefUtils.getInstance(this)
+            if (sharedPrefUtils?.appInstallTime == 0L) sharedPrefUtils?.appInstallTime = System.currentTimeMillis()
+            if (sharedPrefUtils?.isDarkMode == true) setTheme(R.style.AppTheme_Dark) else setTheme(R.style.AppTheme_Light)
+
+            setContentView(R.layout.activity_main)
+
+            aqiViewModel = ViewModelProvider(this).get(AqiViewModel::class.java)
+
+            locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+            locationRequest = LocationRequest.create().setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                    .setInterval(20 * 1000.toLong())
+            locationCallback = object : LocationCallback() {
+                override fun onLocationResult(locationResult: LocationResult) {
+                    for (location in locationResult.locations) {
+                        if (location != null) {
+                            latestLocation = location
+                            getAqiData(location.latitude.toString(), location.longitude.toString())
+                        }
                     }
                 }
             }
-        }
-        checkGPSAndRequestLocation()
-        scheduleWidgetUpdater()
-        try {
+            checkGPSAndRequestLocation()
+            scheduleWidgetUpdater()
             FirebaseMessaging.getInstance().subscribeToTopic("weather")
-                    .addOnCompleteListener { task: Task<Void?>? -> Log.d("FCM", "Subscribed to \"weather\"") }
+                    .addOnCompleteListener { Log.d("FCM", "Subscribed to \"weather\"") }
+            init()
         } catch (e: Exception) {
-            Log.e("FCM", "Unable to add FCM topic")
+            Log.e(logTag, e.toString())
         }
+
     }
 
     private fun checkGPSAndRequestLocation() {
@@ -109,9 +101,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 checkLocationPermission()
             } else {
-                if (locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                if (locationManager?.isProviderEnabled(LocationManager.GPS_PROVIDER) == true) {
                     //Call for AQI data based on location is done in "locationCallback"
-                    fusedLocationClient!!.requestLocationUpdates(locationRequest, locationCallback, null)
+                    fusedLocationClient?.requestLocationUpdates(locationRequest, locationCallback, null)
                 } else {
                     GPSUtils(this).turnGPSOn()
                 }
@@ -120,25 +112,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun scheduleWidgetUpdater() {
-        val constraints = Constraints.Builder()
-                .setRequiredNetworkType(NetworkType.CONNECTED)
-                .setRequiresBatteryNotLow(true)
-                .build()
-        val periodicWorkRequest = PeriodicWorkRequest.Builder(DataUpdateWorker::class.java, 15, TimeUnit.MINUTES)
-                .setConstraints(constraints)
-                .build()
-        WorkManager.getInstance().enqueue(periodicWorkRequest)
+        try {
+            val constraints = Constraints.Builder()
+                    .setRequiredNetworkType(NetworkType.CONNECTED)
+                    .setRequiresBatteryNotLow(true)
+                    .build()
+            val periodicWorkRequest = PeriodicWorkRequest.Builder(DataUpdateWorker::class.java, 15, TimeUnit.MINUTES)
+                    .setConstraints(constraints)
+                    .build()
+            WorkManager.getInstance().enqueue(periodicWorkRequest)
+        } catch (e: Exception) {
+            Log.e(logTag, e.toString())
+        }
     }
 
     private fun init() {
-        aqiTextView = findViewById(R.id.aqi_text_view)
-        temperatureTextView = findViewById(R.id.temperature_text_view)
-        locationTextView = findViewById(R.id.location_text_view)
-        pressureTextView = findViewById(R.id.pressure_text_view)
-        humidityTextView = findViewById(R.id.humidity_text_view)
-        windTextView = findViewById(R.id.wind_text_view)
-        attributionTextView = findViewById(R.id.attribution_text_view)
-        rateUsCard = findViewById(R.id.rateUsLayout)
         setupRecyclerView()
         setupClickListeners()
         setupRateCard()
@@ -158,43 +146,53 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setupRecyclerView() {
-        pollutantsRecyclerView = findViewById(R.id.pollutants_recycler_view)
-        pollutantsRecyclerView!!.setLayoutManager(LinearLayoutManager(this))
-        pollutantsRecyclerView!!.setHasFixedSize(true)
-        val dividerItemDecoration = DividerItemDecoration(pollutantsRecyclerView!!.getContext(),
+        pollutantsRecyclerView.layoutManager = LinearLayoutManager(this)
+        pollutantsRecyclerView.setHasFixedSize(true)
+        val dividerItemDecoration = DividerItemDecoration(pollutantsRecyclerView.context,
                 DividerItemDecoration.VERTICAL)
-        pollutantsRecyclerView!!.addItemDecoration(dividerItemDecoration)
+        pollutantsRecyclerView.addItemDecoration(dividerItemDecoration)
     }
 
     private fun addPollutantsToList(iaqi: Iaqi) {
         pollutantsList.clear()
-        if (iaqi.co != null) pollutantsList.add(Pollutant("Carbon Monoxide - AQI", iaqi.co!!.v!!))
-        if (iaqi.no2 != null) pollutantsList.add(Pollutant("Nitrous Dioxide - AQI", iaqi.no2!!.v!!))
-        if (iaqi.o3 != null) pollutantsList.add(Pollutant("Ozone - AQI", iaqi.o3!!.v!!))
-        if (iaqi.pm2_5 != null) pollutantsList.add(Pollutant("PM 2.5 - AQI", iaqi.pm2_5!!.v!!))
-        if (iaqi.pm10 != null) pollutantsList.add(Pollutant("PM 10 - AQI", iaqi.pm10!!.v!!))
-        if (iaqi.so2 != null) pollutantsList.add(Pollutant("Sulfur Dioxide - AQI", iaqi.so2!!.v!!))
+        iaqi.co?.apply { pollutantsList.add(Pollutant("Carbon Monoxide - AQI", iaqi.co?.v ?: 0.0)) }
+        iaqi.no2?.apply {
+            pollutantsList.add(Pollutant("Nitrous Dioxide - AQI", iaqi.no2?.v ?: 0.0))
+        }
+        iaqi.o3?.apply { pollutantsList.add(Pollutant("Ozone - AQI", iaqi.o3?.v ?: 0.0)) }
+        iaqi.pm2_5?.apply { pollutantsList.add(Pollutant("PM 2.5 - AQI", iaqi.pm2_5?.v ?: 0.0)) }
+        iaqi.pm10?.apply { pollutantsList.add(Pollutant("PM 10 - AQI", iaqi.pm10?.v ?: 0.0)) }
+        iaqi.so2?.apply {
+            pollutantsList.add(Pollutant("Sulfur Dioxide - AQI", iaqi.so2?.v ?: 0.0))
+        }
         pollutantsAdapter = PollutantsAdapter(pollutantsList)
-        pollutantsRecyclerView!!.adapter = pollutantsAdapter
+        pollutantsRecyclerView?.adapter = pollutantsAdapter
     }
 
     private fun setAqiScaleGroup() {
-        val aqi = data.aqi
-        lateinit var aqiScaleText: TextView
-        if (aqi != null) {
-            aqiScaleText = if (aqi >= 0 && aqi <= 50) findViewById(R.id.scaleGood) else if (aqi >= 51 && aqi <= 100) findViewById(R.id.scaleModerate) else if (aqi >= 101 && aqi <= 150) findViewById(R.id.scaleUnhealthySensitive) else if (aqi >= 151 && aqi <= 200) findViewById(R.id.scaleUnhealthy) else if (aqi >= 201 && aqi <= 300) findViewById(R.id.scaleVeryUnhealthy) else if (aqi >= 301) findViewById(R.id.scaleHazardous) else findViewById(R.id.scaleGood)
+        var aqiScaleText: TextView? = null
+        data?.aqi?.apply {
+            aqiScaleText = when (this) {
+                in 0..50 -> findViewById(R.id.scaleGood)
+                in 51..100 -> findViewById(R.id.scaleModerate)
+                in 101..150 -> findViewById(R.id.scaleUnhealthySensitive)
+                in 151..200 -> findViewById(R.id.scaleUnhealthy)
+                in 201..300 -> findViewById(R.id.scaleVeryUnhealthy)
+                else -> findViewById(R.id.scaleHazardous)
+            }
         }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            aqiScaleText.foreground = getDrawable(R.drawable.selected_aqi_foreground)
+            aqiScaleText?.foreground = getDrawable(R.drawable.selected_aqi_foreground)
         }
     }
 
     private fun showDialog(s: String) {
-        instance!!.showProgressDialog(this, s)
+        instance?.showProgressDialog(this, s)
     }
 
     private fun dismissDialog() {
-        instance!!.dismissProgressDialog()
+        instance?.dismissProgressDialog()
     }
 
     private fun checkLocationPermission() {
@@ -234,7 +232,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             MY_PERMISSIONS_REQUEST_LOCATION -> {
 
                 // If request is cancelled, the result arrays are empty.
-                if (grantResults.size > 0
+                if (grantResults.isNotEmpty()
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     if (ContextCompat.checkSelfPermission(this,
                                     Manifest.permission.ACCESS_FINE_LOCATION)
@@ -252,79 +250,86 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun getAqiData(latitude: String, longitude: String) {
         val geo = "geo:$latitude;$longitude"
-        aqiViewModel!!.status.observe(this@MainActivity, Observer { status: Status? ->
+        aqiViewModel.status.observe(this@MainActivity, Observer { status: Status? ->
             if (status != null) {
                 if (status === Status.FETCHING) {
                     showDialog("Getting data from nearest station...")
                 } else dismissDialog()
             }
         })
-        aqiViewModel!!.getGPSApiResponse(geo).observe(this@MainActivity, Observer { apiResponse: ApiResponse? ->
+        aqiViewModel.getGPSApiResponse(geo).observe(this@MainActivity, Observer { apiResponse: ApiResponse? ->
             if (apiResponse != null) {
                 Log.d("api", apiResponse.toString())
-                data = apiResponse.data!!
-                aqiTextView!!.text = data.aqi.toString()
+                data = apiResponse.data
+                aqiTextView?.text = data?.aqi?.toString()
                 //TODO: Find better implementation
-                sharedPrefUtils!!.saveLatestAQI(data.aqi.toString())
+                sharedPrefUtils?.saveLatestAQI(data?.aqi?.toString())
                 setAqiScaleGroup()
-                val iaqi = data.iaqi
-                if (iaqi?.temperature != null) temperatureTextView!!.text = getString(R.string.temperature_unit_celsius, data.iaqi?.temperature!!.v)
-                if (iaqi?.pressure != null) pressureTextView!!.text = getString(R.string.pressure_unit, iaqi.pressure!!.v)
-                if (iaqi?.humidity != null) humidityTextView!!.text = getString(R.string.humidity_unit, iaqi.humidity!!.v)
-                if (iaqi?.wind != null) windTextView!!.text = getString(R.string.wind_unit, iaqi.wind!!.v)
-                locationTextView!!.text = data.city?.name
-                setupAttributions(data)
-                addPollutantsToList(data.iaqi!!)
-                pollutantsAdapter!!.notifyDataSetChanged()
-                updateWidget()
+
+                data?.iaqi?.apply {
+                    temperatureTextView?.text = getString(R.string.temperature_unit_celsius, this.temperature?.v)
+                    pressureTextView?.text = getString(R.string.pressure_unit, this.pressure?.v)
+                    humidityTextView?.text = getString(R.string.humidity_unit, this.humidity?.v)
+                    windTextView?.text = getString(R.string.wind_unit, this.wind?.v)
+                    locationTextView?.text = data?.city?.name
+                    setupAttributions(data)
+                    addPollutantsToList(this)
+                    pollutantsAdapter?.notifyDataSetChanged()
+                    updateWidget()
+                }
             }
         })
     }
 
     //TODO: Find better implementation
     private val aqiData: Unit
-        private get() {
-            aqiViewModel!!.status.observe(this@MainActivity, Observer { status: Status? ->
-                if (status != null) {
-                    if (status === Status.FETCHING) {
-                        showDialog("Getting data based on network...")
-                    } else dismissDialog()
-                }
-            })
-            aqiViewModel!!.apiResponse.observe(this@MainActivity, Observer { apiResponse: ApiResponse? ->
-                if (apiResponse != null) {
-                    Log.d("api", apiResponse.toString())
-                    data = apiResponse.data!!
-                    aqiTextView!!.text = data.aqi.toString()
-                    //TODO: Find better implementation
-                    sharedPrefUtils!!.saveLatestAQI(data.aqi.toString())
-                    setAqiScaleGroup()
-                    val iaqi = data.iaqi
-                    if (iaqi?.temperature != null) temperatureTextView!!.text = getString(R.string.temperature_unit_celsius, data.iaqi?.temperature!!.v)
-                    if (iaqi?.pressure != null) pressureTextView!!.text = getString(R.string.pressure_unit, iaqi.pressure!!.v)
-                    if (iaqi?.humidity != null) humidityTextView!!.text = getString(R.string.humidity_unit, iaqi.humidity!!.v)
-                    if (iaqi?.wind != null) windTextView!!.text = getString(R.string.wind_unit, iaqi.wind!!.v)
-                    locationTextView!!.text = data.city?.name
-                    setupAttributions(data)
-                    addPollutantsToList(data.iaqi!!)
-                    pollutantsAdapter!!.notifyDataSetChanged()
-                    updateWidget()
-                }
-            })
+        get() {
+            if (::aqiViewModel.isInitialized) {
+                aqiViewModel.status.observe(this@MainActivity, Observer { status: Status? ->
+                    if (status != null) {
+                        if (status === Status.FETCHING) {
+                            showDialog("Getting data based on network...")
+                        } else dismissDialog()
+                    }
+                })
+                aqiViewModel.apiResponse.observe(this@MainActivity, Observer { apiResponse: ApiResponse? ->
+                    if (apiResponse != null) {
+                        Log.d("api", apiResponse.toString())
+                        data = apiResponse.data
+                        aqiTextView?.text = data?.aqi?.toString()
+                        //TODO: Find better implementation
+                        sharedPrefUtils?.saveLatestAQI(data?.aqi?.toString())
+                        setAqiScaleGroup()
+                        data?.iaqi?.apply {
+                            temperatureTextView?.text = getString(R.string.temperature_unit_celsius, this.temperature?.v)
+                            pressureTextView?.text = getString(R.string.pressure_unit, this.pressure?.v)
+                            humidityTextView?.text = getString(R.string.humidity_unit, this.humidity?.v)
+                            windTextView?.text = getString(R.string.wind_unit, this.wind?.v)
+                            locationTextView?.text = data?.city?.name
+                            setupAttributions(data)
+                            addPollutantsToList(this)
+                            pollutantsAdapter?.notifyDataSetChanged()
+                            updateWidget()
+                        }
+                    }
+                })
+            }
         }
 
-    private fun setupAttributions(data: Data) {
-        var index = 1
-        val attributionText = StringBuilder()
-        for (attribution in data.attributions!!) {
-            attributionText.append(index++)
-                    .append(". ")
-                    .append(attribution.name)
-                    .append("\n")
-                    .append(attribution.url)
-                    .append("\n\n")
+    private fun setupAttributions(data: Data?) {
+        data?.attributions?.apply {
+            var index = 1
+            val attributionText = StringBuilder()
+            for (attribution in this) {
+                attributionText.append(index++)
+                        .append(". ")
+                        .append(attribution.name)
+                        .append("\n")
+                        .append(attribution.url)
+                        .append("\n\n")
+            }
+            attributionTextView?.text = attributionText
         }
-        attributionTextView!!.text = attributionText
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -358,7 +363,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun setupRateCard() {
         if (!sharedPrefUtils!!.rateCardDone() && System.currentTimeMillis() - sharedPrefUtils!!.appInstallTime!! >= 86400000) {
-            rateUsCard!!.visibility = View.VISIBLE
+            rateUsCard.visibility = View.VISIBLE
         }
     }
 
@@ -371,21 +376,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             R.id.scaleVeryUnhealthy -> InfoDialog(this@MainActivity, PollutionLevels.VERY_UNHEALTHY).show()
             R.id.scaleHazardous -> InfoDialog(this@MainActivity, PollutionLevels.HAZARDOUS).show()
             R.id.btnDarkMode -> {
-                sharedPrefUtils!!.isDarkMode(!sharedPrefUtils!!.isDarkMode)
+                sharedPrefUtils?.isDarkMode(!sharedPrefUtils!!.isDarkMode)
                 recreate()
             }
             R.id.btnShare -> shareApp()
-            R.id.rateNo -> rateUsCard!!.animate().alpha(0.0f).translationX(200f).setDuration(500).withEndAction {
-                rateUsCard!!.visibility = View.GONE
-                sharedPrefUtils!!.rateCardDone(true)
+            R.id.rateNo -> rateUsCard.animate().alpha(0.0f).translationX(200f).setDuration(500).withEndAction {
+                rateUsCard.visibility = View.GONE
+                sharedPrefUtils?.rateCardDone(true)
             }
             R.id.rateYes -> {
-                sharedPrefUtils!!.rateCardDone(true)
-                rateUsCard!!.visibility = View.GONE
+                sharedPrefUtils?.rateCardDone(true)
+                rateUsCard.visibility = View.GONE
                 val uri = Uri.parse("https://play.google.com/store/apps/details?id=com.piyushsatija.pollutionmonitor")
                 startActivity(Intent(Intent.ACTION_VIEW, uri))
-            }
-            else -> {
             }
         }
     }

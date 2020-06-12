@@ -14,7 +14,7 @@ import java.io.IOException
 class DataUpdateWorker(private val context: Context, workerParams: WorkerParameters) : Worker(context, workerParams) {
     private val sharedPrefUtils: SharedPrefUtils? = SharedPrefUtils.getInstance(context)
     override fun doWork(): Result {
-        val apiResponseCall = instance!!.apiInterface.getAQI(BuildConfig.ApiKey)
+        val apiResponseCall = instance?.apiInterface?.getAQI(BuildConfig.ApiKey)
         try {
             val response = apiResponseCall?.execute()
             if (response != null) {

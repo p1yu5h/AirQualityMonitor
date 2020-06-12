@@ -108,4 +108,4 @@
     @android.arch.lifecycle.OnLifecycleEvent *;
 }
 
--keep class com.piyushsatija.pollutionmonitor.**
+-keep class com.piyushsatija.pollutionmonitor.** { *; }

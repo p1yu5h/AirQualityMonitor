@@ -29,12 +29,12 @@ import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import com.google.android.gms.location.*
-import com.google.android.gms.tasks.Task
 import com.google.firebase.messaging.FirebaseMessaging
 import com.piyushsatija.pollutionmonitor.*
 import com.piyushsatija.pollutionmonitor.R
-import com.piyushsatija.pollutionmonitor.RetrofitHelper.Companion.instance
+import com.piyushsatija.pollutionmonitor.api.RetrofitHelper.Companion.instance
 import com.piyushsatija.pollutionmonitor.adapters.PollutantsAdapter
+import com.piyushsatija.pollutionmonitor.api.ApiResponse
 import com.piyushsatija.pollutionmonitor.model.*
 import com.piyushsatija.pollutionmonitor.utils.GPSUtils
 import com.piyushsatija.pollutionmonitor.utils.SharedPrefUtils

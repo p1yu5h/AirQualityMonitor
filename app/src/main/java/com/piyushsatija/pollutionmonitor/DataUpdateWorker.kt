@@ -7,7 +7,7 @@ import android.content.Intent
 import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.piyushsatija.pollutionmonitor.RetrofitHelper.Companion.instance
+import com.piyushsatija.pollutionmonitor.api.RetrofitHelper.Companion.instance
 import com.piyushsatija.pollutionmonitor.utils.SharedPrefUtils
 import java.io.IOException
 

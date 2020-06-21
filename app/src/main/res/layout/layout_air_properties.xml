@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/pressure_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/aqi_color_scale"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="16dp"
+    android:background="#55FFFFFF"
+    android:paddingVertical="8dp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/pressureIcon"
+        android:layout_width="0dp"
+        android:layout_height="36dp"
+        android:layout_marginVertical="8dp"
+        android:tint="@color/lemonYellow"
+        app:layout_constraintBottom_toTopOf="@id/pressureTextView"
+        app:layout_constraintEnd_toEndOf="@id/pressureTextView"
+        app:layout_constraintStart_toStartOf="@id/pressureTextView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_pressure" />
+
+    <TextView
+        android:id="@+id/pressureTextView"
+        style="@style/TextAppearance"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:text="@string/place_holder"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/humidityTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pressureIcon" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/humidityIcon"
+        android:layout_width="0dp"
+        android:layout_height="36dp"
+        android:layout_marginVertical="8dp"
+        android:tint="@color/lemonYellow"
+        app:layout_constraintBottom_toTopOf="@id/humidityTextView"
+        app:layout_constraintEnd_toEndOf="@id/humidityTextView"
+        app:layout_constraintStart_toStartOf="@id/humidityTextView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_humidity" />
+
+    <TextView
+        android:id="@+id/humidityTextView"
+        style="@style/TextAppearance"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:text="@string/place_holder"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/windTextView"
+        app:layout_constraintStart_toEndOf="@id/pressureTextView"
+        app:layout_constraintTop_toBottomOf="@id/humidityIcon" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/windIcon"
+        android:layout_width="0dp"
+        android:layout_height="36dp"
+        android:layout_marginVertical="8dp"
+        android:tint="@color/lemonYellow"
+        app:layout_constraintBottom_toTopOf="@id/windTextView"
+        app:layout_constraintEnd_toEndOf="@id/windTextView"
+        app:layout_constraintStart_toStartOf="@id/windTextView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_wind" />
+
+    <TextView
+        android:id="@+id/windTextView"
+        style="@style/TextAppearance"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:text="@string/place_holder"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/humidityTextView"
+        app:layout_constraintTop_toBottomOf="@id/windIcon" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

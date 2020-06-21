@@ -30,9 +30,9 @@
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:clickable="true"
                     android:focusable="true"
-                    app:srcCompat="@drawable/ic_dark_mode"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/aqi_background" />
+                    app:layout_constraintTop_toTopOf="@id/aqi_background"
+                    app:srcCompat="@drawable/ic_dark_mode" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/btnShare"
@@ -43,9 +43,9 @@
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:clickable="true"
                     android:focusable="true"
-                    app:srcCompat="@drawable/ic_share"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btnDarkMode" />
+                    app:layout_constraintTop_toBottomOf="@+id/btnDarkMode"
+                    app:srcCompat="@drawable/ic_share" />
 
                 <TextView
                     android:id="@+id/aqiTitle"
@@ -106,8 +106,8 @@
                         android:layout_height="20dp"
                         android:elevation="2dp"
                         android:padding="2dp"
-                        app:srcCompat="@drawable/icon_thermometer"
                         android:tint="@color/white"
+                        app:srcCompat="@drawable/icon_thermometer"
                         tools:ignore="ContentDescription" />
 
                     <TextView
@@ -125,10 +125,10 @@
                     android:layout_width="200dp"
                     android:layout_height="200dp"
                     android:layout_marginTop="32dp"
-                    app:srcCompat="@drawable/circle"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/circle"
                     tools:ignore="ContentDescription" />
 
                 <LinearLayout
@@ -179,92 +179,16 @@
                 android:id="@+id/aqi_color_scale"
                 layout="@layout/aqi_color_scale" />
 
-            <LinearLayout
-                android:id="@+id/pressure_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/aqi_color_scale"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:background="#55FFFFFF"
-                android:baselineAligned="false"
-                android:orientation="horizontal"
-                android:weightSum="3">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/TextAppearanceHeading"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="@string/pressure" />
-
-                    <TextView
-                        android:id="@+id/pressureTextView"
-                        style="@style/TextAppearance"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="@string/place_holder" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/TextAppearanceHeading"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="@string/humidity" />
-
-                    <TextView
-                        android:id="@+id/humidityTextView"
-                        style="@style/TextAppearance"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="@string/place_holder" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/TextAppearanceHeading"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="@string/wind" />
-
-                    <TextView
-                        android:id="@+id/windTextView"
-                        style="@style/TextAppearance"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="@string/place_holder" />
-                </LinearLayout>
-
-            </LinearLayout>
+            <include
+                android:id="@+id/airPropertiesLayout"
+                layout="@layout/layout_air_properties" />
 
             <TextView
                 android:id="@+id/pollutantsTitleTextView"
                 style="@style/TextAppearanceHeading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/pressure_layout"
+                android:layout_below="@+id/airPropertiesLayout"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginRight="16dp"

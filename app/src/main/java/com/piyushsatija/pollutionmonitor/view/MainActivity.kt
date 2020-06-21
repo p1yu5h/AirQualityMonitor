@@ -30,11 +30,13 @@ import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import com.google.android.gms.location.*
 import com.google.firebase.messaging.FirebaseMessaging
-import com.piyushsatija.pollutionmonitor.*
+import com.piyushsatija.pollutionmonitor.AQIWidget
+import com.piyushsatija.pollutionmonitor.AqiViewModel
+import com.piyushsatija.pollutionmonitor.DataUpdateWorker
 import com.piyushsatija.pollutionmonitor.R
-import com.piyushsatija.pollutionmonitor.api.RetrofitHelper.Companion.instance
 import com.piyushsatija.pollutionmonitor.adapters.PollutantsAdapter
 import com.piyushsatija.pollutionmonitor.api.ApiResponse
+import com.piyushsatija.pollutionmonitor.api.RetrofitHelper.Companion.instance
 import com.piyushsatija.pollutionmonitor.model.*
 import com.piyushsatija.pollutionmonitor.utils.GPSUtils
 import com.piyushsatija.pollutionmonitor.utils.SharedPrefUtils
@@ -268,9 +270,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
                 data?.iaqi?.apply {
                     temperatureTextView?.text = getString(R.string.temperature_unit_celsius, this.temperature?.v)
-                    pressureTextView?.text = getString(R.string.pressure_unit, this.pressure?.v)
-                    humidityTextView?.text = getString(R.string.humidity_unit, this.humidity?.v)
-                    windTextView?.text = getString(R.string.wind_unit, this.wind?.v)
+                    airPropertiesLayout.findViewById<TextView>(R.id.pressureTextView)?.text = getString(R.string.pressure_unit, this.pressure?.v)
+                    airPropertiesLayout.findViewById<TextView>(R.id.humidityTextView)?.text = getString(R.string.humidity_unit, this.humidity?.v)
+                    airPropertiesLayout.findViewById<TextView>(R.id.windTextView)?.text = getString(R.string.wind_unit, this.wind?.v)
                     locationTextView?.text = data?.city?.name
                     setupAttributions(data)
                     addPollutantsToList(this)
@@ -302,9 +304,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         setAqiScaleGroup()
                         data?.iaqi?.apply {
                             temperatureTextView?.text = getString(R.string.temperature_unit_celsius, this.temperature?.v)
-                            pressureTextView?.text = getString(R.string.pressure_unit, this.pressure?.v)
-                            humidityTextView?.text = getString(R.string.humidity_unit, this.humidity?.v)
-                            windTextView?.text = getString(R.string.wind_unit, this.wind?.v)
+                            airPropertiesLayout.findViewById<TextView>(R.id.pressureTextView)?.text = getString(R.string.pressure_unit, this.pressure?.v)
+                            airPropertiesLayout.findViewById<TextView>(R.id.humidityTextView)?.text = getString(R.string.humidity_unit, this.humidity?.v)
+                            airPropertiesLayout.findViewById<TextView>(R.id.windTextView)?.text = getString(R.string.wind_unit, this.wind?.v)
                             locationTextView?.text = data?.city?.name
                             setupAttributions(data)
                             addPollutantsToList(this)

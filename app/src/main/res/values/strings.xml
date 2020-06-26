@@ -54,4 +54,9 @@
     <string name="rateUsDesc">Ratings will help us continue improving this app and adding new features.</string>
     <string name="rateUsYes">Sure</string>
     <string name="rateUsNo">No Thanks.</string>
+
+    <!--Bottom Navigation-->
+    <string name="bottomNavAQI">AQI</string>
+    <string name="bottomNavSearch">Search</string>
+    <string name="bottomNavSettings">Settings</string>
 </resources>

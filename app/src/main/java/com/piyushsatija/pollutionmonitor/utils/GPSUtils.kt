@@ -50,6 +50,7 @@ class GPSUtils(private val context: Context) {
     companion object {
         private val TAG = GPSUtils::class.java.simpleName
         const val GPS_REQUEST = 111
+        const val MY_PERMISSIONS_REQUEST_LOCATION = 99
     }
 
     init {

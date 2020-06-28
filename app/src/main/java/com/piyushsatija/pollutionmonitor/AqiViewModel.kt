@@ -49,6 +49,7 @@ class AqiViewModel : ViewModel() {
 
             override fun onFailure(call: Call<ApiResponse?>, t: Throwable) {
                 Log.e(logTag, "loadApiResponse", t)
+                mStatus.value = Status.ERROR
             }
         })
     }
@@ -65,12 +66,13 @@ class AqiViewModel : ViewModel() {
                 if (response.body() == null) {
                     return
                 }
-                searchResponse?.value = response.body()
+                searchResponse.value = response.body()
                 mStatus.value = Status.DONE
             }
 
             override fun onFailure(call: Call<SearchResponse?>, t: Throwable) {
                 Log.e(logTag, "searchKeyword", t)
+                mStatus.value = Status.ERROR
             }
         })
     }
@@ -101,6 +103,7 @@ class AqiViewModel : ViewModel() {
 
             override fun onFailure(call: Call<ApiResponse?>, t: Throwable) {
                 Log.e(logTag, "loadGPSBasedApiResponse", t)
+                mStatus.value = Status.ERROR
             }
         })
     }

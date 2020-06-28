@@ -1,0 +1,148 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/aqua"
+    tools:context="com.piyushsatija.pollutionmonitor.view.fragment.SettingsFragment">
+
+    <TextView
+        android:id="@+id/settingsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="25dp"
+        android:text="@string/bottomNavSettings"
+        android:textColor="@color/white"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/windSpeedTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Wind Speed"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@id/settingsTitle"
+        app:layout_constraintTop_toBottomOf="@+id/settingsTitle" />
+
+    <TextView
+        android:id="@+id/windSpeedCTA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Km/h"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@id/settingsTitle"
+        app:layout_constraintTop_toBottomOf="@+id/settingsTitle" />
+
+    <View
+        android:id="@+id/separator1"
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="@id/settingsTitle"
+        app:layout_constraintStart_toStartOf="@id/settingsTitle"
+        app:layout_constraintTop_toBottomOf="@id/windSpeedTextView" />
+
+    <TextView
+        android:id="@+id/temperatureTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Temperature"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@id/settingsTitle"
+        app:layout_constraintTop_toBottomOf="@+id/separator1" />
+
+    <TextView
+        android:id="@+id/temperatureCTA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="°C"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@id/settingsTitle"
+        app:layout_constraintTop_toBottomOf="@+id/separator1" />
+
+    <View
+        android:id="@+id/separator2"
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="@id/settingsTitle"
+        app:layout_constraintStart_toStartOf="@id/settingsTitle"
+        app:layout_constraintTop_toBottomOf="@id/temperatureTextView" />
+
+    <TextView
+        android:id="@+id/darkModeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Dark Mode"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@id/settingsTitle"
+        app:layout_constraintTop_toBottomOf="@id/separator2" />
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/darkModeCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:buttonTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/darkModeTextView"
+        app:layout_constraintEnd_toEndOf="@id/settingsTitle"
+        app:layout_constraintTop_toTopOf="@id/darkModeTextView" />
+
+    <View
+        android:id="@+id/separator3"
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="@id/settingsTitle"
+        app:layout_constraintStart_toStartOf="@id/settingsTitle"
+        app:layout_constraintTop_toBottomOf="@id/darkModeTextView" />
+
+    <TextView
+        android:id="@+id/appVersionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="App Version"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@id/settingsTitle"
+        app:layout_constraintTop_toBottomOf="@id/separator3" />
+
+    <TextView
+        android:id="@+id/appVersion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="1.0.0"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@id/settingsTitle"
+        app:layout_constraintTop_toBottomOf="@id/separator3" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="@id/settingsTitle"
+        app:layout_constraintStart_toStartOf="@id/settingsTitle"
+        app:layout_constraintTop_toBottomOf="@id/darkModeTextView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

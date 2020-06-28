@@ -67,23 +67,7 @@ class AQIFragment : Fragment(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         sharedPrefUtils = SharedPrefUtils.getInstance(requireContext())
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R
-                .layout.fragment_aqi, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        setupClickListeners()
-        setupRecyclerView()
-        setupRateCard()
         aqiViewModel = ViewModelProvider(this).get(AqiViewModel::class.java)
 
         locationManager = context!!.getSystemService(Context.LOCATION_SERVICE) as? LocationManager
@@ -105,6 +89,18 @@ class AQIFragment : Fragment(), View.OnClickListener {
         scheduleWidgetUpdater()
     }
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_aqi, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupClickListeners()
+        setupRecyclerView()
+        setupRateCard()
+    }
+
     private fun checkGPSAndRequestLocation() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (context!!.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && context!!.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -114,9 +110,7 @@ class AQIFragment : Fragment(), View.OnClickListener {
                     //Call for AQI data based on location is done in "locationCallback"
                     fusedLocationClient!!.requestLocationUpdates(locationRequest, locationCallback, null)
                 } else {
-//                    context?.run {
                     GPSUtils(context!!).turnGPSOn()
-//                    }
                 }
             }
         }

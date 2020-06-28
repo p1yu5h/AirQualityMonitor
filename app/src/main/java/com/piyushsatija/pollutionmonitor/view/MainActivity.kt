@@ -16,6 +16,7 @@ import com.piyushsatija.pollutionmonitor.R
 import com.piyushsatija.pollutionmonitor.utils.GPSUtils
 import com.piyushsatija.pollutionmonitor.utils.SharedPrefUtils
 import com.piyushsatija.pollutionmonitor.view.fragment.AQIFragment
+import com.piyushsatija.pollutionmonitor.view.fragment.SearchFragment
 import com.piyushsatija.pollutionmonitor.view.fragment.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private val logTag = javaClass.simpleName
     private var sharedPrefUtils: SharedPrefUtils? = null
     private var aqiFragment = AQIFragment()
+    private var searchFragment = SearchFragment()
     private var settingsFragment = SettingsFragment()
     private val fm = supportFragmentManager
     private var currentFragment: Fragment = aqiFragment
@@ -39,6 +41,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     .addOnCompleteListener { Log.d("FCM", "Subscribed to \"weather\"") }
 
             fm.beginTransaction().add(R.id.fragmentContainer, settingsFragment, "settings").hide(settingsFragment).commit()
+            fm.beginTransaction().add(R.id.fragmentContainer, searchFragment, "search").hide(searchFragment).commit()
             fm.beginTransaction().add(R.id.fragmentContainer, aqiFragment, "aqi").commit()
 
             bottomNavigation.setOnNavigationItemSelectedListener(this)
@@ -81,6 +84,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 return true
             }
             R.id.searchNav -> {
+                fm.beginTransaction().hide(currentFragment).show(searchFragment).commit()
+                currentFragment = searchFragment
                 return true
             }
             R.id.settingsNav -> {

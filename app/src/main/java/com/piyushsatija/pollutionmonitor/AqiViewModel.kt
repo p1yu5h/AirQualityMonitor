@@ -19,6 +19,7 @@ class AqiViewModel : ViewModel() {
     private val mRetrofitHelper: RetrofitHelper? = instance
     private var mApiInterface: ApiInterface? = null
     private var mApiResponse: MutableLiveData<ApiResponse?>? = null
+    var searchResponse =  MutableLiveData<SearchResponse>()
     private val mStatus = MutableLiveData<Status>()
     private val apiKey = BuildConfig.ApiKey
     val apiResponse: LiveData<ApiResponse?>
@@ -64,6 +65,7 @@ class AqiViewModel : ViewModel() {
                 if (response.body() == null) {
                     return
                 }
+                searchResponse?.value = response.body()
                 mStatus.value = Status.DONE
             }
 

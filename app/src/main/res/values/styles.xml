@@ -23,6 +23,8 @@
         <item name="android:windowActivityTransitions">true</item>
         <item name="android:navigationBarColor">@color/aqua</item>
         <item name="android:windowBackground">@color/aqua</item>
+        <item name="android:editTextColor">@android:color/white</item>
+        <item name="android:textColorHint">@android:color/white</item>
     </style>
 
     <!--Dark Theme-->
@@ -35,6 +37,8 @@
         <item name="android:windowActivityTransitions">true</item>
         <item name="android:navigationBarColor">@color/darkGrey</item>
         <item name="android:windowBackground">@color/darkGrey</item>
+        <item name="android:editTextColor">@android:color/white</item>
+        <item name="android:textColorHint">@android:color/white</item>
     </style>
 
     <!-- Text styles -->

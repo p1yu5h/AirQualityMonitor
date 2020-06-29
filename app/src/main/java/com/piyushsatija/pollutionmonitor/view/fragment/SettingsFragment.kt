@@ -27,6 +27,25 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        windSpeedCTA.text = when (sharedPrefUtils!!.getStringValue(Constants.WINDSPEED_UNIT, Constants.WINDSPEED_MPS)) {
+            Constants.WINDSPEED_MPS -> getString(R.string.mps)
+            Constants.WINDSPEED_KMPH -> getString(R.string.kmph)
+            else -> getString(R.string.mps) //fallback
+        }
+
+        windSpeedCTA.setOnClickListener {
+            val previousSelection = sharedPrefUtils!!.getStringValue(Constants.WINDSPEED_UNIT, Constants.WINDSPEED_MPS)
+            showSingleChoiceDialog("Wind speed units", arrayOf(Constants.WINDSPEED_MPS, Constants.WINDSPEED_KMPH), previousSelection) { selectedItem: String ->
+                sharedPrefUtils!!.saveStringValue(Constants.WINDSPEED_UNIT, selectedItem)
+                windSpeedCTA.text = when (selectedItem) {
+                    Constants.WINDSPEED_MPS -> getString(R.string.mps)
+                    Constants.WINDSPEED_KMPH -> getString(R.string.kmph)
+                    else -> getString(R.string.mps) //fallback
+                }
+            }
+        }
+
+
         temperatureCTA.text = when (sharedPrefUtils!!.getStringValue(Constants.TEMPERATURE_UNIT, Constants.TEMPERATURE_CELSIUS)) {
             Constants.TEMPERATURE_CELSIUS -> getString(R.string.celsiusSymbol)
             Constants.TEMPERATURE_FAHRENHEIT -> getString(R.string.fahrenheitSymbol)

@@ -171,7 +171,7 @@ class AQIFragment : Fragment(), View.OnClickListener {
                     temperatureTextView?.text = getString(R.string.temperature_unit_celsius, this.temperature?.v)
                     airPropertiesLayout.findViewById<TextView>(R.id.pressureTextView)?.text = getString(R.string.pressure_unit, this.pressure?.v)
                     airPropertiesLayout.findViewById<TextView>(R.id.humidityTextView)?.text = getString(R.string.humidity_unit, this.humidity?.v)
-                    airPropertiesLayout.findViewById<TextView>(R.id.windTextView)?.text = getString(R.string.wind_unit, this.wind?.v)
+                    airPropertiesLayout.findViewById<TextView>(R.id.windTextView)?.text = getString(R.string.wind_unit_mps, this.wind?.v)
                     locationTextView?.text = data?.city?.name
                     setupAttributions(data)
                     addPollutantsToList(this)
@@ -204,7 +204,7 @@ class AQIFragment : Fragment(), View.OnClickListener {
                             temperatureTextView?.text = getString(R.string.temperature_unit_celsius, this.temperature?.v)
                             airPropertiesLayout.findViewById<TextView>(R.id.pressureTextView)?.text = getString(R.string.pressure_unit, this.pressure?.v)
                             airPropertiesLayout.findViewById<TextView>(R.id.humidityTextView)?.text = getString(R.string.humidity_unit, this.humidity?.v)
-                            airPropertiesLayout.findViewById<TextView>(R.id.windTextView)?.text = getString(R.string.wind_unit, this.wind?.v)
+                            airPropertiesLayout.findViewById<TextView>(R.id.windTextView)?.text = getString(R.string.wind_unit_mps, this.wind?.v)
                             locationTextView?.text = data?.city?.name
                             setupAttributions(data)
                             addPollutantsToList(this)

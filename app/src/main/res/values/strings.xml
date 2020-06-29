@@ -8,7 +8,7 @@
     <string name="humidity_unit">%1$.0f%%</string>
     <string name="pressure_unit">%1$.1f mb</string>
     <string name="wind_unit_mps">%1$.1f m/s</string>
-    <string name="wind_unit_kmph">%1$.1f m/s</string>
+    <string name="wind_unit_kmph">%1$.1f km/h</string>
     <string name="mps">m/s</string>
     <string name="kmph">km/h</string>
 

@@ -164,55 +164,23 @@ class AQIFragment : Fragment(), View.OnClickListener {
 
     private fun getAqiData(latitude: String, longitude: String) {
         val geo = "geo:$latitude;$longitude"
-        aqiViewModel.status.observe(activity!!, Observer { status: Status? ->
-            if (status != null) {
-                if (status === Status.FETCHING) {
-                    showDialog("Getting data from nearest station...")
-                } else dismissDialog()
-            }
-        })
-        aqiViewModel.getGPSApiResponse(geo).observe(activity!!, Observer { apiResponse: ApiResponse? ->
-            if (apiResponse != null) {
-                Log.d("api", apiResponse.toString())
-                data = apiResponse.data
-                aqiTextView?.text = data?.aqi?.toString()
-                //TODO: Find better implementation
-                sharedPrefUtils?.saveLatestAQI(data?.aqi?.toString())
-                setAqiScaleGroup()
-
-                data?.iaqi?.apply {
-                    temperatureTextView?.text = getTemperatureValue(this.temperature?.v)
-                    airPropertiesLayout.findViewById<TextView>(R.id.pressureTextView)?.text = getString(R.string.pressure_unit, this.pressure?.v)
-                    airPropertiesLayout.findViewById<TextView>(R.id.humidityTextView)?.text = getString(R.string.humidity_unit, this.humidity?.v)
-                    airPropertiesLayout.findViewById<TextView>(R.id.windTextView)?.text = getWindSpeedValue(this.wind?.v)
-                    locationTextView?.text = data?.city?.name
-                    setupAttributions(data)
-                    addPollutantsToList(this)
-                    pollutantsAdapter?.notifyDataSetChanged()
-                    updateWidget()
-                }
-            }
-        })
-    }
-
-    private val aqiData: Unit
-        get() {
-            if (::aqiViewModel.isInitialized) {
-                aqiViewModel.status.observe(activity!!, Observer { status: Status? ->
+        if (::aqiViewModel.isInitialized && isAdded) {
+            activity?.apply {
+                aqiViewModel.status.observe(this, Observer { status: Status? ->
                     if (status != null) {
                         if (status === Status.FETCHING) {
-                            showDialog("Getting data based on network...")
+                            showDialog("Getting data from nearest station...")
                         } else dismissDialog()
                     }
                 })
-                aqiViewModel.apiResponse.observe(activity!!, Observer { apiResponse: ApiResponse? ->
+                aqiViewModel.getGPSApiResponse(geo).observe(this, Observer { apiResponse: ApiResponse? ->
                     if (apiResponse != null) {
                         Log.d("api", apiResponse.toString())
                         data = apiResponse.data
                         aqiTextView?.text = data?.aqi?.toString()
-                        //TODO: Find better implementation
                         sharedPrefUtils?.saveLatestAQI(data?.aqi?.toString())
                         setAqiScaleGroup()
+
                         data?.iaqi?.apply {
                             temperatureTextView?.text = getTemperatureValue(this.temperature?.v)
                             airPropertiesLayout.findViewById<TextView>(R.id.pressureTextView)?.text = getString(R.string.pressure_unit, this.pressure?.v)
@@ -226,6 +194,42 @@ class AQIFragment : Fragment(), View.OnClickListener {
                         }
                     }
                 })
+            }
+        }
+    }
+
+    private val aqiData: Unit
+        get() {
+            if (::aqiViewModel.isInitialized && isAdded) {
+                activity?.apply {
+                    aqiViewModel.status.observe(this, Observer { status: Status? ->
+                        if (status != null) {
+                            if (status === Status.FETCHING) {
+                                showDialog("Getting data based on network...")
+                            } else dismissDialog()
+                        }
+                    })
+                    aqiViewModel.apiResponse.observe(this, Observer { apiResponse: ApiResponse? ->
+                        if (apiResponse != null) {
+                            Log.d("api", apiResponse.toString())
+                            data = apiResponse.data
+                            aqiTextView?.text = data?.aqi?.toString()
+                            sharedPrefUtils?.saveLatestAQI(data?.aqi?.toString())
+                            setAqiScaleGroup()
+                            data?.iaqi?.apply {
+                                temperatureTextView?.text = getTemperatureValue(this.temperature?.v)
+                                airPropertiesLayout.findViewById<TextView>(R.id.pressureTextView)?.text = getString(R.string.pressure_unit, this.pressure?.v)
+                                airPropertiesLayout.findViewById<TextView>(R.id.humidityTextView)?.text = getString(R.string.humidity_unit, this.humidity?.v)
+                                airPropertiesLayout.findViewById<TextView>(R.id.windTextView)?.text = getWindSpeedValue(this.wind?.v)
+                                locationTextView?.text = data?.city?.name
+                                setupAttributions(data)
+                                addPollutantsToList(this)
+                                pollutantsAdapter?.notifyDataSetChanged()
+                                updateWidget()
+                            }
+                        }
+                    })
+                }
             }
         }
 
@@ -392,6 +396,17 @@ class AQIFragment : Fragment(), View.OnClickListener {
             mainActivity.updateValues = false
             temperatureTextView?.text = getTemperatureValue(this.temperature)
             airPropertiesLayout?.findViewById<TextView>(R.id.windTextView)?.text = getWindSpeedValue(this.windSpeed)
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (::aqiViewModel.isInitialized && isAdded) {
+            activity?.apply {
+                aqiViewModel.status.removeObservers(this)
+                aqiViewModel.apiResponse.removeObservers(this)
+                aqiViewModel.getGPSApiResponse("").removeObservers(this)
+            }
         }
     }
 

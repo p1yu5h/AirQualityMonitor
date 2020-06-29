@@ -72,4 +72,14 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onQueryTextChange(newText: String?): Boolean {
         return true
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (::aqiViewModel.isInitialized && isAdded) {
+            activity?.apply {
+                aqiViewModel.status.removeObservers(this)
+                aqiViewModel.searchResponse.removeObservers(this)
+            }
+        }
+    }
 }

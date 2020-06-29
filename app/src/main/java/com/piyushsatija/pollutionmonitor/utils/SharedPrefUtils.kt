@@ -41,6 +41,16 @@ class SharedPrefUtils private constructor(context: Context) {
             editor.apply()
         }
 
+    fun saveStringValue(key: String, value: String) {
+        val editor = preferences.edit()
+        editor.putString(key, value)
+        editor.apply()
+    }
+
+    fun getStringValue(key: String, defaultValue: String = ""): String {
+        return preferences.getString(key, defaultValue) ?: defaultValue
+    }
+
     fun clearAllPrefs() {
         preferences.edit().clear().apply()
     }

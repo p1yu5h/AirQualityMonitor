@@ -1,5 +1,6 @@
 package com.piyushsatija.pollutionmonitor.view.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,11 +10,20 @@ import androidx.fragment.app.Fragment
 import com.piyushsatija.pollutionmonitor.R
 import com.piyushsatija.pollutionmonitor.utils.Constants
 import com.piyushsatija.pollutionmonitor.utils.SharedPrefUtils
+import com.piyushsatija.pollutionmonitor.view.MainActivity
 import kotlinx.android.synthetic.main.fragment_settings.*
 
 
 class SettingsFragment : Fragment() {
     private var sharedPrefUtils: SharedPrefUtils? = null
+    private lateinit var mainActivity: MainActivity
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is MainActivity) {
+            mainActivity = context
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,6 +84,7 @@ class SettingsFragment : Fragment() {
         }
         builder.setPositiveButton("OK") { dialog, _ ->
             onConfirmSelection(items[checkedItem])
+            if (::mainActivity.isInitialized) mainActivity.updateValues = true
             dialog.dismiss()
         }
         builder.setNegativeButton("Cancel", null)

@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private var settingsFragment = SettingsFragment()
     private val fm = supportFragmentManager
     private var currentFragment: Fragment = aqiFragment
+    var updateValues = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,6 +81,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         return when (item.itemId) {
             R.id.aqiNav -> {
                 fm.beginTransaction().hide(currentFragment).show(aqiFragment).commit()
+                if (updateValues) aqiFragment.updateValues()
                 currentFragment = aqiFragment
                 return true
             }

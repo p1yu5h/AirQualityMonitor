@@ -38,9 +38,12 @@ import com.piyushsatija.pollutionmonitor.adapters.PollutantsAdapter
 import com.piyushsatija.pollutionmonitor.api.ApiResponse
 import com.piyushsatija.pollutionmonitor.api.RetrofitHelper
 import com.piyushsatija.pollutionmonitor.model.*
+import com.piyushsatija.pollutionmonitor.utils.AppUtils
+import com.piyushsatija.pollutionmonitor.utils.Constants
 import com.piyushsatija.pollutionmonitor.utils.GPSUtils
 import com.piyushsatija.pollutionmonitor.utils.SharedPrefUtils
 import com.piyushsatija.pollutionmonitor.view.InfoDialog
+import com.piyushsatija.pollutionmonitor.view.MainActivity
 import kotlinx.android.synthetic.main.aqi_color_scale.*
 import kotlinx.android.synthetic.main.fragment_aqi.*
 import kotlinx.android.synthetic.main.layout_rate_us.*
@@ -50,6 +53,7 @@ import java.util.concurrent.TimeUnit
 
 class AQIFragment : Fragment(), View.OnClickListener {
     private val logTag = javaClass.simpleName
+    private lateinit var mainActivity: MainActivity
 
     //Data
     private lateinit var aqiViewModel: AqiViewModel
@@ -57,6 +61,8 @@ class AQIFragment : Fragment(), View.OnClickListener {
     private var pollutantsAdapter: PollutantsAdapter? = null
     private val pollutantsList: MutableList<Pollutant> = ArrayList()
     private var sharedPrefUtils: SharedPrefUtils? = null
+    private var temperature: Double? = null
+    private var windSpeed: Double? = null
 
     //Location
     private var fusedLocationClient: FusedLocationProviderClient? = null
@@ -64,6 +70,13 @@ class AQIFragment : Fragment(), View.OnClickListener {
     private var locationRequest: LocationRequest? = null
     private var locationCallback: LocationCallback? = null
     private var latestLocation: Location? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is MainActivity) {
+            mainActivity = context
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -168,10 +181,10 @@ class AQIFragment : Fragment(), View.OnClickListener {
                 setAqiScaleGroup()
 
                 data?.iaqi?.apply {
-                    temperatureTextView?.text = getString(R.string.temperature_unit_celsius, this.temperature?.v)
+                    temperatureTextView?.text = getTemperatureValue(this.temperature?.v)
                     airPropertiesLayout.findViewById<TextView>(R.id.pressureTextView)?.text = getString(R.string.pressure_unit, this.pressure?.v)
                     airPropertiesLayout.findViewById<TextView>(R.id.humidityTextView)?.text = getString(R.string.humidity_unit, this.humidity?.v)
-                    airPropertiesLayout.findViewById<TextView>(R.id.windTextView)?.text = getString(R.string.wind_unit_mps, this.wind?.v)
+                    airPropertiesLayout.findViewById<TextView>(R.id.windTextView)?.text = getWindSpeedValue(this.wind?.v)
                     locationTextView?.text = data?.city?.name
                     setupAttributions(data)
                     addPollutantsToList(this)
@@ -201,10 +214,10 @@ class AQIFragment : Fragment(), View.OnClickListener {
                         sharedPrefUtils?.saveLatestAQI(data?.aqi?.toString())
                         setAqiScaleGroup()
                         data?.iaqi?.apply {
-                            temperatureTextView?.text = getString(R.string.temperature_unit_celsius, this.temperature?.v)
+                            temperatureTextView?.text = getTemperatureValue(this.temperature?.v)
                             airPropertiesLayout.findViewById<TextView>(R.id.pressureTextView)?.text = getString(R.string.pressure_unit, this.pressure?.v)
                             airPropertiesLayout.findViewById<TextView>(R.id.humidityTextView)?.text = getString(R.string.humidity_unit, this.humidity?.v)
-                            airPropertiesLayout.findViewById<TextView>(R.id.windTextView)?.text = getString(R.string.wind_unit_mps, this.wind?.v)
+                            airPropertiesLayout.findViewById<TextView>(R.id.windTextView)?.text = getWindSpeedValue(this.wind?.v)
                             locationTextView?.text = data?.city?.name
                             setupAttributions(data)
                             addPollutantsToList(this)
@@ -215,6 +228,22 @@ class AQIFragment : Fragment(), View.OnClickListener {
                 })
             }
         }
+
+    private fun getTemperatureValue(temperature: Double?): String {
+        if (temperature == null) return getString(R.string.place_holder)
+        this.temperature = temperature
+        val unit = sharedPrefUtils!!.getStringValue(Constants.TEMPERATURE_UNIT, Constants.TEMPERATURE_CELSIUS)
+        return if (unit == Constants.TEMPERATURE_CELSIUS) getString(R.string.temperature_unit_celsius, temperature)
+        else getString(R.string.temperature_unit_fahrenheit, AppUtils.convertToFahrenheit(temperature))
+    }
+
+    private fun getWindSpeedValue(windSpeed: Double?): String {
+        if (windSpeed == null) return getString(R.string.place_holder)
+        this.windSpeed = windSpeed
+        val unit = sharedPrefUtils!!.getStringValue(Constants.WINDSPEED_UNIT, Constants.WINDSPEED_MPS)
+        return if (unit == Constants.WINDSPEED_MPS) getString(R.string.wind_unit_mps, windSpeed)
+        else getString(R.string.wind_unit_kmph, AppUtils.convertToKmph(windSpeed))
+    }
 
     private fun setupRecyclerView() {
         pollutantsRecyclerView.layoutManager = LinearLayoutManager(context)
@@ -355,6 +384,14 @@ class AQIFragment : Fragment(), View.OnClickListener {
                 val uri = Uri.parse("https://play.google.com/store/apps/details?id=com.piyushsatija.pollutionmonitor")
                 startActivity(Intent(Intent.ACTION_VIEW, uri))
             }
+        }
+    }
+
+    fun updateValues() {
+        if (::mainActivity.isInitialized) {
+            mainActivity.updateValues = false
+            temperatureTextView?.text = getTemperatureValue(this.temperature)
+            airPropertiesLayout?.findViewById<TextView>(R.id.windTextView)?.text = getWindSpeedValue(this.windSpeed)
         }
     }
 

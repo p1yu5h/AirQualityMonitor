@@ -2,7 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:overScrollMode="never"
+    android:scrollbars="none">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -28,59 +30,56 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/aqiTitle"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="16dp"
             android:elevation="2dp"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="50sp"
             android:textStyle="bold"
-            android:transitionName="zoom"
             app:layout_constraintBottom_toBottomOf="@+id/aqi_background"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/view"
+            app:layout_constraintStart_toStartOf="@id/aqi_background"
             app:layout_constraintTop_toTopOf="@+id/aqi_background"
             tools:text="123" />
 
         <View
             android:id="@+id/view"
-            android:layout_width="120dp"
-            android:layout_height="2dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="2dp"
+            android:layout_height="0dp"
             android:background="@color/white"
             android:elevation="2dp"
+            app:layout_constraintBottom_toBottomOf="@id/aqiTextView"
             app:layout_constraintEnd_toEndOf="@+id/aqi_background"
             app:layout_constraintStart_toStartOf="@+id/aqi_background"
-            app:layout_constraintTop_toBottomOf="@+id/aqiTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/aqiTextView"
+            app:layout_constraintTop_toTopOf="@id/aqiTextView" />
 
-        <LinearLayout
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/temperatureIcon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:elevation="2dp"
+            android:padding="2dp"
+            android:tint="@color/white"
+            app:layout_constraintEnd_toEndOf="@id/aqi_background"
+            app:layout_constraintStart_toEndOf="@id/view"
+            app:layout_constraintTop_toTopOf="@id/view"
+            app:srcCompat="@drawable/ic_temperature"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/temperatureTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:elevation="2dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@+id/aqi_background"
-            app:layout_constraintStart_toStartOf="@+id/aqi_background"
-            app:layout_constraintTop_toBottomOf="@+id/view"
-            tools:ignore="UseCompoundDrawables">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:elevation="2dp"
-                android:padding="2dp"
-                android:tint="@color/white"
-                app:srcCompat="@drawable/icon_thermometer"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:id="@+id/temperatureTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:elevation="2dp"
-                android:text="@string/place_holder"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
-        </LinearLayout>
+            android:text="@string/place_holder"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@id/view"
+            app:layout_constraintEnd_toEndOf="@id/aqi_background"
+            app:layout_constraintStart_toEndOf="@id/view"
+            app:layout_constraintTop_toBottomOf="@id/temperatureIcon" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/aqi_background"
@@ -95,11 +94,11 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/locationIcon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginTop="16dp"
-            android:src="@drawable/icon_location"
-            android:tint="@color/lemonYellow"
+            android:src="@drawable/ic_location"
+            android:tint="@color/white"
             app:layout_constraintEnd_toStartOf="@id/locationTextView"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
@@ -120,11 +119,13 @@
             tools:text="New Delhi" />
 
         <include
-            android:id="@+id/aqi_color_scale"
-            layout="@layout/aqi_color_scale"
+            android:id="@+id/aqiInfoCard"
+            layout="@layout/layout_aqi_info_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/locationTextView" />
 
         <include
@@ -132,8 +133,11 @@
             layout="@layout/layout_air_properties"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="16dp"
             android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/aqi_color_scale" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/aqiInfoCard" />
 
         <TextView
             android:id="@+id/pollutantsTitleTextView"

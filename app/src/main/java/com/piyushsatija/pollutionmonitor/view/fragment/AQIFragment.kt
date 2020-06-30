@@ -300,20 +300,10 @@ class AQIFragment : Fragment(), View.OnClickListener {
     }
 
     private fun setAqiScaleGroup() {
-        var aqiScaleText: TextView? = null
         data?.aqi?.apply {
-            aqiScaleText = when (this) {
-                in 0..50 -> scaleGood
-                in 51..100 -> scaleModerate
-                in 101..150 -> scaleUnhealthySensitive
-                in 151..200 -> scaleUnhealthy
-                in 201..300 -> scaleVeryUnhealthy
-                else -> scaleHazardous
-            }
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            aqiScaleText?.foreground = ContextCompat.getDrawable(context!!, R.drawable.selected_aqi_foreground)
+            val data = AppUtils.getAQIInfo(this, context!!)
+            aqiInfoCard.findViewById<TextView>(R.id.aqiInfoTitle).text = data.getString("title")
+            aqiInfoCard.findViewById<TextView>(R.id.aqiInfoDesc).text = data.getString("desc")
         }
     }
 
@@ -355,12 +345,6 @@ class AQIFragment : Fragment(), View.OnClickListener {
     }
 
     private fun setupClickListeners() {
-        scaleGood.setOnClickListener(this)
-        scaleModerate.setOnClickListener(this)
-        scaleUnhealthySensitive.setOnClickListener(this)
-        scaleUnhealthy.setOnClickListener(this)
-        scaleVeryUnhealthy.setOnClickListener(this)
-        scaleHazardous.setOnClickListener(this)
         rateYes.setOnClickListener(this)
         rateNo.setOnClickListener(this)
     }

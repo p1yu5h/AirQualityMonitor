@@ -134,30 +134,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/aqiInfoCard" />
 
-        <TextView
-            android:id="@+id/pollutantsTitleTextView"
-            style="@style/TextAppearanceHeading"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginRight="16dp"
-            android:text="@string/pollutants_aqi"
-            android:textAlignment="textStart"
-            app:layout_constraintTop_toBottomOf="@id/airPropertiesLayout" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/pollutantsRecyclerView"
+        <include
+            android:id="@+id/pollutantCard"
+            layout="@layout/layout_pollutants_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:overScrollMode="never"
-            app:layout_constraintTop_toBottomOf="@id/pollutantsTitleTextView" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/airPropertiesLayout" />
 
         <include
             android:id="@+id/rateUsCard"
@@ -166,17 +155,16 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/pollutantsRecyclerView" />
+            app:layout_constraintTop_toBottomOf="@id/pollutantCard" />
 
         <include
             android:id="@+id/attributionCard"
             layout="@layout/layout_attributions_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/rateUsCard"
             android:layout_margin="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintTop_toBottomOf="@id/rateUsCard" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

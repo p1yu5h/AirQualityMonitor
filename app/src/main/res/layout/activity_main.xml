@@ -31,9 +31,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/aqua"
-        app:itemIconTint="@color/lemonYellow"
-        app:itemRippleColor="@color/lemonYellow"
-        app:itemTextColor="@color/lemonYellow"
+        app:elevation="10dp"
+        app:itemIconTint="@color/white"
+        app:itemRippleColor="@color/white"
+        app:itemTextColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_navigation_menu" />
 

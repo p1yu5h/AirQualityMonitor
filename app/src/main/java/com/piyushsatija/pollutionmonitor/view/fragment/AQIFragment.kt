@@ -16,6 +16,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -23,8 +25,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.work.Constraints
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequest
@@ -34,7 +34,6 @@ import com.piyushsatija.pollutionmonitor.AQIWidget
 import com.piyushsatija.pollutionmonitor.AqiViewModel
 import com.piyushsatija.pollutionmonitor.DataUpdateWorker
 import com.piyushsatija.pollutionmonitor.R
-import com.piyushsatija.pollutionmonitor.adapters.PollutantsAdapter
 import com.piyushsatija.pollutionmonitor.api.ApiResponse
 import com.piyushsatija.pollutionmonitor.api.RetrofitHelper
 import com.piyushsatija.pollutionmonitor.model.*
@@ -44,7 +43,6 @@ import com.piyushsatija.pollutionmonitor.utils.GPSUtils
 import com.piyushsatija.pollutionmonitor.utils.SharedPrefUtils
 import com.piyushsatija.pollutionmonitor.view.InfoDialog
 import com.piyushsatija.pollutionmonitor.view.MainActivity
-import kotlinx.android.synthetic.main.aqi_color_scale.*
 import kotlinx.android.synthetic.main.fragment_aqi.*
 import kotlinx.android.synthetic.main.layout_rate_us.*
 import java.util.*
@@ -58,7 +56,6 @@ class AQIFragment : Fragment(), View.OnClickListener {
     //Data
     private lateinit var aqiViewModel: AqiViewModel
     private var data: Data? = Data()
-    private var pollutantsAdapter: PollutantsAdapter? = null
     private val pollutantsList: MutableList<Pollutant> = ArrayList()
     private var sharedPrefUtils: SharedPrefUtils? = null
     private var temperature: Double? = null
@@ -110,7 +107,6 @@ class AQIFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupClickListeners()
-        setupRecyclerView()
         setupRateCard()
     }
 
@@ -189,7 +185,6 @@ class AQIFragment : Fragment(), View.OnClickListener {
                             locationTextView?.text = data?.city?.name
                             setupAttributions(data)
                             addPollutantsToList(this)
-                            pollutantsAdapter?.notifyDataSetChanged()
                             updateWidget()
                         }
                     }
@@ -224,7 +219,6 @@ class AQIFragment : Fragment(), View.OnClickListener {
                                 locationTextView?.text = data?.city?.name
                                 setupAttributions(data)
                                 addPollutantsToList(this)
-                                pollutantsAdapter?.notifyDataSetChanged()
                                 updateWidget()
                             }
                         }
@@ -249,14 +243,6 @@ class AQIFragment : Fragment(), View.OnClickListener {
         else getString(R.string.wind_unit_kmph, AppUtils.convertToKmph(windSpeed))
     }
 
-    private fun setupRecyclerView() {
-        pollutantsRecyclerView.layoutManager = LinearLayoutManager(context)
-        pollutantsRecyclerView.setHasFixedSize(true)
-        val dividerItemDecoration = DividerItemDecoration(pollutantsRecyclerView.context,
-                DividerItemDecoration.VERTICAL)
-        pollutantsRecyclerView.addItemDecoration(dividerItemDecoration)
-    }
-
     private fun addPollutantsToList(iaqi: Iaqi) {
         pollutantsList.clear()
         iaqi.co?.apply { pollutantsList.add(Pollutant("Carbon Monoxide - AQI", iaqi.co?.v ?: 0.0)) }
@@ -269,8 +255,15 @@ class AQIFragment : Fragment(), View.OnClickListener {
         iaqi.so2?.apply {
             pollutantsList.add(Pollutant("Sulfur Dioxide - AQI", iaqi.so2?.v ?: 0.0))
         }
-        pollutantsAdapter = PollutantsAdapter(pollutantsList)
-        pollutantsRecyclerView?.adapter = pollutantsAdapter
+
+        val pollutantsContainer = pollutantCard.findViewById<LinearLayout>(R.id.pollutantsContainer)
+        pollutantsContainer.removeAllViews()
+        pollutantsList.forEach {
+            val pollutantRow = layoutInflater.inflate(R.layout.item_pollutant, pollutantsContainer, false)
+            pollutantRow.findViewById<TextView>(R.id.pollutantName).text = it.pollutantName
+            pollutantRow.findViewById<ProgressBar>(R.id.pollutantProgressBar).progress = it.pollutantValue.toInt()
+            pollutantsContainer.addView(pollutantRow)
+        }
     }
 
     private fun setupAttributions(data: Data?) {

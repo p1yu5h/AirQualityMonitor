@@ -10,8 +10,8 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.piyushsatija.pollutionmonitor.AqiViewModel
 import com.piyushsatija.pollutionmonitor.R
 import com.piyushsatija.pollutionmonitor.adapters.SearchResultAdapter
@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.fragment_search.*
 class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
     private lateinit var aqiViewModel: AqiViewModel
     private lateinit var searchResultAdapter: SearchResultAdapter
+    private var queryText = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_search, container, false)
@@ -34,7 +35,7 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
         searchRecyclerView.setHasFixedSize(true)
 
         aqiViewModel = ViewModelProvider(this).get(AqiViewModel::class.java)
-        aqiViewModel.status.observe(activity!!, Observer {status ->
+        aqiViewModel.status.observe(activity!!, Observer { status ->
             when (status) {
                 Status.DONE -> {
                     searchProgressBar.visibility = View.GONE
@@ -45,6 +46,7 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
                     searchRecyclerView.visibility = View.GONE
                 }
                 Status.FETCHING -> {
+                    searchPlaceholder.visibility = View.GONE
                     searchProgressBar.visibility = View.VISIBLE
                     searchRecyclerView.visibility = View.GONE
                 }
@@ -53,7 +55,11 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
 
         aqiViewModel.searchResponse.observe(activity!!, Observer {
             it.data?.apply {
-                val dataList = this.filter { data ->  data.aqi != "-" }
+                val dataList = this.filter { data -> data.aqi != "-" }
+                if (dataList.isEmpty()) {
+                    searchPlaceholder.visibility = View.VISIBLE
+                    Snackbar.make(searchParent, "No results found for \"$queryText\"", Snackbar.LENGTH_LONG).show()
+                }
                 searchResultAdapter = SearchResultAdapter(dataList)
                 searchRecyclerView.adapter = searchResultAdapter
             }
@@ -61,7 +67,10 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        query?.apply { aqiViewModel.searchKeyword(this) }
+        query?.apply {
+            queryText = this
+            aqiViewModel.searchKeyword(this)
+        }
         searchView.clearFocus()
         return true
     }

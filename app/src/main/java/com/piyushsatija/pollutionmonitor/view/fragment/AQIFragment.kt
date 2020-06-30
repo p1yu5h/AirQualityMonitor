@@ -285,7 +285,7 @@ class AQIFragment : Fragment(), View.OnClickListener {
                         .append(attribution.url)
                         .append("\n\n")
             }
-            attributionTextView?.text = attributionText
+            attributionCard.findViewById<TextView>(R.id.attributionTextView)?.text = attributionText
         }
     }
 

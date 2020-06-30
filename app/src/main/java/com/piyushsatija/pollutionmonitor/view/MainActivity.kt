@@ -98,4 +98,14 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             else -> false
         }
     }
+
+    override fun onBackPressed() {
+        if (currentFragment != aqiFragment) {
+            fm.beginTransaction().hide(currentFragment).show(aqiFragment).commit()
+            if (updateValues) aqiFragment.updateValues()
+            currentFragment = aqiFragment
+        } else {
+            finish()
+        }
+    }
 }

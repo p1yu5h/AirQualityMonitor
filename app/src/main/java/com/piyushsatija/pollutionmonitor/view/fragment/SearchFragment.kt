@@ -32,10 +32,6 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
         searchView.setOnQueryTextListener(this)
         searchRecyclerView.layoutManager = LinearLayoutManager(context)
         searchRecyclerView.setHasFixedSize(true)
-        val dividerItemDecoration = DividerItemDecoration(searchRecyclerView.context,
-                DividerItemDecoration.VERTICAL)
-        searchRecyclerView.addItemDecoration(dividerItemDecoration)
-
 
         aqiViewModel = ViewModelProvider(this).get(AqiViewModel::class.java)
         aqiViewModel.status.observe(activity!!, Observer {status ->
@@ -57,7 +53,8 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
 
         aqiViewModel.searchResponse.observe(activity!!, Observer {
             it.data?.apply {
-                searchResultAdapter = SearchResultAdapter(this)
+                val dataList = this.filter { data ->  data.aqi != "-" }
+                searchResultAdapter = SearchResultAdapter(dataList)
                 searchRecyclerView.adapter = searchResultAdapter
             }
         })

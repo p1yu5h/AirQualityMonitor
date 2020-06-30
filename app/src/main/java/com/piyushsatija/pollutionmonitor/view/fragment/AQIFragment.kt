@@ -349,12 +349,6 @@ class AQIFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.scaleGood -> InfoDialog(activity!!, PollutionLevels.GOOD).show()
-            R.id.scaleModerate -> InfoDialog(activity!!, PollutionLevels.MODERATE).show()
-            R.id.scaleUnhealthySensitive -> InfoDialog(activity!!, PollutionLevels.UNHEALTHY_FOR_SENSITIVE).show()
-            R.id.scaleUnhealthy -> InfoDialog(activity!!, PollutionLevels.UNHEALTHY).show()
-            R.id.scaleVeryUnhealthy -> InfoDialog(activity!!, PollutionLevels.VERY_UNHEALTHY).show()
-            R.id.scaleHazardous -> InfoDialog(activity!!, PollutionLevels.HAZARDOUS).show()
             R.id.rateNo -> rateUsCard.animate().alpha(0.0f).translationX(200f).setDuration(500).withEndAction {
                 rateUsCard.visibility = View.GONE
                 sharedPrefUtils?.rateCardDone(true)

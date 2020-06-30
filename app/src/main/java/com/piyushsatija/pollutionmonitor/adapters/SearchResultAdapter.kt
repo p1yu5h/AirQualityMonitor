@@ -18,7 +18,8 @@ class SearchResultAdapter(private val searchResults: List<Data>) : RecyclerView.
 
     override fun onBindViewHolder(holder: SearchResultViewHolder, position: Int) {
         val searchResult = searchResults[position]
-        holder.textView.text = searchResult.station.name
+        holder.stationName.text = searchResult.station.name
+        holder.stationAQI.text = searchResult.aqi
     }
 
     override fun getItemCount(): Int {
@@ -26,6 +27,7 @@ class SearchResultAdapter(private val searchResults: List<Data>) : RecyclerView.
     }
 
     inner class SearchResultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val textView: TextView = itemView.findViewById(R.id.textView)
+        val stationName: TextView = itemView.findViewById(R.id.stationName)
+        val stationAQI: TextView = itemView.findViewById(R.id.stationAQI)
     }
 }

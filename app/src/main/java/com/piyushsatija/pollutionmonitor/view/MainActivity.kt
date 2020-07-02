@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.messaging.FirebaseMessaging
 import com.piyushsatija.pollutionmonitor.R
 import com.piyushsatija.pollutionmonitor.utils.GPSUtils
@@ -20,7 +21,7 @@ import com.piyushsatija.pollutionmonitor.view.fragment.SearchFragment
 import com.piyushsatija.pollutionmonitor.view.fragment.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener, MessageInterface {
     private val logTag = javaClass.simpleName
     private var sharedPrefUtils: SharedPrefUtils? = null
     private var aqiFragment = AQIFragment()
@@ -75,6 +76,12 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 }
             }
         }
+    }
+
+    override fun showSnackbar(message: String) {
+        val snackbar = Snackbar.make(fragmentContainer, message, Snackbar.LENGTH_LONG)
+        snackbar.anchorView = bottomNavigation
+        snackbar.show()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

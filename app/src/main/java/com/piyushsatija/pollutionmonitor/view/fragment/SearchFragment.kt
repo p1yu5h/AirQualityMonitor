@@ -2,6 +2,7 @@
 
 package com.piyushsatija.pollutionmonitor.view.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,12 +17,19 @@ import com.piyushsatija.pollutionmonitor.AqiViewModel
 import com.piyushsatija.pollutionmonitor.R
 import com.piyushsatija.pollutionmonitor.adapters.SearchResultAdapter
 import com.piyushsatija.pollutionmonitor.model.Status
+import com.piyushsatija.pollutionmonitor.view.MessageInterface
 import kotlinx.android.synthetic.main.fragment_search.*
 
 class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
     private lateinit var aqiViewModel: AqiViewModel
     private lateinit var searchResultAdapter: SearchResultAdapter
+    private lateinit var messageInterface: MessageInterface
     private var queryText = ""
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is MessageInterface) messageInterface = context
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_search, container, false)
@@ -58,7 +66,7 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
                 val dataList = this.filter { data -> data.aqi != "-" }
                 if (dataList.isEmpty()) {
                     searchPlaceholder.visibility = View.VISIBLE
-                    Snackbar.make(searchParent, "No results found for \"$queryText\"", Snackbar.LENGTH_LONG).show()
+                    if (::messageInterface.isInitialized) messageInterface.showSnackbar("No results found for \"$queryText\"")
                 }
                 searchResultAdapter = SearchResultAdapter(dataList)
                 searchRecyclerView.adapter = searchResultAdapter

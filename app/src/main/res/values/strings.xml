@@ -73,4 +73,9 @@
     <string name="bottomNavAQI">AQI</string>
     <string name="bottomNavSearch">Search</string>
     <string name="bottomNavSettings">Settings</string>
+
+    <!--Settings-->
+    <string name="windSpeed">Wind speed</string>
+    <string name="temperature">Temperature</string>
+    <string name="appVersion">App Version</string>
 </resources>

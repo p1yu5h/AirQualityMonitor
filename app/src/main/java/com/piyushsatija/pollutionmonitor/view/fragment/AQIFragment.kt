@@ -246,15 +246,15 @@ class AQIFragment : Fragment(), View.OnClickListener {
 
     private fun addPollutantsToList(iaqi: Iaqi) {
         pollutantsList.clear()
-        iaqi.co?.apply { pollutantsList.add(Pollutant("Carbon Monoxide - AQI", iaqi.co?.v ?: 0.0)) }
+        iaqi.co?.apply { pollutantsList.add(Pollutant("Carbon Monoxide", iaqi.co?.v ?: 0.0)) }
         iaqi.no2?.apply {
-            pollutantsList.add(Pollutant("Nitrous Dioxide - AQI", iaqi.no2?.v ?: 0.0))
+            pollutantsList.add(Pollutant("Nitrous Dioxide", iaqi.no2?.v ?: 0.0))
         }
-        iaqi.o3?.apply { pollutantsList.add(Pollutant("Ozone - AQI", iaqi.o3?.v ?: 0.0)) }
-        iaqi.pm2_5?.apply { pollutantsList.add(Pollutant("PM 2.5 - AQI", iaqi.pm2_5?.v ?: 0.0)) }
-        iaqi.pm10?.apply { pollutantsList.add(Pollutant("PM 10 - AQI", iaqi.pm10?.v ?: 0.0)) }
+        iaqi.o3?.apply { pollutantsList.add(Pollutant("Ozone", iaqi.o3?.v ?: 0.0)) }
+        iaqi.pm2_5?.apply { pollutantsList.add(Pollutant("PM 2.5", iaqi.pm2_5?.v ?: 0.0)) }
+        iaqi.pm10?.apply { pollutantsList.add(Pollutant("PM 10", iaqi.pm10?.v ?: 0.0)) }
         iaqi.so2?.apply {
-            pollutantsList.add(Pollutant("Sulfur Dioxide - AQI", iaqi.so2?.v ?: 0.0))
+            pollutantsList.add(Pollutant("Sulfur Dioxide", iaqi.so2?.v ?: 0.0))
         }
 
         val pollutantsContainer = pollutantCard.findViewById<LinearLayout>(R.id.pollutantsContainer)

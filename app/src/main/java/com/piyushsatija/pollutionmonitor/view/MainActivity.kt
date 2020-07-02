@@ -36,8 +36,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         try {
             sharedPrefUtils = SharedPrefUtils.getInstance(this)
             if (sharedPrefUtils?.appInstallTime == 0L) sharedPrefUtils?.appInstallTime = System.currentTimeMillis()
-            if (sharedPrefUtils?.isDarkMode == true) setTheme(R.style.AppTheme_Dark) else setTheme(R.style.AppTheme_Light)
-
+            setTheme(R.style.AppTheme_Light)
             setContentView(R.layout.activity_main)
             FirebaseMessaging.getInstance().subscribeToTopic("weather")
                     .addOnCompleteListener { Log.d("FCM", "Subscribed to \"weather\"") }

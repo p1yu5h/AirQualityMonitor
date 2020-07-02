@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Wind Speed"
+        android:text="@string/windSpeed"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@id/settingsTitle"
@@ -35,11 +35,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Km/h"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@id/settingsTitle"
-        app:layout_constraintTop_toBottomOf="@+id/settingsTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/settingsTitle"
+        tools:text="Km/h" />
 
     <View
         android:id="@+id/separator1"
@@ -56,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Temperature"
+        android:text="@string/temperature"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@id/settingsTitle"
@@ -67,11 +67,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="°C"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@id/settingsTitle"
-        app:layout_constraintTop_toBottomOf="@+id/separator1" />
+        app:layout_constraintTop_toBottomOf="@+id/separator1"
+        tools:text="°C" />
 
     <View
         android:id="@+id/separator2"
@@ -88,7 +88,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="App Version"
+        android:text="@string/appVersion"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@id/settingsTitle"
@@ -99,11 +99,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="1.0.0"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@id/settingsTitle"
-        app:layout_constraintTop_toBottomOf="@id/separator2" />
+        app:layout_constraintTop_toBottomOf="@id/separator2"
+        tools:text="1.0.0" />
 
     <View
         android:layout_width="0dp"

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import com.piyushsatija.pollutionmonitor.BuildConfig
 import com.piyushsatija.pollutionmonitor.R
 import com.piyushsatija.pollutionmonitor.utils.Constants
 import com.piyushsatija.pollutionmonitor.utils.SharedPrefUtils
@@ -37,6 +38,7 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        appVersion.text = BuildConfig.VERSION_NAME
         windSpeedCTA.text = when (sharedPrefUtils!!.getStringValue(Constants.WINDSPEED_UNIT, Constants.WINDSPEED_MPS)) {
             Constants.WINDSPEED_MPS -> getString(R.string.mps)
             Constants.WINDSPEED_KMPH -> getString(R.string.kmph)

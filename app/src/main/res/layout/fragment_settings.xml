@@ -84,36 +84,6 @@
         app:layout_constraintTop_toBottomOf="@id/temperatureText" />
 
     <TextView
-        android:id="@+id/darkModeTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Dark Mode"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@id/settingsTitle"
-        app:layout_constraintTop_toBottomOf="@id/separator2" />
-
-    <androidx.appcompat.widget.AppCompatCheckBox
-        android:id="@+id/darkModeCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:buttonTint="@color/white"
-        app:layout_constraintBottom_toBottomOf="@id/darkModeTextView"
-        app:layout_constraintEnd_toEndOf="@id/settingsTitle"
-        app:layout_constraintTop_toTopOf="@id/darkModeTextView" />
-
-    <View
-        android:id="@+id/separator3"
-        android:layout_width="0dp"
-        android:layout_height="0.5dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/white"
-        app:layout_constraintEnd_toEndOf="@id/settingsTitle"
-        app:layout_constraintStart_toStartOf="@id/settingsTitle"
-        app:layout_constraintTop_toBottomOf="@id/darkModeTextView" />
-
-    <TextView
         android:id="@+id/appVersionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -122,7 +92,7 @@
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@id/settingsTitle"
-        app:layout_constraintTop_toBottomOf="@id/separator3" />
+        app:layout_constraintTop_toBottomOf="@id/separator2" />
 
     <TextView
         android:id="@+id/appVersion"
@@ -133,7 +103,7 @@
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@id/settingsTitle"
-        app:layout_constraintTop_toBottomOf="@id/separator3" />
+        app:layout_constraintTop_toBottomOf="@id/separator2" />
 
     <View
         android:layout_width="0dp"
@@ -142,6 +112,6 @@
         android:background="@color/white"
         app:layout_constraintEnd_toEndOf="@id/settingsTitle"
         app:layout_constraintStart_toStartOf="@id/settingsTitle"
-        app:layout_constraintTop_toBottomOf="@id/darkModeTextView" />
+        app:layout_constraintTop_toBottomOf="@id/temperatureText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

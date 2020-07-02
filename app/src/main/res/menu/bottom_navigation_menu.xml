@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/aqiNav"
+        android:enabled="true"
+        android:icon="@drawable/ic_aqi_meter"
+        android:title="@string/bottomNavAQI"/>
+    <item
+        android:id="@+id/searchNav"
+        android:enabled="true"
+        android:icon="@drawable/ic_search"
+        android:title="@string/bottomNavSearch"/>
+    <item
+        android:id="@+id/settingsNav"
+        android:enabled="true"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/bottomNavSettings"/>
+</menu>

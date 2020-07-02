@@ -9,16 +9,16 @@
     <color name="lightestPurple">#6E43D6</color>
     <color name="transparent">#0FFF</color>
     <color name="transparentDark">#4000</color>
-    <color name="transparentLight">#4FFF</color>
+    <color name="transparentLight">#2BFFFFFF</color>
     <color name="blue">#284CDC</color>
-    <color name="aqua">#009ba3</color>
+    <color name="aqua">#00727C</color>
     <color name="lemonYellow">#fff44f</color>
     <color name="grey">#999</color>
     <color name="darkGrey">#363636</color>
     
     <!--AQI Scale Colors-->
     <color name="scaleGood">#009966</color>
-    <color name="scaleModerate">#FFDE33</color>
+    <color name="scaleModerate">#F4D11E</color>
     <color name="scaleUnhealthySensitive">#FF8821</color>
     <color name="scaleUnhealthy">#CC0033</color>
     <color name="scaleVeryUnhealthy">#660099</color>

@@ -14,11 +14,8 @@ class SplashActivity : AppCompatActivity() {
     private val handler = Handler()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val sharedPrefUtils = SharedPrefUtils.getInstance(this)
-        if (sharedPrefUtils!!.isDarkMode) setTheme(R.style.AppTheme_Dark) else setTheme(R.style.AppTheme_Light)
+        setTheme(R.style.AppTheme_Light)
         setContentView(R.layout.activity_splash)
-        val versionTextView = findViewById<TextView>(R.id.splash_version_text)
-        versionTextView.text = String.format("v%s", BuildConfig.VERSION_NAME)
         handler.postDelayed({
             startActivity(Intent(this@SplashActivity, MainActivity::class.java))
             finish()

@@ -2,9 +2,15 @@
     <string name="app_name">Air Pollution Monitor - AQI</string>
     <string name="aqi_title">AQI</string>
     <string name="temperature_unit_celsius">%1$.1f &#176;C</string>
+    <string name="temperature_unit_fahrenheit">%1$.1f &#176;F</string>
+    <string name="celsiusSymbol">&#176;C</string>
+    <string name="fahrenheitSymbol">&#176;F</string>
     <string name="humidity_unit">%1$.0f%%</string>
     <string name="pressure_unit">%1$.1f mb</string>
-    <string name="wind_unit">%1$.1f m/s</string>
+    <string name="wind_unit_mps">%1$.2f m/s</string>
+    <string name="wind_unit_kmph">%1$.2f km/h</string>
+    <string name="mps">m/s</string>
+    <string name="kmph">km/h</string>
 
     <string name="alert_title_gps_off">GPS is Turned Off</string>
     <string name="alert_content_gps_off">Please turn on GPS for more accurate data.</string>
@@ -44,6 +50,14 @@
     <string name="very_unhealthy_health_implications">Health warnings of emergency conditions. The entire population is more likely to be affected.</string>
     <string name="hazardous_health_implications">Health alert: everyone may experience more serious health effects.</string>
 
+    <!--Cautionary Statements -->
+    <string name="goodCaution">Enjoy your day!</string>
+    <string name="moderateCaution">Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor exertion.</string>
+    <string name="unhealthySensitiveCaution">Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor exertion.</string>
+    <string name="unhealthyCaution">Active children and adults, and people with respiratory disease, such as asthma, should avoid prolonged outdoor exertion; everyone else, especially children, should limit prolonged outdoor exertion</string>
+    <string name="veryUnhealthyCaution">Active children and adults, and people with respiratory disease, such as asthma, should avoid all outdoor exertion; everyone else, especially children, should limit outdoor exertion.</string>
+    <string name="hazardousCaution">Everyone should avoid all outdoor exertion</string>
+
     <string name="appwidget_text">AQI</string>
     <string name="add_widget">Add widget</string>
 
@@ -54,4 +68,14 @@
     <string name="rateUsDesc">Ratings will help us continue improving this app and adding new features.</string>
     <string name="rateUsYes">Sure</string>
     <string name="rateUsNo">No Thanks.</string>
+
+    <!--Bottom Navigation-->
+    <string name="bottomNavAQI">AQI</string>
+    <string name="bottomNavSearch">Search</string>
+    <string name="bottomNavSettings">Settings</string>
+
+    <!--Settings-->
+    <string name="windSpeed">Wind speed</string>
+    <string name="temperature">Temperature</string>
+    <string name="appVersion">App Version</string>
 </resources>

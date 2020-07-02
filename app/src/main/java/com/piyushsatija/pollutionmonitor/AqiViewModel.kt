@@ -19,6 +19,7 @@ class AqiViewModel : ViewModel() {
     private val mRetrofitHelper: RetrofitHelper? = instance
     private var mApiInterface: ApiInterface? = null
     private var mApiResponse: MutableLiveData<ApiResponse?>? = null
+    var searchResponse =  MutableLiveData<SearchResponse>()
     private val mStatus = MutableLiveData<Status>()
     private val apiKey = BuildConfig.ApiKey
     val apiResponse: LiveData<ApiResponse?>
@@ -48,6 +49,7 @@ class AqiViewModel : ViewModel() {
 
             override fun onFailure(call: Call<ApiResponse?>, t: Throwable) {
                 Log.e(logTag, "loadApiResponse", t)
+                mStatus.value = Status.ERROR
             }
         })
     }
@@ -64,11 +66,13 @@ class AqiViewModel : ViewModel() {
                 if (response.body() == null) {
                     return
                 }
+                searchResponse.value = response.body()
                 mStatus.value = Status.DONE
             }
 
             override fun onFailure(call: Call<SearchResponse?>, t: Throwable) {
                 Log.e(logTag, "searchKeyword", t)
+                mStatus.value = Status.ERROR
             }
         })
     }
@@ -99,6 +103,7 @@ class AqiViewModel : ViewModel() {
 
             override fun onFailure(call: Call<ApiResponse?>, t: Throwable) {
                 Log.e(logTag, "loadGPSBasedApiResponse", t)
+                mStatus.value = Status.ERROR
             }
         })
     }

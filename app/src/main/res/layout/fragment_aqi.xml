@@ -11,86 +11,15 @@
         android:layout_height="wrap_content"
         tools:context="com.piyushsatija.pollutionmonitor.view.fragment.AQIFragment">
 
-        <TextView
-            android:id="@+id/aqiTitle"
+        <include
+            android:id="@+id/aqiCircle"
+            layout="@layout/layout_aqi_circle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="8dp"
-            android:elevation="2dp"
-            android:text="@string/aqi_title"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            app:layout_constraintBottom_toTopOf="@+id/aqiTextView"
-            app:layout_constraintEnd_toEndOf="@+id/aqi_background"
-            app:layout_constraintStart_toStartOf="@+id/aqi_background" />
-
-        <TextView
-            android:id="@+id/aqiTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/aqiTitle"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="16dp"
-            android:elevation="2dp"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="50sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/aqi_background"
-            app:layout_constraintEnd_toStartOf="@id/view"
-            app:layout_constraintStart_toStartOf="@id/aqi_background"
-            app:layout_constraintTop_toTopOf="@+id/aqi_background"
-            tools:text="123" />
-
-        <View
-            android:id="@+id/view"
-            android:layout_width="2dp"
-            android:layout_height="0dp"
-            android:background="@color/white"
-            android:elevation="2dp"
-            app:layout_constraintBottom_toBottomOf="@id/aqiTextView"
-            app:layout_constraintEnd_toEndOf="@+id/aqi_background"
-            app:layout_constraintStart_toStartOf="@+id/aqi_background"
-            app:layout_constraintTop_toBottomOf="@+id/aqiTextView"
-            app:layout_constraintTop_toTopOf="@id/aqiTextView" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/temperatureIcon"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:elevation="2dp"
-            android:padding="2dp"
-            android:tint="@color/white"
-            app:layout_constraintEnd_toEndOf="@id/aqi_background"
-            app:layout_constraintStart_toEndOf="@id/view"
-            app:layout_constraintTop_toTopOf="@id/view"
-            app:srcCompat="@drawable/ic_temperature"
-            tools:ignore="ContentDescription" />
-
-        <TextView
-            android:id="@+id/temperatureTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elevation="2dp"
-            android:text="@string/place_holder"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@id/view"
-            app:layout_constraintEnd_toEndOf="@id/aqi_background"
-            app:layout_constraintStart_toEndOf="@id/view"
-            app:layout_constraintTop_toBottomOf="@id/temperatureIcon" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/aqi_background"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
             android:layout_marginTop="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/circle"
-            tools:ignore="ContentDescription" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/locationIcon"
@@ -102,7 +31,7 @@
             app:layout_constraintEnd_toStartOf="@id/locationTextView"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/aqi_background"
+            app:layout_constraintTop_toBottomOf="@id/aqiCircle"
             tools:ignore="ContentDescription" />
 
         <TextView
@@ -126,7 +55,7 @@
             android:layout_margin="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/locationTextView" />
+            app:layout_constraintTop_toBottomOf="@id/locationIcon" />
 
         <include
             android:id="@+id/airPropertiesLayout"

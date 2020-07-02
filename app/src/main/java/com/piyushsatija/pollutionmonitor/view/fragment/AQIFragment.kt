@@ -173,12 +173,12 @@ class AQIFragment : Fragment(), View.OnClickListener {
                     if (apiResponse != null) {
                         Log.d("api", apiResponse.toString())
                         data = apiResponse.data
-                        aqiTextView?.text = data?.aqi?.toString()
+                        aqiCircle.findViewById<TextView>(R.id.aqiTextView)?.text = data?.aqi?.toString()
                         sharedPrefUtils?.saveLatestAQI(data?.aqi?.toString())
                         setAqiScaleGroup()
 
                         data?.iaqi?.apply {
-                            temperatureTextView?.text = getTemperatureValue(this.temperature?.v)
+                            aqiCircle.findViewById<TextView>(R.id.temperatureTextView)?.text = getTemperatureValue(this.temperature?.v)
                             airPropertiesLayout.findViewById<TextView>(R.id.pressureTextView)?.text = getString(R.string.pressure_unit, this.pressure?.v)
                             airPropertiesLayout.findViewById<TextView>(R.id.humidityTextView)?.text = getString(R.string.humidity_unit, this.humidity?.v)
                             airPropertiesLayout.findViewById<TextView>(R.id.windTextView)?.text = getWindSpeedValue(this.wind?.v)
@@ -208,11 +208,11 @@ class AQIFragment : Fragment(), View.OnClickListener {
                         if (apiResponse != null) {
                             Log.d("api", apiResponse.toString())
                             data = apiResponse.data
-                            aqiTextView?.text = data?.aqi?.toString()
+                            aqiCircle.findViewById<TextView>(R.id.aqiTextView)?.text = data?.aqi?.toString()
                             sharedPrefUtils?.saveLatestAQI(data?.aqi?.toString())
                             setAqiScaleGroup()
                             data?.iaqi?.apply {
-                                temperatureTextView?.text = getTemperatureValue(this.temperature?.v)
+                                aqiCircle.findViewById<TextView>(R.id.temperatureTextView)?.text = getTemperatureValue(this.temperature?.v)
                                 airPropertiesLayout.findViewById<TextView>(R.id.pressureTextView)?.text = getString(R.string.pressure_unit, this.pressure?.v)
                                 airPropertiesLayout.findViewById<TextView>(R.id.humidityTextView)?.text = getString(R.string.humidity_unit, this.humidity?.v)
                                 airPropertiesLayout.findViewById<TextView>(R.id.windTextView)?.text = getWindSpeedValue(this.wind?.v)
@@ -365,7 +365,7 @@ class AQIFragment : Fragment(), View.OnClickListener {
     fun updateValues() {
         if (::mainActivity.isInitialized) {
             mainActivity.updateValues = false
-            temperatureTextView?.text = getTemperatureValue(this.temperature)
+            aqiCircle.findViewById<TextView>(R.id.temperatureTextView)?.text = getTemperatureValue(this.temperature)
             airPropertiesLayout?.findViewById<TextView>(R.id.windTextView)?.text = getWindSpeedValue(this.windSpeed)
         }
     }

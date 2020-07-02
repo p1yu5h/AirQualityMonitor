@@ -21,7 +21,7 @@
             app:srcCompat="@drawable/bg_header_white" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/infoIcon"
+            android:id="@+id/aqiInfoIcon"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginEnd="12dp"
@@ -38,7 +38,7 @@
             android:layout_margin="12dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/headerBg"
-            app:layout_constraintEnd_toStartOf="@+id/infoIcon"
+            app:layout_constraintEnd_toStartOf="@+id/aqiInfoIcon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/headerBg"
             tools:text="Unhealthy" />

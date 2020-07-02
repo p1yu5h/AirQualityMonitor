@@ -2,6 +2,7 @@ package com.piyushsatija.pollutionmonitor.utils
 
 import android.content.Context
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import com.piyushsatija.pollutionmonitor.R
 
 object AppUtils {
@@ -42,5 +43,16 @@ object AppUtils {
             }
         }
         return bundle
+    }
+
+    fun getAQIColor(aqi: Int, context: Context): Int {
+        return when (aqi) {
+            in 0..50 -> ContextCompat.getColor(context, R.color.scaleGood)
+            in 51..100 -> ContextCompat.getColor(context, R.color.scaleModerate)
+            in 101..150 -> ContextCompat.getColor(context, R.color.scaleUnhealthySensitive)
+            in 151..200 -> ContextCompat.getColor(context, R.color.scaleUnhealthy)
+            in 201..300 -> ContextCompat.getColor(context, R.color.scaleVeryUnhealthy)
+            else -> ContextCompat.getColor(context, R.color.scaleHazardous)
+        }
     }
 }

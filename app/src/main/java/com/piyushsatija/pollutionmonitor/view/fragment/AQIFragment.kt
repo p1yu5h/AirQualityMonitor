@@ -20,6 +20,7 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -296,7 +297,10 @@ class AQIFragment : Fragment(), View.OnClickListener {
         data?.aqi?.apply {
             val data = AppUtils.getAQIInfo(this, context!!)
             aqiInfoCard.findViewById<TextView>(R.id.aqiInfoTitle).text = data.getString("title")
+            aqiInfoCard.findViewById<TextView>(R.id.aqiInfoTitle).setTextColor(AppUtils.getAQIColor(this, context!!))
             aqiInfoCard.findViewById<TextView>(R.id.aqiInfoDesc).text = data.getString("desc")
+            aqiInfoCard.findViewById<AppCompatImageView>(R.id.aqiInfoIcon)
+                    .setColorFilter(AppUtils.getAQIColor(this, context!!), android.graphics.PorterDuff.Mode.SRC_IN);
         }
     }
 

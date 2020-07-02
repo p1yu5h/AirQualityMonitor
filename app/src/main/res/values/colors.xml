@@ -18,7 +18,7 @@
     
     <!--AQI Scale Colors-->
     <color name="scaleGood">#009966</color>
-    <color name="scaleModerate">#FFDE33</color>
+    <color name="scaleModerate">#F4D11E</color>
     <color name="scaleUnhealthySensitive">#FF8821</color>
     <color name="scaleUnhealthy">#CC0033</color>
     <color name="scaleVeryUnhealthy">#660099</color>

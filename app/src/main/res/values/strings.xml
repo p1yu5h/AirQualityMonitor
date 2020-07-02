@@ -50,6 +50,14 @@
     <string name="very_unhealthy_health_implications">Health warnings of emergency conditions. The entire population is more likely to be affected.</string>
     <string name="hazardous_health_implications">Health alert: everyone may experience more serious health effects.</string>
 
+    <!--Cautionary Statements -->
+    <string name="goodCaution">Enjoy your day!</string>
+    <string name="moderateCaution">Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor exertion.</string>
+    <string name="unhealthySensitiveCaution">Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor exertion.</string>
+    <string name="unhealthyCaution">Active children and adults, and people with respiratory disease, such as asthma, should avoid prolonged outdoor exertion; everyone else, especially children, should limit prolonged outdoor exertion</string>
+    <string name="veryUnhealthyCaution">Active children and adults, and people with respiratory disease, such as asthma, should avoid all outdoor exertion; everyone else, especially children, should limit outdoor exertion.</string>
+    <string name="hazardousCaution">Everyone should avoid all outdoor exertion</string>
+
     <string name="appwidget_text">AQI</string>
     <string name="add_widget">Add widget</string>
 

@@ -55,4 +55,41 @@ object AppUtils {
             else -> ContextCompat.getColor(context, R.color.scaleHazardous)
         }
     }
+
+    fun getAQIDialogInfo(aqi: Int, context: Context): Bundle {
+        val bundle = Bundle()
+        when (aqi) {
+            in 0..50 -> {
+                bundle.putString("range", context.getString(R.string.good_range))
+                bundle.putString("desc", context.getString(R.string.goodCaution))
+                bundle.putInt("color", R.color.scaleGood)
+            }
+            in 51..100 -> {
+                bundle.putString("range", context.getString(R.string.moderate_range))
+                bundle.putString("desc", context.getString(R.string.moderateCaution))
+                bundle.putInt("color", R.color.scaleModerate)
+            }
+            in 101..150 -> {
+                bundle.putString("range", context.getString(R.string.unhealthy_for_sensitive_range))
+                bundle.putString("desc", context.getString(R.string.unhealthySensitiveCaution))
+                bundle.putInt("color", R.color.scaleUnhealthySensitive)
+            }
+            in 151..200 -> {
+                bundle.putString("range", context.getString(R.string.unhealthy_range))
+                bundle.putString("desc", context.getString(R.string.unhealthyCaution))
+                bundle.putInt("color", R.color.scaleUnhealthy)
+            }
+            in 201..300 -> {
+                bundle.putString("range", context.getString(R.string.very_unhealthy_range))
+                bundle.putString("desc", context.getString(R.string.veryUnhealthyCaution))
+                bundle.putInt("color", R.color.scaleVeryUnhealthy)
+            }
+            else -> {
+                bundle.putString("range", context.getString(R.string.hazardous_range))
+                bundle.putString("desc", context.getString(R.string.hazardousCaution))
+                bundle.putInt("color", R.color.scaleHazardous)
+            }
+        }
+        return bundle
+    }
 }

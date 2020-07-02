@@ -71,6 +71,14 @@
         <item name="android:padding">4dp</item>
     </style>
 
+    <style name="BottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/InfoBottomSheetStyle</item>
+    </style>
+
+    <style name="InfoBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@color/transparent</item>
+    </style>
+
     <!--Animations-->
 
     <style name="DialogAnimation">

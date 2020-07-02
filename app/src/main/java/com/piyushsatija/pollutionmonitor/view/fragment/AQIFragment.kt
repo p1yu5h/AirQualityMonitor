@@ -300,7 +300,12 @@ class AQIFragment : Fragment(), View.OnClickListener {
             aqiInfoCard.findViewById<TextView>(R.id.aqiInfoTitle).setTextColor(AppUtils.getAQIColor(this, context!!))
             aqiInfoCard.findViewById<TextView>(R.id.aqiInfoDesc).text = data.getString("desc")
             aqiInfoCard.findViewById<AppCompatImageView>(R.id.aqiInfoIcon)
-                    .setColorFilter(AppUtils.getAQIColor(this, context!!), android.graphics.PorterDuff.Mode.SRC_IN);
+                    .setColorFilter(AppUtils.getAQIColor(this, context!!), android.graphics.PorterDuff.Mode.SRC_IN)
+            aqiInfoCard.findViewById<AppCompatImageView>(R.id.aqiInfoIcon).setOnClickListener {
+                val dialogInfoBundle = AppUtils.getAQIDialogInfo(this, context!!)
+                val infoBottomSheetFragment = InfoBottomSheetFragment(dialogInfoBundle)
+                infoBottomSheetFragment.show(parentFragmentManager, infoBottomSheetFragment.tag)
+            }
         }
     }
 

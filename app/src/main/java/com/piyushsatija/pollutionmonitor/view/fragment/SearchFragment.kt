@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.piyushsatija.pollutionmonitor.AqiViewModel
 import com.piyushsatija.pollutionmonitor.R
 import com.piyushsatija.pollutionmonitor.adapters.SearchResultAdapter

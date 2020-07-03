@@ -17,12 +17,14 @@ android {
     buildTypes {
         debug {
             buildConfigField 'String', "ApiKey", AirQualityMonitor_ApiToken
+            buildConfigField 'String', "EmailId", EmailId
             minifyEnabled false
             debuggable true
             applicationIdSuffix ".debug"
         }
         release {
             buildConfigField 'String', "ApiKey", AirQualityMonitor_ApiToken
+            buildConfigField 'String', "EmailId", EmailId
             minifyEnabled true
             shrinkResources true
             debuggable false

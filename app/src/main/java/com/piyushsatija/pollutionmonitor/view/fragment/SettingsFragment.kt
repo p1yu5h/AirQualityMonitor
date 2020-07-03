@@ -1,10 +1,13 @@
 package com.piyushsatija.pollutionmonitor.view.fragment
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.piyushsatija.pollutionmonitor.BuildConfig
@@ -74,6 +77,30 @@ class SettingsFragment : Fragment() {
                     else -> getString(R.string.celsiusSymbol) //fallback
                 }
             }
+        }
+
+        feedbackCTA.setOnClickListener {
+            val intent = Intent(Intent.ACTION_SENDTO).apply {
+                data = Uri.parse("mailto:${BuildConfig.EmailId}")
+                putExtra(Intent.EXTRA_SUBJECT, "Feedback for Air Pollution Monitor - AQI android app")
+            }
+            if (intent.resolveActivity(context!!.packageManager) != null) {
+                startActivity(intent)
+            } else {
+                Toast.makeText(
+                        context,
+                        "Please install an email client to send feedback.",
+                        Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+        shareCTA.setOnClickListener {
+            val shareIntent = Intent()
+            shareIntent.action = Intent.ACTION_SEND
+            shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.shareText))
+            shareIntent.type = "text/plain"
+            startActivity(shareIntent)
         }
     }
 

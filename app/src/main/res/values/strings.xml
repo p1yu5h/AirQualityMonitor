@@ -77,5 +77,7 @@
     <!--Settings-->
     <string name="windSpeed">Wind speed</string>
     <string name="temperature">Temperature</string>
+    <string name="shareApp">Share App</string>
+    <string name="feedback">Send Feedback</string>
     <string name="appVersion">App Version</string>
 </resources>

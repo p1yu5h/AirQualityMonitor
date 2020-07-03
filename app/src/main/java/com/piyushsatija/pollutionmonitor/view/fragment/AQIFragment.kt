@@ -315,14 +315,6 @@ class AQIFragment : Fragment(), View.OnClickListener {
         RetrofitHelper.instance?.dismissProgressDialog()
     }
 
-    private fun shareApp() {
-        val shareIntent = Intent()
-        shareIntent.action = Intent.ACTION_SEND
-        shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.shareText))
-        shareIntent.type = "text/plain"
-        startActivity(shareIntent)
-    }
-
     private fun setupRateCard() {
         if (!sharedPrefUtils!!.rateCardDone() && System.currentTimeMillis() - sharedPrefUtils!!.appInstallTime!! >= 86400000) {
             rateUsCard.visibility = View.VISIBLE

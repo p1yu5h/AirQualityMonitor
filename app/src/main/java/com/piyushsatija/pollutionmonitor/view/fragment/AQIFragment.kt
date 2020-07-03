@@ -31,9 +31,7 @@ import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import com.google.android.gms.location.*
-import com.piyushsatija.pollutionmonitor.AQIWidget
-import com.piyushsatija.pollutionmonitor.AqiViewModel
-import com.piyushsatija.pollutionmonitor.DataUpdateWorker
+import com.piyushsatija.pollutionmonitor.*
 import com.piyushsatija.pollutionmonitor.R
 import com.piyushsatija.pollutionmonitor.api.ApiResponse
 import com.piyushsatija.pollutionmonitor.api.RetrofitHelper
@@ -365,7 +363,7 @@ class AQIFragment : Fragment(), View.OnClickListener {
             R.id.rateYes -> {
                 sharedPrefUtils?.rateCardDone(true)
                 rateUsCard.visibility = View.GONE
-                val uri = Uri.parse("https://play.google.com/store/apps/details?id=com.piyushsatija.pollutionmonitor")
+                val uri = Uri.parse("https://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID}")
                 startActivity(Intent(Intent.ACTION_VIEW, uri))
             }
         }

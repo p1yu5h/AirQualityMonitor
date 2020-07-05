@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.piyushsatija.pollutionmonitor.R
 import com.piyushsatija.pollutionmonitor.model.search.Data
 
-class SearchResultAdapter(private val searchResults: List<Data>) : RecyclerView.Adapter<SearchResultAdapter.SearchResultViewHolder>() {
+class SearchResultAdapter(private var searchResults: List<Data>) : RecyclerView.Adapter<SearchResultAdapter.SearchResultViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultViewHolder {
         val itemView = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_search_result
@@ -24,6 +24,11 @@ class SearchResultAdapter(private val searchResults: List<Data>) : RecyclerView.
 
     override fun getItemCount(): Int {
         return searchResults.size
+    }
+
+   fun updateItems(searchResults: List<Data>) {
+       this.searchResults = searchResults
+       notifyDataSetChanged()
     }
 
     inner class SearchResultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

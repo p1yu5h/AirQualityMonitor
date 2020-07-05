@@ -16,6 +16,7 @@ import com.piyushsatija.pollutionmonitor.AqiViewModel
 import com.piyushsatija.pollutionmonitor.R
 import com.piyushsatija.pollutionmonitor.adapters.SearchResultAdapter
 import com.piyushsatija.pollutionmonitor.model.Status
+import com.piyushsatija.pollutionmonitor.model.search.Data
 import com.piyushsatija.pollutionmonitor.view.MessageInterface
 import kotlinx.android.synthetic.main.fragment_search.*
 
@@ -23,6 +24,7 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
     private lateinit var aqiViewModel: AqiViewModel
     private lateinit var searchResultAdapter: SearchResultAdapter
     private lateinit var messageInterface: MessageInterface
+    private var dataList = ArrayList<Data>()
     private var queryText = ""
 
     override fun onAttach(context: Context) {
@@ -40,6 +42,9 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
         searchView.setOnQueryTextListener(this)
         searchRecyclerView.layoutManager = LinearLayoutManager(context)
         searchRecyclerView.setHasFixedSize(true)
+
+        searchResultAdapter = SearchResultAdapter(dataList)
+        searchRecyclerView.adapter = searchResultAdapter
 
         aqiViewModel = ViewModelProvider(this).get(AqiViewModel::class.java)
         aqiViewModel.status.observe(activity!!, Observer { status ->
@@ -62,13 +67,12 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
 
         aqiViewModel.searchResponse.observe(activity!!, Observer {
             it.data?.apply {
-                val dataList = this.filter { data -> data.aqi != "-" }
+                dataList = ArrayList(this.filter { data -> data.aqi != "-" })
                 if (dataList.isEmpty()) {
                     searchPlaceholder.visibility = View.VISIBLE
                     if (::messageInterface.isInitialized) messageInterface.showSnackbar("No results found for \"$queryText\"")
                 }
-                searchResultAdapter = SearchResultAdapter(dataList)
-                searchRecyclerView.adapter = searchResultAdapter
+                searchResultAdapter.updateItems(dataList)
             }
         })
     }
@@ -83,6 +87,7 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
+        if (!newText.isNullOrBlank()) searchResultAdapter.updateItems(ArrayList())
         return true
     }
 

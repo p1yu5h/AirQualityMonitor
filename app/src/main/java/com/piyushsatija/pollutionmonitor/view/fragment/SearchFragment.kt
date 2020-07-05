@@ -87,8 +87,19 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        if (!newText.isNullOrBlank()) searchResultAdapter.updateItems(ArrayList())
+        if (!newText.isNullOrBlank()) clearResults(false)
         return true
+    }
+
+    fun clearResults(fromBottomNav: Boolean) {
+        if (::searchResultAdapter.isInitialized) {
+            searchResultAdapter.updateItems(ArrayList())
+            searchPlaceholder.visibility = View.VISIBLE
+        }
+        if (fromBottomNav) {
+            searchView.setQuery("", false)
+            searchView.clearFocus()
+        }
     }
 
     override fun onDestroy() {

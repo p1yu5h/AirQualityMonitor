@@ -93,6 +93,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
             R.id.searchNav -> {
                 fm.beginTransaction().hide(currentFragment).show(searchFragment).commit()
+                searchFragment.clearResults(fromBottomNav = true)
                 currentFragment = searchFragment
                 return true
             }

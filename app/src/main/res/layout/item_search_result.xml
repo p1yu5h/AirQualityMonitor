@@ -21,6 +21,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:maxLines="2"
+        android:minLines="2"
+        android:gravity="center_vertical"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/itemBg"
         app:layout_constraintEnd_toStartOf="@id/aqiBg"

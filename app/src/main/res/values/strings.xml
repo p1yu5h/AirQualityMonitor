@@ -79,5 +79,5 @@
     <string name="temperature">Temperature</string>
     <string name="shareApp">Share App</string>
     <string name="feedback">Send Feedback</string>
-    <string name="appVersion">App Version</string>
+    <string name="appVersion">App Version: %1$s</string>
 </resources>

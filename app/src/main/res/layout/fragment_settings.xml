@@ -97,7 +97,7 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/feedbackCTA"
         android:layout_width="36dp"
-        android:layout_height="48dp"
+        android:layout_height="36dp"
         android:paddingVertical="8dp"
         app:layout_constraintBottom_toBottomOf="@id/feedbackText"
         app:layout_constraintEnd_toEndOf="@id/settingsTitle"
@@ -129,52 +129,26 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/shareCTA"
         android:layout_width="36dp"
-        android:layout_height="48dp"
+        android:layout_height="36dp"
         android:paddingVertical="8dp"
         app:layout_constraintBottom_toBottomOf="@id/shareText"
         app:layout_constraintEnd_toEndOf="@id/settingsTitle"
         app:layout_constraintTop_toTopOf="@id/shareText"
         app:srcCompat="@drawable/ic_share" />
 
-    <View
-        android:id="@+id/separator4"
-        android:layout_width="0dp"
-        android:layout_height="0.5dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/white"
-        app:layout_constraintEnd_toEndOf="@id/settingsTitle"
-        app:layout_constraintStart_toStartOf="@id/settingsTitle"
-        app:layout_constraintTop_toBottomOf="@id/shareText" />
-
-    <TextView
-        android:id="@+id/appVersionTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/appVersion"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@id/settingsTitle"
-        app:layout_constraintTop_toBottomOf="@id/separator4" />
 
     <TextView
         android:id="@+id/appVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        tools:text="@string/appVersion"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:textColor="@color/white"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@id/settingsTitle"
-        app:layout_constraintTop_toBottomOf="@id/separator4"
-        tools:text="1.0.0" />
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintStart_toStartOf="parent"/>
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0.5dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/white"
-        app:layout_constraintEnd_toEndOf="@id/settingsTitle"
-        app:layout_constraintStart_toStartOf="@id/settingsTitle"
-        app:layout_constraintTop_toBottomOf="@id/feedbackText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

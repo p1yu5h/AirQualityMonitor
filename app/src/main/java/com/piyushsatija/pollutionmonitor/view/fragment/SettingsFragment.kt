@@ -41,7 +41,7 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        appVersion.text = BuildConfig.VERSION_NAME
+        appVersion.text = getString(R.string.appVersion, BuildConfig.VERSION_NAME)
         windSpeedCTA.text = when (sharedPrefUtils!!.getStringValue(Constants.WINDSPEED_UNIT, Constants.WINDSPEED_MPS)) {
             Constants.WINDSPEED_MPS -> getString(R.string.mps)
             Constants.WINDSPEED_KMPH -> getString(R.string.kmph)
@@ -59,7 +59,6 @@ class SettingsFragment : Fragment() {
                 }
             }
         }
-
 
         temperatureCTA.text = when (sharedPrefUtils!!.getStringValue(Constants.TEMPERATURE_UNIT, Constants.TEMPERATURE_CELSIUS)) {
             Constants.TEMPERATURE_CELSIUS -> getString(R.string.celsiusSymbol)

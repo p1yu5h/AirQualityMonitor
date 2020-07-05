@@ -308,11 +308,11 @@ class AQIFragment : Fragment(), View.OnClickListener {
     }
 
     private fun showDialog(s: String) {
-        RetrofitHelper.instance?.showProgressDialog(context, s)
+        if (isAdded) RetrofitHelper.instance?.showProgressDialog(context, s)
     }
 
     private fun dismissDialog() {
-        RetrofitHelper.instance?.dismissProgressDialog()
+        if (isAdded) RetrofitHelper.instance?.dismissProgressDialog()
     }
 
     private fun setupRateCard() {

@@ -11,12 +11,14 @@ class RetrofitHelper private constructor() {
     private var mProgressDialog: ProgressDialog? = null
 
     fun showProgressDialog(context: Context?, Message: String?) {
-        dismissProgressDialog()
-        mProgressDialog = ProgressDialog(context, ProgressDialog.THEME_DEVICE_DEFAULT_LIGHT)
-        mProgressDialog?.setCancelable(false)
-        mProgressDialog?.setCanceledOnTouchOutside(false)
-        mProgressDialog?.setMessage(Message)
-        mProgressDialog?.show()
+        context?.apply {
+            dismissProgressDialog()
+            mProgressDialog = ProgressDialog(context, ProgressDialog.THEME_DEVICE_DEFAULT_LIGHT)
+            mProgressDialog?.setCancelable(false)
+            mProgressDialog?.setCanceledOnTouchOutside(false)
+            mProgressDialog?.setMessage(Message)
+            mProgressDialog?.show()
+        }
     }
 
     fun dismissProgressDialog() {
@@ -28,6 +30,7 @@ class RetrofitHelper private constructor() {
     companion object {
         private var sRetrofitHelper: RetrofitHelper? = null
         private const val BASE_URL = "https://api.waqi.info/"
+
         @JvmStatic
         val instance: RetrofitHelper?
             get() {

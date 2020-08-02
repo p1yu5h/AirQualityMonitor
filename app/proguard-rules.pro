@@ -77,9 +77,6 @@
 # If you're using custom Eception
 -keep public class * extends java.lang.Exception
 
--keep class com.crashlytics.** { *; }
--dontwarn com.crashlytics.**
-
 ### Crash report
 -renamesourcefileattribute SourceFile
 -keepattributes SourceFile,LineNumberTable

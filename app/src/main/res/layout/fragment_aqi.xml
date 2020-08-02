@@ -58,6 +58,15 @@
             app:layout_constraintTop_toBottomOf="@id/locationIcon" />
 
         <include
+            android:id="@+id/rateUsCard"
+            layout="@layout/layout_rate_us"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/aqiInfoCard" />
+
+        <include
             android:id="@+id/airPropertiesLayout"
             layout="@layout/layout_air_properties"
             android:layout_width="match_parent"
@@ -65,7 +74,7 @@
             android:layout_margin="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/aqiInfoCard" />
+            app:layout_constraintTop_toBottomOf="@id/rateUsCard" />
 
         <include
             android:id="@+id/pollutantCard"
@@ -78,22 +87,13 @@
             app:layout_constraintTop_toBottomOf="@id/airPropertiesLayout" />
 
         <include
-            android:id="@+id/rateUsCard"
-            layout="@layout/layout_rate_us"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/pollutantCard" />
-
-        <include
             android:id="@+id/attributionCard"
             layout="@layout/layout_attributions_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rateUsCard" />
+            app:layout_constraintTop_toBottomOf="@id/pollutantCard" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

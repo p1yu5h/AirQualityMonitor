@@ -260,6 +260,7 @@ class AQIFragment : Fragment(), View.OnClickListener {
         pollutantsList.forEach {
             val pollutantRow = layoutInflater.inflate(R.layout.item_pollutant, pollutantsContainer, false)
             pollutantRow.findViewById<TextView>(R.id.pollutantName).text = it.pollutantName
+            pollutantRow.findViewById<TextView>(R.id.pollutantValue).text = it.pollutantValue.toString()
             pollutantRow.findViewById<ProgressBar>(R.id.pollutantProgressBar).progress = it.pollutantValue.toInt()
             pollutantsContainer.addView(pollutantRow)
         }

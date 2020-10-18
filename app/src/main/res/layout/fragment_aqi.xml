@@ -21,31 +21,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/locationIcon"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/ic_location"
-            android:tint="@color/white"
-            app:layout_constraintEnd_toStartOf="@id/locationTextView"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/aqiCircle"
-            tools:ignore="ContentDescription" />
-
-        <TextView
-            android:id="@+id/locationTextView"
-            android:layout_width="wrap_content"
+        <include
+            android:id="@+id/aqiLocationCard"
+            layout="@layout/layout_location_text"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@id/locationIcon"
+            android:layout_margin="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/locationIcon"
-            app:layout_constraintTop_toTopOf="@id/locationIcon"
-            tools:text="New Delhi" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/aqiCircle" />
 
         <include
             android:id="@+id/aqiInfoCard"
@@ -55,7 +39,7 @@
             android:layout_margin="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/locationIcon" />
+            app:layout_constraintTop_toBottomOf="@id/aqiLocationCard" />
 
         <include
             android:id="@+id/rateUsCard"

@@ -12,7 +12,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.messaging.FirebaseMessaging
 import com.piyushsatija.pollutionmonitor.R
 import com.piyushsatija.pollutionmonitor.utils.GPSUtils
 import com.piyushsatija.pollutionmonitor.utils.SharedPrefUtils
@@ -38,8 +37,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             if (sharedPrefUtils?.appInstallTime == 0L) sharedPrefUtils?.appInstallTime = System.currentTimeMillis()
             setTheme(R.style.AppTheme_Light)
             setContentView(R.layout.activity_main)
-            FirebaseMessaging.getInstance().subscribeToTopic("weather")
-                    .addOnCompleteListener { Log.d("FCM", "Subscribed to \"weather\"") }
 
             fm.beginTransaction().add(R.id.fragmentContainer, settingsFragment, "settings").hide(settingsFragment).commit()
             fm.beginTransaction().add(R.id.fragmentContainer, searchFragment, "search").hide(searchFragment).commit()

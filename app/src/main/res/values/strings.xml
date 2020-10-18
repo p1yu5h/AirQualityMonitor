@@ -32,8 +32,6 @@
     <string name="very_unhealthy">Very Unhealthy</string>
     <string name="hazardous">Hazardous</string>
 
-    <!--Info Dialog-->
-
     <!--AQI Range-->
     <string name="good_range">0 – 50</string>
     <string name="moderate_range">51 – 100</string>
@@ -51,7 +49,7 @@
     <string name="hazardous_health_implications">Health alert: everyone may experience more serious health effects.</string>
 
     <!--Cautionary Statements -->
-    <string name="goodCaution">Enjoy your day!</string>
+    <string name="goodCaution">No significant health concerns. Enjoy your day!</string>
     <string name="moderateCaution">Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor exertion.</string>
     <string name="unhealthySensitiveCaution">Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor exertion.</string>
     <string name="unhealthyCaution">Active children and adults, and people with respiratory disease, such as asthma, should avoid prolonged outdoor exertion; everyone else, especially children, should limit prolonged outdoor exertion</string>
@@ -80,4 +78,7 @@
     <string name="shareApp">Share App</string>
     <string name="feedback">Send Feedback</string>
     <string name="appVersion">App Version: %1$s</string>
+
+    <!--Miscellaneous-->
+    <string name="locationDisclaimer">Please note: This is the location of your nearest air pollution monitoring station, and not your exact location.</string>
 </resources>

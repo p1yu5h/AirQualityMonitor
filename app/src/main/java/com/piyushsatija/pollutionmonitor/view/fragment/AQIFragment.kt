@@ -182,7 +182,7 @@ class AQIFragment : Fragment(), View.OnClickListener {
                             airPropertiesLayout.findViewById<TextView>(R.id.pressureTextView)?.text = getString(R.string.pressure_unit, this.pressure?.v)
                             airPropertiesLayout.findViewById<TextView>(R.id.humidityTextView)?.text = getString(R.string.humidity_unit, this.humidity?.v)
                             airPropertiesLayout.findViewById<TextView>(R.id.windTextView)?.text = getWindSpeedValue(this.wind?.v)
-                            locationTextView?.text = data?.city?.name
+                            aqiLocationCard.findViewById<TextView>(R.id.locationTextView)?.text = data?.city?.name
                             setupAttributions(data)
                             addPollutantsToList(this)
                             updateWidget()
@@ -216,7 +216,7 @@ class AQIFragment : Fragment(), View.OnClickListener {
                                 airPropertiesLayout.findViewById<TextView>(R.id.pressureTextView)?.text = getString(R.string.pressure_unit, this.pressure?.v)
                                 airPropertiesLayout.findViewById<TextView>(R.id.humidityTextView)?.text = getString(R.string.humidity_unit, this.humidity?.v)
                                 airPropertiesLayout.findViewById<TextView>(R.id.windTextView)?.text = getWindSpeedValue(this.wind?.v)
-                                locationTextView?.text = data?.city?.name
+                                aqiLocationCard.findViewById<TextView>(R.id.locationTextView)?.text = data?.city?.name
                                 setupAttributions(data)
                                 addPollutantsToList(this)
                                 updateWidget()

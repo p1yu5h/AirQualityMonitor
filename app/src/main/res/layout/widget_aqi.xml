@@ -6,9 +6,9 @@
     <ImageView
         android:id="@+id/widget_background"
         android:layout_width="160dp"
-        android:layout_height="match_parent"
+        android:layout_height="160dp"
         android:layout_centerInParent="true"
-        android:src="@drawable/circle_widget" />
+        android:src="@drawable/bg_widget" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -18,7 +18,7 @@
         android:layout_marginBottom="4dp"
         android:text="@string/aqi_title"
         android:textColor="@color/white"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/widget_aqi_text"
@@ -29,19 +29,20 @@
         android:layout_gravity="center"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="44sp"
+        android:textSize="40sp"
         android:textStyle="bold"
         tools:text="123" />
 
-    <TextView android:id="@+id/widget_air_quality_text"
+    <TextView
+        android:id="@+id/widget_air_quality_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/widget_aqi_text"
         android:layout_centerHorizontal="true"
-        tools:text="Unhealthy"
         android:elevation="5dp"
-        android:textStyle="bold"
         android:shadowColor="@color/white"
         android:textColor="@color/scaleGood"
-        android:textSize="18sp" />
+        android:textSize="14sp"
+        android:textStyle="bold"
+        tools:text="Unhealthy" />
 </RelativeLayout>

@@ -41,38 +41,38 @@ class AQIWidget : AppWidgetProvider() {
             views.setTextViewText(R.id.widget_aqi_text, aqiString)
             var airQuality = ""
             val aqi = aqiString?.toInt() ?: 0
-            var colorId =
-            when {
-                aqi in 0..50 -> {
-                    airQuality = context.getString(R.string.good)
-                    ContextCompat.getColor(context, R.color.scaleGood)
-                }
-                aqi in 51..100 -> {
-                    airQuality = context.getString(R.string.moderate)
-                    ContextCompat.getColor(context, R.color.scaleModerate)
-                }
-                aqi in 101..150 -> {
-                    airQuality = context.getString(R.string.unhealthy)
-                    ContextCompat.getColor(context, R.color.scaleUnhealthySensitive)
-                }
-                aqi in 151..200 -> {
-                    airQuality = context.getString(R.string.unhealthy)
-                    ContextCompat.getColor(context, R.color.scaleUnhealthy)
-                }
-                aqi in 201..300 -> {
-                    airQuality = context.getString(R.string.very_unhealthy)
-                    ContextCompat.getColor(context, R.color.scaleVeryUnhealthy)
-                }
-                aqi >= 301 -> {
-                    airQuality = context.getString(R.string.hazardous)
-                    ContextCompat.getColor(context, R.color.scaleHazardous)
-                }
-                else -> {
-                    ContextCompat.getColor(context, R.color.scaleGood)
-                }
-            }
+            val colorId =
+                    when {
+                        aqi in 0..50 -> {
+                            airQuality = context.getString(R.string.good)
+                            ContextCompat.getColor(context, R.color.scaleGood)
+                        }
+                        aqi in 51..100 -> {
+                            airQuality = context.getString(R.string.moderate)
+                            ContextCompat.getColor(context, R.color.scaleModerate)
+                        }
+                        aqi in 101..150 -> {
+                            airQuality = context.getString(R.string.unhealthy)
+                            ContextCompat.getColor(context, R.color.scaleUnhealthySensitive)
+                        }
+                        aqi in 151..200 -> {
+                            airQuality = context.getString(R.string.unhealthy)
+                            ContextCompat.getColor(context, R.color.scaleUnhealthy)
+                        }
+                        aqi in 201..300 -> {
+                            airQuality = context.getString(R.string.very_unhealthy)
+                            ContextCompat.getColor(context, R.color.scaleVeryUnhealthy)
+                        }
+                        aqi >= 301 -> {
+                            airQuality = context.getString(R.string.hazardous)
+                            ContextCompat.getColor(context, R.color.scaleHazardous)
+                        }
+                        else -> {
+                            ContextCompat.getColor(context, R.color.scaleGood)
+                        }
+                    }
             views.setTextViewText(R.id.widget_air_quality_text, airQuality)
-            views.setTextColor(R.id.widget_air_quality_text, ContextCompat.getColor(context, R.color.grey))
+            views.setTextColor(R.id.widget_air_quality_text, colorId)
             val intent = Intent(context, MainActivity::class.java)
             val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
             views.setOnClickPendingIntent(R.id.widget_background, pendingIntent)

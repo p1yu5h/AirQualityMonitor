@@ -19,6 +19,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.app.ActivityCompat
@@ -40,9 +41,9 @@ import com.piyushsatija.pollutionmonitor.utils.AppUtils
 import com.piyushsatija.pollutionmonitor.utils.Constants
 import com.piyushsatija.pollutionmonitor.utils.GPSUtils
 import com.piyushsatija.pollutionmonitor.utils.SharedPrefUtils
-import com.piyushsatija.pollutionmonitor.view.InfoDialog
 import com.piyushsatija.pollutionmonitor.view.MainActivity
 import kotlinx.android.synthetic.main.fragment_aqi.*
+import kotlinx.android.synthetic.main.layout_air_properties.*
 import kotlinx.android.synthetic.main.layout_rate_us.*
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -340,6 +341,9 @@ class AQIFragment : Fragment(), View.OnClickListener {
     private fun setupClickListeners() {
         rateYes.setOnClickListener(this)
         rateNo.setOnClickListener(this)
+        pressureIcon.setOnClickListener(this)
+        humidityIcon.setOnClickListener(this)
+        windIcon.setOnClickListener(this)
     }
 
     public fun locationPermissionResult(success: Boolean) {
@@ -358,6 +362,15 @@ class AQIFragment : Fragment(), View.OnClickListener {
                 rateUsCard.visibility = View.GONE
                 val uri = Uri.parse("https://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID}")
                 startActivity(Intent(Intent.ACTION_VIEW, uri))
+            }
+            R.id.pressureIcon -> {
+                Toast.makeText(requireContext(), getString(R.string.pressure), Toast.LENGTH_SHORT).show()
+            }
+            R.id.humidityIcon -> {
+                Toast.makeText(requireContext(), getString(R.string.humidity), Toast.LENGTH_SHORT).show()
+            }
+            R.id.windIcon -> {
+                Toast.makeText(requireContext(), getString(R.string.wind), Toast.LENGTH_SHORT).show()
             }
         }
     }

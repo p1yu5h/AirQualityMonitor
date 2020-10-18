@@ -18,9 +18,9 @@
     <string name="alert_content_location_access">Please Allow Location Access to get Air Quality and Weather Information.</string>
 
     <string name="place_holder">---</string>
-    <string name="pressure">Pressure</string>
+    <string name="pressure">Air Pressure</string>
     <string name="humidity">Humidity</string>
-    <string name="wind">Wind</string>
+    <string name="wind">Wind Speed</string>
     <string name="attribution">Attributions</string>
     <string name="pollutants_aqi">Pollutants AQI</string>
 
